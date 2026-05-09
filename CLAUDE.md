@@ -18,11 +18,12 @@ Sistema de versionamento de páginas de vendas Astro pra rodar A/B test e itera�
 | `_config/changelog.md` | Diário narrativo de versões | Após criar nova versão |
 | `versoes/<pagina>/<v>/` | Componentes da versão (page.astro + Hero.astro etc) | Editando UI |
 | `src/pages/<pagina>/<v>.astro` | Rota fina que importa o page.astro da versão | Criando nova versão |
-| `src/pages/index.astro` | Diretório interno data-driven (noindex) | Quase nunca |
+| `src/pages/index.astro` | Re-export do `page.astro` da latest — é o que `/` serve em prod | Skill atualiza o import quando latest muda |
+| `src/pages/dev.astro` | Diretório interno data-driven (noindex) listando todas as versões | Quase nunca |
 | `src/lib/versions.ts` | Helper que lê versions.json | Lendo state em build |
 | `src/layouts/Base.astro` | Layout compartilhado (head, OG, GTM, fontes) | NÃO editar via skill |
 | `src/lib/tracking.ts` | Helpers de tracking (begin_checkout) | NÃO editar via skill |
-| `vercel.json` | Rewrite `/` → latest + headers `/_dev` | Skill atualiza ao mudar latest |
+| `vercel.json` | Headers `/dev` (noindex). Sem rewrites — Astro gera /index.html e arquivo estático ganha do rewrite | Raramente |
 | `copy/` | Copy fonte do cliente — NÃO ALTERAR | Lendo conteúdo |
 | `rules/copy-anti-ai.md` | Regras de microcopy | Escrevendo qualquer texto novo |
 | `cases/`, `fotos/` | Assets compartilhados | Importando assets |
@@ -65,10 +66,12 @@ Detalhes completos do fluxo: `.claude/skills/landing-version/SKILL.md`.
 
 ## Roteamento em prod (Vercel)
 
-- `tonluccas.com/` → rewrite pra `/pagina-vendas/v{latest}` (URL permanece `/`, conteúdo é o da latest)
+- `tonluccas.com/` → serve a latest (via re-export no `src/pages/index.astro`, sem rewrite)
 - `tonluccas.com/pagina-vendas/v1` → versão 1 canônica (URL pra ads, nunca muda)
 - `tonluccas.com/pagina-vendas/v2` → versão 2 canônica (quando criada)
-- `tonluccas.com/_dev` → diretório interno com noindex
+- `tonluccas.com/dev` → diretório interno com noindex (lista todas as versões pra navegação interna)
+
+**Por que re-export e não rewrite:** Astro gera `/index.html` em build estático. Vercel serve arquivo estático ANTES de checar rewrites, então `rewrites: [{ source: "/", destination: "..." }]` nunca dispara. Re-export no próprio `index.astro` resolve.
 
 ## Key decisions
 
@@ -76,5 +79,5 @@ Detalhes completos do fluxo: `.claude/skills/landing-version/SKILL.md`.
 - **`versions.json` como source of truth, não nome de pasta.** Permite mudar latest sem renomear nada.
 - **AskUserQuestion como gate obrigatório.** Replica o "human review checkpoint" do constraint Output Drift do CliefNotes — sem ele, edições erradas vão pra versão errada.
 - **Frozen versions são imutáveis por padrão.** Hotfix é a exceção que precisa de decisão consciente do user.
-- **Diretório interno em `/_dev` (noindex), raiz serve latest.** URL limpa pro share, sem expor versões em produção.
+- **Diretório interno em `/dev` (noindex), raiz serve latest.** URL limpa pro share, sem expor versões em produção.
 - **Cada fork = UMA mudança isolada.** Múltiplas mudanças num fork tornam impossível atribuir conversão.

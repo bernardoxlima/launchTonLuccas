@@ -1,14 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/pagina-vendas/v1"
-    }
-  ],
   "headers": [
     {
-      "source": "/_dev",
+      "source": "/dev",
       "headers": [
         { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
       ]

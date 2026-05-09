@@ -38,5 +38,5 @@ Hard rules que se aplicam a TODA edição neste projeto. A skill `landing-versio
 ## Roteamento
 
 16. **`/` (raiz) sempre serve a versão `latest`** via rewrite no `vercel.json`. Quando latest muda, atualizar a `destination` do rewrite.
-17. **`/_dev` é o diretório interno** com `noindex`. Lista todas as versões (latest + frozen) lendo de `versions.json`.
+17. **`/dev` é o diretório interno** com `noindex` (via prop no Base + X-Robots-Tag header). Lista todas as versões (latest + frozen) lendo de `versions.json`. Não usar prefixo `_` no filename porque Astro ignora `src/pages/_*.astro` por convenção.
 18. **`/<pagina>/<v>` é a URL canônica de cada versão** pra campanhas A/B. Compartilhar essas URLs em ads, não a raiz.

@@ -103,7 +103,7 @@ Disparar `AskUserQuestion` com EXATAMENTE estas 3 opções:
    **Refinamentos:**
    - (vazio)
    ```
-8. **Atualizar `vercel.json`** — trocar `destination` do rewrite raiz pra `/<pagina>/v[N+1]`
+8. **Atualizar `src/pages/index.astro`** — trocar o `import Page from '@versoes/<pagina>/<vN>/page.astro'` pra apontar pra `v[N+1]/page.astro`. Esta é a forma como a raiz `/` passa a servir a nova latest. **NÃO usar rewrite no vercel.json** — Astro gera `/index.html` e arquivo estático ganha do rewrite no Vercel; o re-export no index.astro é o caminho que funciona.
 9. **Validar build:** rodar `npm run build` e capturar o output. Se quebrar, debugar.
 
 #### Se HOTFIX
