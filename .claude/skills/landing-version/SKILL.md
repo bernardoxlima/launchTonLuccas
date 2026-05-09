@@ -66,10 +66,12 @@ Disparar `AskUserQuestion` com EXATAMENTE estas 3 opções:
    ---
    <Page />
    ```
-5. **AskUserQuestion** pra capturar metadata (não pular):
-   - "Qual a hipótese desta v[N+1]? (o que você acha que vai converter melhor)"
-   - "Como vai medir? (begin_checkout rate, scroll depth, tempo na página…)"
-   - "Label curto pra o diretório? (ex: 'Hero com vídeo')"
+5. **Auto-gerar metadata** a partir do contexto (NÃO perguntar ao user a menos que falte info crítica):
+   - **Label:** derivar 1 frase curta (≤6 palavras) descrevendo a mudança. Ex: "Headline com ponto final", "Pricing anchor R$ 297", "Hero com vídeo".
+   - **Hipótese:** se o user já justificou a mudança no pedido original ("acho que com vídeo converte mais"), use a justificativa dele. Caso contrário, derive uma hipótese plausível ("mudança visual pra testar X vs Y") e marque como `[hipótese assumida — confirme]` pra o user editar depois se quiser.
+   - **Métrica:** default sempre `begin_checkout rate via tracking.ts` (que já está instrumentado). Só perguntar se o user mencionar outra métrica explícita no pedido (ex: "quero medir scroll depth").
+
+   **Regra:** UM AskUserQuestion no MÁXIMO nesta etapa, e SÓ se falta info crítica que não dá pra derivar. Pra mudanças de microcopy/punctuação/copy ajuste, NUNCA perguntar — auto-preencher e seguir. O user pode editar `versions.json`/`changelog.md` direto se discordar dos defaults.
 6. **Atualizar `_config/versions.json`** atomicamente:
    ```json
    {

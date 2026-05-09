@@ -8,6 +8,17 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 
 ## mpd
 
+### v2 — 2026-05-09
+
+**Forked from:** v1
+**Label:** Headline com ponto final
+**Mudança:** Adicionado ponto final após "lucrativa" na headline do hero, separando a declaração principal do qualifier itálico "em apenas 2 dias."
+**Hipótese:** Decisões separadas — ponto fecha a declaração principal como promessa decisiva, e "em apenas 2 dias." vira reforço separado
+**Métrica:** begin_checkout rate via tracking.ts
+
+**Refinamentos:**
+- (vazio)
+
 ### v1 — 2026-05-09
 
 **Forked from:** — (versão inicial)

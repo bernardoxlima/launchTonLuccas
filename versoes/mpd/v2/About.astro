@@ -1,0 +1,150 @@
+---
+import { Image } from 'astro:assets';
+import tonPortrait from '../../../fotos/ton-bio.webp';
+
+const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || '#pricing';
+
+// TODO: substituir por logos das marcas quando disponíveis
+const brands = [
+  'Sicredi',
+  'Sul América',
+  'Jeep',
+  'FIAT',
+  'RAM',
+  'Duolingo',
+  'Renner',
+  'BMW',
+  'MINI',
+];
+---
+
+<section id="sobre" class="ds-section w-full bg-[#E6E3D6] py-14 md:py-24 overflow-hidden">
+  {/* Header */}
+  <div class="max-w-4xl mx-auto text-center mb-14 md:mb-20 px-6 md:px-12">
+    <p class="text-[11px] font-bold tracking-[0.2em] uppercase text-stone-500 mb-7 font-sans">
+      Quem é Ton Luccas
+    </p>
+
+    <h2 class="text-3xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-stone-900 font-serif font-medium">
+      Ele posicionou Sicredi,<br />
+      BMW, Duolingo.
+      <span class="block italic text-stone-600 mt-2">Agora ensina líderes a posicionar quem eles são.</span>
+    </h2>
+  </div>
+
+  {/* Photo + Bio */}
+  <div class="max-w-7xl mx-auto px-6 md:px-12 mb-16 md:mb-24">
+    <div class="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
+      <div class="w-full lg:w-2/5">
+        <div class="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl shadow-stone-900/20">
+          <Image
+            src={tonPortrait}
+            alt="Ton Luccas conduzindo palestra"
+            widths={[400, 600, 800]}
+            sizes="(max-width: 1024px) 100vw, 480px"
+            class="w-full h-full object-cover scale-125"
+            loading="lazy"
+          />
+          <div class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-stone-950/65 via-stone-950/25 to-transparent pointer-events-none"></div>
+          <div class="absolute bottom-7 left-7 right-7">
+            <div class="flex gap-4 items-stretch">
+              <div class="w-[2px] bg-[#D4F268]/80 self-stretch"></div>
+              <div class="py-0.5">
+                <p class="text-lg md:text-xl font-serif font-light leading-tight text-[#E6E3D6]">TEDxSpeaker</p>
+                <p class="text-lg md:text-xl font-serif font-light leading-tight text-stone-300 mt-1">CEO da Vorus</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full lg:w-3/5 space-y-6 text-lg text-stone-700 leading-relaxed font-sans">
+        <p>
+          Há <span class="about-highlight font-medium text-stone-900">anos posicionando marcas Top 100 do Brasil</span> — bancos, automotivas, edtechs e varejo — em territórios mentais únicos que deixam de ser comparados com qualquer concorrente.
+        </p>
+        <p>
+          Agora, esse mesmo trabalho, antes reservado a marcas que valem bilhões, chega a líderes que querem ocupar o topo da sua categoria.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  {/* Brand marquee — full bleed */}
+  <div class="mb-16 md:mb-24">
+    <p class="text-[11px] font-bold tracking-[0.2em] uppercase text-stone-500 mb-10 font-sans text-center px-6 md:px-12">
+      As marcas que ele posicionou
+    </p>
+
+    <div class="brand-marquee relative">
+      <div class="brand-track flex items-center gap-12 md:gap-20 whitespace-nowrap">
+        {[...brands, ...brands].map((brand) => (
+          <span class="font-serif font-medium text-3xl md:text-5xl lg:text-6xl text-stone-900 shrink-0">
+            {brand}
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  {/* Pull-quote */}
+  <div class="max-w-3xl mx-auto text-center px-6 md:px-12 mb-10">
+    <p class="text-2xl md:text-3xl lg:text-4xl font-serif italic text-stone-900 leading-snug">
+      &ldquo;O método que posiciona marcas que valem bilhões, agora aplicado em quem você é.&rdquo;
+    </p>
+  </div>
+
+  {/* CTA */}
+  <div class="text-center px-6 md:px-12">
+    <a
+      href={checkoutStandardUrl}
+      data-cta="about-standard"
+      class="inline-flex items-center justify-center px-8 py-4 bg-stone-900 hover:bg-stone-800 text-[#E6E3D6] rounded-full text-lg font-medium transition-all transform hover:-translate-y-0.5 shadow-xl shadow-stone-900/10 font-sans text-center"
+    >
+      Quero minha vaga no Workshop
+    </a>
+  </div>
+</section>
+
+<script>
+  import { trackEvent } from '@lib/tracking';
+  document.querySelectorAll<HTMLAnchorElement>('a[data-cta="about-standard"]').forEach((el) => {
+    el.addEventListener('click', () => {
+      trackEvent('begin_checkout', {
+        currency: 'BRL',
+        value: 47,
+        cta_location: 'about',
+        items: [{ item_id: 'workshop-mp-definitiva-standard', item_name: 'Standard', price: 47, quantity: 1 }],
+      });
+    });
+  });
+</script>
+
+<style is:global>
+  @keyframes brand-marquee-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .brand-marquee {
+    mask-image: linear-gradient(90deg, transparent 0, black 8%, black 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, black 8%, black 92%, transparent 100%);
+  }
+
+  .brand-track {
+    width: max-content;
+    animation: brand-marquee-scroll 70s linear infinite;
+  }
+
+  .brand-marquee:hover .brand-track {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brand-track { animation: none; }
+  }
+
+  .about-highlight {
+    background-image: linear-gradient(transparent 60%, rgba(212, 242, 104, 0.45) 60%);
+    padding: 0 0.1em;
+  }
+</style>
