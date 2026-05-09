@@ -19,7 +19,7 @@ Este projeto rodam múltiplas versões de landing pages vivas em paralelo (A/B t
 
 ### Step 1 — Identificar alvo
 
-- Qual `<pagina>`? (default: `pagina-vendas` se o user não especificar)
+- Qual `<pagina>`? (default: `mpd` — página de vendas Marca Pessoal Definitiva — se o user não especificar)
 - Qual versão é `latest` agora? (ler `versions.json`)
 - O arquivo que o user mencionou está em `frozen[]`?
 

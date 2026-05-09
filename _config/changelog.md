@@ -6,7 +6,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 
 ---
 
-## pagina-vendas
+## mpd
 
 ### v1 — 2026-05-09
 

@@ -67,8 +67,8 @@ Detalhes completos do fluxo: `.claude/skills/landing-version/SKILL.md`.
 ## Roteamento em prod (Vercel)
 
 - `tonluccas.com/` → serve a latest (via re-export no `src/pages/index.astro`, sem rewrite)
-- `tonluccas.com/pagina-vendas/v1` → versão 1 canônica (URL pra ads, nunca muda)
-- `tonluccas.com/pagina-vendas/v2` → versão 2 canônica (quando criada)
+- `tonluccas.com/mpd/v1` → versão 1 canônica (URL pra ads, nunca muda)
+- `tonluccas.com/mpd/v2` → versão 2 canônica (quando criada)
 - `tonluccas.com/dev` → diretório interno com noindex (lista todas as versões pra navegação interna)
 
 **Por que re-export e não rewrite:** Astro gera `/index.html` em build estático. Vercel serve arquivo estático ANTES de checar rewrites, então `rewrites: [{ source: "/", destination: "..." }]` nunca dispara. Re-export no próprio `index.astro` resolve.
