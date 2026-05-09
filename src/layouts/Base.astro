@@ -4,6 +4,7 @@ interface Props {
   description?: string;
   ogImage?: string;
   canonical?: string;
+  noindex?: boolean;
 }
 
 const {
@@ -11,6 +12,7 @@ const {
   description = 'Em 2 dias, construa uma marca pessoal forte, original e lucrativa a partir da sua essência. Workshop ao vivo com Ton Luccas, 23 e 24 de maio.',
   ogImage = '/og-image.jpg',
   canonical,
+  noindex = false,
 } = Astro.props;
 
 const gtmId = import.meta.env.PUBLIC_GTM_ID;
@@ -29,6 +31,7 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).toStri
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     {/* OG / Twitter */}
     <meta property="og:type" content="website" />

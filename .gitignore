@@ -26,3 +26,11 @@ pnpm-debug.log*
 
 # os
 Thumbs.db
+
+# claude code session artifacts
+.claude/scheduled_tasks.lock
+.claude/sessions/
+.claude/cache/
+
+# dev screenshots (local only — usar Chrome DevTools MCP, não comitar)
+.dev-screenshots/

@@ -1,36 +1,46 @@
 ---
 import Base from '@layouts/Base.astro';
+import versions, { getHistoryEntry } from '@lib/versions';
 
-// Lista de versões disponíveis. Adicione aqui quando criar novas variações.
-const versions = [
-  {
-    page: 'Página de Vendas',
-    slug: 'pagina-vendas',
-    versions: [
-      {
-        v: 'v1',
-        href: '/pagina-vendas/v1',
-        label: 'V1 — Editorial Green Museum (escuro no hero)',
-        status: 'em construção',
-      },
-    ],
-  },
-  {
-    page: 'Página de Obrigado',
-    slug: 'pagina-obrigado',
-    versions: [],
-  },
-];
+// Diretório interno. Em PROD, vercel.json reescreve "/" pra a versão latest,
+// então este arquivo só é visível em DEV (npm run dev) ou via /index.html direto.
+// Source of truth: _config/versions.json (gerenciado pela skill landing-version).
+
+const PAGE_LABELS: Record<string, string> = {
+  'pagina-vendas': 'Página de Vendas',
+  'pagina-obrigado': 'Página de Obrigado',
+};
+
+const pages = Object.entries(versions).map(([slug, config]) => {
+  const allVersions = [config.latest, ...config.frozen].map((v) => {
+    const entry = getHistoryEntry(slug, v);
+    return {
+      v,
+      href: `/${slug}/${v}`,
+      label: entry?.label ?? v,
+      hypothesis: entry?.hypothesis ?? '',
+      created: entry?.created ?? '',
+      isLatest: v === config.latest,
+      isFrozen: config.frozen.includes(v),
+    };
+  });
+  return {
+    slug,
+    label: PAGE_LABELS[slug] ?? slug,
+    versions: allVersions,
+  };
+});
 ---
 
 <Base
-  title="LaunchOS · Ton Luccas"
-  description="Diretório de versões em construção para o lançamento."
+  title="LaunchOS · Diretório interno"
+  description="Diretório interno de versões. Não indexar."
+  noindex
 >
   <main class="min-h-screen bg-[#E6E3D6] py-20 md:py-28 px-6 md:px-12">
     <div class="max-w-5xl mx-auto">
       <p class="text-[11px] font-bold tracking-[0.2em] uppercase text-stone-500 mb-6 font-sans">
-        Diretório interno
+        Diretório interno · noindex
       </p>
 
       <h1 class="text-4xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-stone-900 mb-6 font-serif font-light">
@@ -38,17 +48,16 @@ const versions = [
       </h1>
 
       <p class="text-lg text-stone-600 mb-16 max-w-2xl leading-relaxed font-sans">
-        Versões das páginas em construção. Cada versão vive em <code class="px-1.5 py-0.5 bg-white rounded border border-stone-200 text-sm">/versoes/&lt;pagina&gt;/&lt;v&gt;/</code> e roteia em <code class="px-1.5 py-0.5 bg-white rounded border border-stone-200 text-sm">/&lt;pagina&gt;/&lt;v&gt;</code>.
+        Versões geradas pela skill <code class="px-1.5 py-0.5 bg-white rounded border border-stone-200 text-sm">landing-version</code>. Source of truth em <code class="px-1.5 py-0.5 bg-white rounded border border-stone-200 text-sm">_config/versions.json</code>. Em produção, <code class="px-1.5 py-0.5 bg-white rounded border border-stone-200 text-sm">/</code> serve a versão latest via rewrite no <code class="px-1.5 py-0.5 bg-white rounded border border-stone-200 text-sm">vercel.json</code>.
       </p>
 
       <div class="space-y-12">
-        {versions.map((page) => (
+        {pages.map((page) => (
           <section>
-            <h2 class="text-2xl md:text-3xl font-serif font-light text-stone-900 mb-6">{page.page}</h2>
+            <h2 class="text-2xl md:text-3xl font-serif font-light text-stone-900 mb-6">{page.label}</h2>
 
             {page.versions.length === 0 ? (
               <div class="bg-white rounded-2xl p-8 border border-dashed border-stone-300 text-center">
-                <iconify-icon class="text-stone-300 mb-3" icon="solar:gallery-add-linear" width="32"></iconify-icon>
                 <p class="text-sm text-stone-500 font-sans">Nenhuma versão criada ainda.</p>
               </div>
             ) : (
@@ -59,13 +68,29 @@ const versions = [
                     class="group bg-white rounded-2xl p-6 border border-stone-200 hover:border-stone-400 transition-all hover:shadow-lg block"
                   >
                     <div class="flex items-start justify-between mb-4">
-                      <span class="inline-block px-2.5 py-1 rounded-full bg-stone-100 text-[11px] font-bold text-stone-600 tracking-[0.15em] uppercase font-sans">
-                        {v.v}
-                      </span>
-                      <iconify-icon class="text-stone-400 group-hover:text-stone-900 group-hover:translate-x-1 transition-all" icon="solar:arrow-right-linear" width="20"></iconify-icon>
+                      <div class="flex gap-2">
+                        <span class="inline-block px-2.5 py-1 rounded-full bg-stone-100 text-[11px] font-bold text-stone-600 tracking-[0.15em] uppercase font-sans">
+                          {v.v}
+                        </span>
+                        {v.isLatest && (
+                          <span class="inline-block px-2.5 py-1 rounded-full bg-lime-200 text-[11px] font-bold text-lime-900 tracking-[0.15em] uppercase font-sans">
+                            latest
+                          </span>
+                        )}
+                        {v.isFrozen && (
+                          <span class="inline-block px-2.5 py-1 rounded-full bg-stone-300 text-[11px] font-bold text-stone-700 tracking-[0.15em] uppercase font-sans">
+                            frozen
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <h3 class="text-lg font-medium text-stone-900 mb-2 font-sans">{v.label}</h3>
-                    <p class="text-xs text-stone-500 font-sans">Status: {v.status}</p>
+                    {v.hypothesis && (
+                      <p class="text-xs text-stone-500 font-sans mb-1"><strong>Hipótese:</strong> {v.hypothesis}</p>
+                    )}
+                    {v.created && (
+                      <p class="text-xs text-stone-400 font-sans">Criada em {v.created}</p>
+                    )}
                   </a>
                 ))}
               </div>
@@ -74,9 +99,12 @@ const versions = [
         ))}
       </div>
 
-      <div class="mt-20 pt-8 border-t border-stone-300/50">
+      <div class="mt-20 pt-8 border-t border-stone-300/50 space-y-2">
         <p class="text-xs text-stone-500 font-sans">
-          Estrutura: <code class="px-1.5 py-0.5 bg-white rounded border border-stone-200">/versoes/</code> guarda os arquivos das versões. <code class="px-1.5 py-0.5 bg-white rounded border border-stone-200">/src/pages/</code> guarda as rotas Astro que importam essas versões.
+          <strong>Pra criar nova versão:</strong> peça ao Claude Code "troca o hero" (ou qualquer edição) — a skill <code class="px-1 py-0.5 bg-white rounded border border-stone-200">landing-version</code> faz o fluxo de versionamento automático.
+        </p>
+        <p class="text-xs text-stone-500 font-sans">
+          <strong>Pra mexer manual:</strong> nunca edite versão em <code class="px-1 py-0.5 bg-white rounded border border-stone-200">frozen[]</code>. Cheque <code class="px-1 py-0.5 bg-white rounded border border-stone-200">_config/versions.json</code> antes.
         </p>
       </div>
     </div>

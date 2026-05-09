@@ -1,0 +1,16 @@
+{
+  "pagina-vendas": {
+    "latest": "v1",
+    "frozen": [],
+    "history": [
+      {
+        "v": "v1",
+        "from": null,
+        "created": "2026-05-09",
+        "label": "Editorial Green Museum (escuro no hero)",
+        "hypothesis": "Paleta editorial clara contrasta com hero escuro pra autoridade premium",
+        "metric": "begin_checkout rate via tracking.ts"
+      }
+    ]
+  }
+}

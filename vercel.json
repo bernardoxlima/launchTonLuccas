@@ -1,0 +1,18 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/pagina-vendas/v1"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/_dev",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+      ]
+    }
+  ],
+  "_comment": "destination do rewrite raiz é gerenciado pela skill landing-version. Quando latest muda em _config/versions.json, este destination tem que ser atualizado pra apontar pra /pagina-vendas/<novo-latest>."
+}
