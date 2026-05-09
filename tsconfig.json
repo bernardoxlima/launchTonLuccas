@@ -1,0 +1,15 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@layouts/*": ["src/layouts/*"],
+      "@lib/*": ["src/lib/*"],
+      "@styles/*": ["src/styles/*"],
+      "@versoes/*": ["versoes/*"],
+      "@fotos/*": ["fotos/*"]
+    }
+  },
+  "include": ["src", "versoes", "astro.config.mjs"],
+  "exclude": ["dist", "node_modules"]
+}
