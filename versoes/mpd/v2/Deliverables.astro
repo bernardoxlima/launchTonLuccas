@@ -36,22 +36,22 @@ const items = [
 ];
 ---
 
-<section id="entregaveis" class="ds-section w-full bg-stone-950 text-[#E6E3D6] py-14 md:py-24 px-6 md:px-12">
+<section id="entregaveis" class="ds-section w-full bg-stone-950 text-[#E6E3D6] py-14 md:py-24 lg:py-16 px-6 md:px-12">
   <div class="max-w-7xl mx-auto">
-    <div class="max-w-3xl mb-10 md:mb-16">
-      <h2 class="text-3xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-[#E6E3D6] mb-8 font-serif font-medium">
+    <div class="max-w-3xl mb-10 md:mb-16 lg:mb-10">
+      <h2 class="text-3xl md:text-5xl lg:text-[2.75rem] leading-[1.05] tracking-tight text-[#E6E3D6] mb-8 font-serif font-medium">
         Em 2 dias, você não vai apenas entender sobre marca pessoal.
         <span class="italic text-stone-400">Você vai construir a sua.</span>
       </h2>
 
-      <p class="text-lg text-stone-300 leading-relaxed font-sans">
+      <p class="text-lg lg:text-base text-stone-300 leading-relaxed font-sans">
         Ao final do workshop, você terá clareza sobre:
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-6">
       {items.map((item) => (
-        <article class="bg-gradient-to-br from-[#D4F268]/[0.16] via-transparent to-[#D4F268]/[0.28] rounded-3xl p-8 border border-[#D4F268]/25 flex flex-col relative overflow-hidden">
+        <article class="bg-gradient-to-br from-[#D4F268]/[0.16] via-transparent to-[#D4F268]/[0.28] rounded-3xl p-8 lg:p-6 border border-[#D4F268]/25 flex flex-col relative overflow-hidden">
           <div class="absolute top-0 right-0 w-64 h-64 bg-[#D4F268]/15 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
           <div class="absolute bottom-0 left-0 w-72 h-72 bg-[#D4F268]/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
 
@@ -59,8 +59,8 @@ const items = [
             <span class="text-5xl font-serif font-medium text-[#E6E3D6]">{item.n}</span>
             <Icon class="text-[#D4F268]" name="solar:check-circle-linear" width={24} height={24} />
           </div>
-          <h3 class="text-2xl md:text-3xl font-serif font-medium text-[#E6E3D6] mb-4 leading-tight relative z-10">{item.title}</h3>
-          <p class="text-base text-stone-300 leading-relaxed font-sans relative z-10">{item.body}</p>
+          <h3 class="text-2xl md:text-3xl lg:text-xl font-serif font-medium text-[#E6E3D6] mb-4 leading-tight relative z-10">{item.title}</h3>
+          <p class="text-base lg:text-sm text-stone-300 leading-relaxed font-sans relative z-10">{item.body}</p>
         </article>
       ))}
     </div>
