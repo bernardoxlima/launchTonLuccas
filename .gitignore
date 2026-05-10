@@ -34,3 +34,5 @@ Thumbs.db
 
 # dev screenshots (local only — usar Chrome DevTools MCP, não comitar)
 .dev-screenshots/
+.vercel
+.env*.local

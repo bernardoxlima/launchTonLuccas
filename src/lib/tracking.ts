@@ -8,27 +8,26 @@ declare global {
   }
 }
 
-/**
- * Empurra um evento para o dataLayer do GTM.
- * Se o GTM não estiver carregado (env vazia), vira no-op.
- */
 export function trackEvent(eventName: string, params: TrackEventParams = {}): void {
   if (typeof window === 'undefined') return;
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({ event: eventName, ...params });
 }
 
-/**
- * Helper para o evento de checkout — disparado no clique do CTA antes do redirect para Kiwify.
- * Segue schema do GA4 ecommerce.
- */
+function metaPixel(event: string, params: Record<string, unknown> = {}): void {
+  if (typeof window === 'undefined' || !window.fbq) return;
+  window.fbq('track', event, params);
+}
+
 export function trackBeginCheckout(plan: 'standard' | 'vip', value: number): void {
+  const itemId = `workshop-mp-definitiva-${plan}`;
+
   trackEvent('begin_checkout', {
     currency: 'BRL',
     value,
     items: [
       {
-        item_id: `workshop-mp-definitiva-${plan}`,
+        item_id: itemId,
         item_name: 'Workshop Marca Pessoal Definitiva',
         item_variant: plan === 'standard' ? 'Lote 1 Standard' : 'VIP',
         price: value,
@@ -36,11 +35,16 @@ export function trackBeginCheckout(plan: 'standard' | 'vip', value: number): voi
       },
     ],
   });
+
+  metaPixel('InitiateCheckout', {
+    content_ids: [itemId],
+    content_type: 'product',
+    currency: 'BRL',
+    value,
+    num_items: 1,
+  });
 }
 
-/**
- * View item — disparado quando o usuário rola até o bloco de pricing.
- */
 export function trackViewPricing(): void {
   trackEvent('view_item_list', {
     item_list_name: 'Pricing Workshop',
@@ -48,5 +52,11 @@ export function trackViewPricing(): void {
       { item_id: 'workshop-mp-definitiva-standard', item_name: 'Standard', price: 47 },
       { item_id: 'workshop-mp-definitiva-vip', item_name: 'VIP', price: 297 },
     ],
+  });
+
+  metaPixel('ViewContent', {
+    content_ids: ['workshop-mp-definitiva-standard', 'workshop-mp-definitiva-vip'],
+    content_type: 'product',
+    currency: 'BRL',
   });
 }
