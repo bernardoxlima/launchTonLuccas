@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import tonHero from '../../../fotos/ton-hero-image.png';
+import tonHero from '../../../fotos/ton-hero-image.webp';
 import logoWorkshop from '../../../fotos/logoWorkshop.svg';
 
 const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || '#pricing';
@@ -23,8 +23,8 @@ const tickerItems = [
       <Image
         src={tonHero}
         alt="Ton Luccas — retrato conceitual representando a crise de identidade digital"
-        widths={[600, 900, 1200, 1600]}
-        sizes="100vw"
+        widths={[400, 600, 800, 1200, 1600]}
+        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 100vw, 1600px"
         class="w-full h-full object-cover object-[center_top]"
         loading="eager"
         fetchpriority="high"

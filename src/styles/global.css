@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Fonts are imported via ESM in src/layouts/Base.astro frontmatter
+   (so Vite/Astro resolve the .woff2 asset URLs correctly). */
+
 /* Design tokens extraídos do Green Museum DS */
 @theme {
   /* Backgrounds — bege editorial */
@@ -29,8 +32,8 @@
   --color-green-600: #16a34a;
 
   /* Tipografia */
-  --font-serif: "Newsreader", ui-serif, Georgia, serif;
-  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Newsreader Variable", "Newsreader", ui-serif, Georgia, serif;
+  --font-sans: "Instrument Sans Variable", "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
 /* Base */
