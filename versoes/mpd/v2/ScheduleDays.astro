@@ -99,7 +99,7 @@ const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || '#pr
         O que você vai construir no Dia 1
       </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 relative z-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 relative z-10">
         {day1Items.map((item) => (
           <div class="flex gap-4">
             <span class="text-3xl font-serif font-light text-[#D4F268]/40 shrink-0">{item.n}</span>
@@ -139,7 +139,7 @@ const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || '#pr
         O que você vai construir no Dia 2
       </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
         {day2Items.map((item) => (
           <div class="flex gap-4">
             <span class="text-3xl font-serif font-light text-[#D4F268]/40 shrink-0">{item.n}</span>
@@ -207,20 +207,20 @@ const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || '#pr
         <span class="text-sm text-[#E6E3D6] font-sans">23 e 24 de Maio · Online no Zoom</span>
       </div>
 
-      <div class="flex flex-col gap-2 relative z-10">
-        <div class="bg-stone-900/50 rounded-lg px-4 py-3 border-l-4 border-[#D4F268]">
+      <div class="flex flex-col lg:flex-row lg:gap-4 gap-2 relative z-10">
+        <div class="bg-stone-900/50 rounded-lg px-4 py-3 border-l-4 border-[#D4F268] lg:flex-1">
           <p class="text-base font-medium text-[#E6E3D6] font-sans leading-snug">Início</p>
           <p class="text-sm text-stone-400 font-sans">9h30</p>
         </div>
-        <div class="bg-stone-900/50 rounded-lg px-4 py-3 border-l-4 border-[#D4F268]">
+        <div class="bg-stone-900/50 rounded-lg px-4 py-3 border-l-4 border-[#D4F268] lg:flex-1">
           <p class="text-base font-medium text-[#E6E3D6] font-sans leading-snug">Almoço</p>
           <p class="text-sm text-stone-400 font-sans">12h</p>
         </div>
-        <div class="bg-stone-900/50 rounded-lg px-4 py-3 border-l-4 border-[#D4F268]">
+        <div class="bg-stone-900/50 rounded-lg px-4 py-3 border-l-4 border-[#D4F268] lg:flex-1">
           <p class="text-base font-medium text-[#E6E3D6] font-sans leading-snug">Retorno</p>
           <p class="text-sm text-stone-400 font-sans">14h</p>
         </div>
-        <div class="bg-stone-900/50 rounded-lg px-4 py-3 border-l-4 border-[#D4F268]">
+        <div class="bg-stone-900/50 rounded-lg px-4 py-3 border-l-4 border-[#D4F268] lg:flex-1">
           <p class="text-base font-medium text-[#E6E3D6] font-sans leading-snug">Fechamento</p>
           <p class="text-sm text-stone-400 font-sans">17h30</p>
         </div>
