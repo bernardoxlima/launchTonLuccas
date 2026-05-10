@@ -42,9 +42,9 @@ const tickerItems = [
   </div>
 
   {/* Grid 2-col em lg+. Mobile/tablet = stacked (foto em cima, texto embaixo, padrão block). */}
-  <div class="lg:grid lg:grid-cols-2 lg:min-h-[80vh]">
+  <div class="lg:grid lg:grid-cols-2 lg:min-h-[68vh]">
     {/* IMAGE COLUMN — lg:order-2 (direita) */}
-    <div class="relative w-full min-h-[55vh] md:min-h-[65vh] lg:min-h-[80vh] lg:order-2">
+    <div class="relative w-full min-h-[55vh] md:min-h-[65vh] lg:min-h-[68vh] lg:order-2">
       <div class="absolute top-12 md:top-14 lg:top-0 left-0 right-0 bottom-0 overflow-hidden">
         <Picture
           src={tonHero}
@@ -53,7 +53,7 @@ const tickerItems = [
           sizes="(max-width: 1023px) 100vw, 50vw"
           formats={['avif', 'webp']}
           fallbackFormat="webp"
-          class="w-full h-full object-cover object-[center_top] lg:object-center"
+          class="w-full h-full object-cover object-[center_top] lg:object-[center_top]"
           loading="eager"
           fetchpriority="high"
         />
