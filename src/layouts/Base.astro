@@ -2,6 +2,8 @@
 import '@fontsource-variable/newsreader/wght.css';
 import '@fontsource-variable/instrument-sans/wght.css';
 import '@fontsource/fraunces/700.css';
+import { getImage } from 'astro:assets';
+import tonHero from '../../fotos/ton-hero-image.webp';
 
 interface Props {
   title: string;
@@ -23,6 +25,18 @@ const gtmId = import.meta.env.PUBLIC_GTM_ID;
 const ga4Id = import.meta.env.PUBLIC_GA4_ID;
 const metaPixelId = import.meta.env.PUBLIC_META_PIXEL_ID;
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
+
+// Hero preload: warm the browser cache before <img> discovery in body.
+// Same widths/sizes as the <Image> in versoes/mpd/v*/Hero.astro — must match
+// exactly so the preload entry matches what srcset picks. Skipped on noindex
+// pages (e.g. /dev) where there's no hero.
+const heroPreload = noindex
+  ? null
+  : await getImage({
+      src: tonHero,
+      widths: [400, 600, 800, 1200, 1600],
+      format: 'webp',
+    });
 ---
 
 <!doctype html>
@@ -33,6 +47,16 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).toStri
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#0a0a0a" />
+
+    {heroPreload && (
+      <link
+        rel="preload"
+        as="image"
+        imagesrcset={heroPreload.srcSet.attribute}
+        imagesizes="(max-width: 768px) 100vw, (max-width: 1280px) 100vw, 1600px"
+        fetchpriority="high"
+      />
+    )}
 
     <title>{title}</title>
     <meta name="description" content={description} />
