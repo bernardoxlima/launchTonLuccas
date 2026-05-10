@@ -76,8 +76,10 @@ const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || '#pr
       </div>
     </div>
 
+    {/* Dia 1 + Dia 2: 2-col grid em lg+ (cards lado a lado), stacked em mobile/md */}
+    <div class="lg:grid lg:grid-cols-2 lg:gap-6 lg:items-start mb-12 md:mb-16">
     {/* Dia 1 */}
-    <article class="bg-transparent rounded-3xl p-8 md:p-12 text-[#E6E3D6] border border-[#D4F268]/40 hover:border-[#D4F268]/70 transition-colors mb-8 relative overflow-hidden">
+    <article class="bg-transparent rounded-3xl p-8 md:p-12 lg:p-8 text-[#E6E3D6] border border-[#D4F268]/40 hover:border-[#D4F268]/70 transition-colors mb-8 lg:mb-0 relative overflow-hidden">
       <div class="absolute top-0 right-0 w-64 h-64 bg-[#D4F268]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
       <div class="mb-6 pb-6 border-b border-[#D4F268]/20 relative z-10">
         <p class="text-[11px] font-bold tracking-[0.2em] uppercase text-[#D4F268] mb-3 font-sans">
@@ -99,7 +101,7 @@ const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || '#pr
         O que você vai construir no Dia 1
       </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 relative z-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6 mb-8 relative z-10">
         {day1Items.map((item) => (
           <div class="flex gap-4">
             <span class="text-3xl font-serif font-light text-[#D4F268]/40 shrink-0">{item.n}</span>
@@ -117,7 +119,7 @@ const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || '#pr
     </article>
 
     {/* Dia 2 — premium card */}
-    <article class="bg-transparent rounded-3xl p-8 md:p-12 text-[#E6E3D6] border border-[#D4F268]/40 hover:border-[#D4F268]/70 transition-colors mb-12 relative overflow-hidden">
+    <article class="bg-transparent rounded-3xl p-8 md:p-12 lg:p-8 text-[#E6E3D6] border border-[#D4F268]/40 hover:border-[#D4F268]/70 transition-colors mb-0 relative overflow-hidden">
       <div class="absolute top-0 right-0 w-64 h-64 bg-[#D4F268]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
       <div class="mb-6 pb-6 border-b border-[#D4F268]/20 relative z-10">
         <p class="text-[11px] font-bold tracking-[0.2em] uppercase text-[#D4F268] mb-3 font-sans">
@@ -139,7 +141,7 @@ const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || '#pr
         O que você vai construir no Dia 2
       </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6 relative z-10">
         {day2Items.map((item) => (
           <div class="flex gap-4">
             <span class="text-3xl font-serif font-light text-[#D4F268]/40 shrink-0">{item.n}</span>
@@ -151,38 +153,23 @@ const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || '#pr
         ))}
       </div>
     </article>
+    </div>
 
-    {/* Promessa — poster editorial */}
+    {/* Promessa — 3 linhas: heading, body, highlighted */}
     <div class="py-8 md:py-12 mb-10">
       <p class="text-base md:text-lg font-bold tracking-[0.25em] uppercase text-[#D4F268] font-sans text-center mb-10 md:mb-12">
-        A promessa desses<br />
-        2 dias é simples
+        A promessa desses<br class="md:hidden" /> 2 dias é simples
       </p>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 mb-14 md:mb-16 items-start">
-        {/* Left: É simples + setup como um texto só */}
-        <div class="flex flex-col items-center text-center">
-          <p class="text-base md:text-lg text-stone-300 leading-relaxed font-sans max-w-md">
-            Você vai parar de tentar construir<br />
-            sua marca com pedaços dos outros.
-          </p>
-        </div>
 
-        {/* Right: 3 words stacked */}
-        <div class="flex flex-col items-start md:items-end text-left md:text-right">
-          <p class="text-sm md:text-base text-stone-400 font-sans italic mb-4 max-w-xs">
-            E vai construir uma marca pessoal
-          </p>
-          <p class="text-5xl md:text-6xl lg:text-7xl font-serif font-medium text-[#E6E3D6] leading-[0.95] tracking-tight">
-            Original,
-          </p>
-          <p class="text-5xl md:text-6xl lg:text-7xl font-serif font-medium italic text-stone-300 leading-[0.95] tracking-tight">
-            forte
-          </p>
-          <p class="text-5xl md:text-6xl lg:text-7xl font-serif font-medium text-[#D4F268] leading-[0.95] tracking-tight">
-            &amp; lucrativa.
-          </p>
-        </div>
-      </div>
+      <p class="text-center max-w-3xl mx-auto text-base md:text-lg text-stone-300 leading-relaxed font-sans mb-10 md:mb-12">
+        Você vai parar de tentar construir sua marca com pedaços dos outros <span class="italic text-stone-400">e vai construir uma marca pessoal</span>
+      </p>
+
+      <p class="text-center font-serif font-medium tracking-tight leading-[1.05] mb-14 md:mb-16 text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
+        <span class="text-[#E6E3D6]">Original,</span>
+        <span class="italic text-stone-300"> forte </span>
+        <span class="text-[#D4F268]">&amp; lucrativa.</span>
+      </p>
 
       <a
         href={checkoutStandardUrl}
@@ -207,20 +194,20 @@ const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || '#pr
         <span class="text-sm text-[#E6E3D6] font-sans">23 e 24 de Maio · Online no Zoom</span>
       </div>
 
-      <div class="flex flex-col gap-2 relative z-10">
-        <div class="bg-stone-900/50 rounded-lg px-4 py-3 border-l-4 border-[#D4F268]">
+      <div class="flex flex-col lg:flex-row lg:gap-4 gap-2 relative z-10">
+        <div class="bg-stone-900/50 rounded-lg px-4 py-3 border-l-4 border-[#D4F268] lg:flex-1">
           <p class="text-base font-medium text-[#E6E3D6] font-sans leading-snug">Início</p>
           <p class="text-sm text-stone-400 font-sans">9h30</p>
         </div>
-        <div class="bg-stone-900/50 rounded-lg px-4 py-3 border-l-4 border-[#D4F268]">
+        <div class="bg-stone-900/50 rounded-lg px-4 py-3 border-l-4 border-[#D4F268] lg:flex-1">
           <p class="text-base font-medium text-[#E6E3D6] font-sans leading-snug">Almoço</p>
           <p class="text-sm text-stone-400 font-sans">12h</p>
         </div>
-        <div class="bg-stone-900/50 rounded-lg px-4 py-3 border-l-4 border-[#D4F268]">
+        <div class="bg-stone-900/50 rounded-lg px-4 py-3 border-l-4 border-[#D4F268] lg:flex-1">
           <p class="text-base font-medium text-[#E6E3D6] font-sans leading-snug">Retorno</p>
           <p class="text-sm text-stone-400 font-sans">14h</p>
         </div>
-        <div class="bg-stone-900/50 rounded-lg px-4 py-3 border-l-4 border-[#D4F268]">
+        <div class="bg-stone-900/50 rounded-lg px-4 py-3 border-l-4 border-[#D4F268] lg:flex-1">
           <p class="text-base font-medium text-[#E6E3D6] font-sans leading-snug">Fechamento</p>
           <p class="text-sm text-stone-400 font-sans">17h30</p>
         </div>

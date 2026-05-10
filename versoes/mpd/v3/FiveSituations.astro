@@ -35,11 +35,11 @@ const situations = [
     <div class="mb-10 md:mb-16">
       <h2 class="text-3xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-stone-900 mb-8 font-serif font-medium w-fit mx-auto">
         Eu sei que você vive
-        <span class="block italic text-stone-600 whitespace-nowrap text-4xl md:text-6xl lg:text-7xl ml-8 md:ml-16 lg:ml-24">uma dessas situações:</span>
+        <span class="block italic text-stone-600 whitespace-nowrap text-4xl md:text-6xl lg:text-5xl ml-8 md:ml-16 lg:inline lg:ml-3">uma dessas situações:</span>
       </h2>
     </div>
 
-    <div class="space-y-4 md:space-y-6">
+    <div class="space-y-4 md:grid md:grid-cols-2 md:gap-6 md:space-y-0">
       {situations.map((s, i) => {
         const themes = [
           {
@@ -94,7 +94,7 @@ const situations = [
       <a
         href={checkoutStandardUrl}
         data-cta="situations-standard"
-        class="inline-flex items-center justify-center px-8 py-4 bg-stone-900 hover:bg-stone-800 text-[#D4F268] rounded-full text-lg font-semibold transition-all transform hover:-translate-y-0.5 shadow-xl shadow-stone-900/20 font-sans text-center"
+        class="inline-flex items-center justify-center px-7 py-3.5 bg-stone-900 hover:bg-stone-800 text-[#D4F268] rounded-full text-base md:text-lg font-medium transition-all transform hover:-translate-y-0.5 shadow-xl shadow-stone-900/20 font-sans text-center"
       >
         Quero construir minha Marca Pessoal
       </a>

@@ -1,7 +1,7 @@
 {
   "mpd": {
-    "latest": "v2",
-    "frozen": ["v1"],
+    "latest": "v3",
+    "frozen": ["v1", "v2"],
     "history": [
       {
         "v": "v1",
@@ -17,6 +17,14 @@
         "created": "2026-05-09",
         "label": "Headline com ponto final",
         "hypothesis": "Decisões separadas — ponto fecha a declaração principal como promessa decisiva, e 'em apenas 2 dias.' vira reforço separado",
+        "metric": "begin_checkout rate via tracking.ts"
+      },
+      {
+        "v": "v3",
+        "from": "v2",
+        "created": "2026-05-10",
+        "label": "Desktop responsive — hero 2-col, header em right col, FiveSituations 2x2, Promise 3-line, ScheduleDays Day1+Day2 lado-a-lado",
+        "hypothesis": "Layout adaptado pra PC reduz fricção de leitura e parecer 'celular esticado' aumenta autoridade visual + conversion rate em traffic pago",
         "metric": "begin_checkout rate via tracking.ts"
       }
     ]
