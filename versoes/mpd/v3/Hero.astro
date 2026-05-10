@@ -42,7 +42,7 @@ const tickerItems = [
   </div>
 
   {/* Grid 2-col em lg+. Mobile/tablet = stacked (foto em cima, texto embaixo, padrão block). */}
-  <div class="lg:grid lg:grid-cols-2 lg:min-h-screen">
+  <div class="lg:grid lg:grid-cols-[3fr_2fr] lg:min-h-screen">
     {/* IMAGE COLUMN — lg:order-2 (direita) */}
     <div class="relative w-full min-h-[55vh] md:min-h-[65vh] lg:min-h-screen lg:order-2">
       <div class="absolute top-12 md:top-14 lg:top-0 left-0 right-0 bottom-0 overflow-hidden">
@@ -50,7 +50,7 @@ const tickerItems = [
           src={tonHero}
           alt="Ton Luccas — retrato conceitual representando a crise de identidade digital"
           widths={[400, 600, 800, 1200, 1600]}
-          sizes="(max-width: 1023px) 100vw, 50vw"
+          sizes="(max-width: 1023px) 100vw, 40vw"
           formats={['avif', 'webp']}
           fallbackFormat="webp"
           class="w-full h-full object-cover object-[center_top] lg:object-center"
