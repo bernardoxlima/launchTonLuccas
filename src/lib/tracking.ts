@@ -14,34 +14,19 @@ export function trackEvent(eventName: string, params: TrackEventParams = {}): vo
   window.dataLayer.push({ event: eventName, ...params });
 }
 
-function metaPixel(event: string, params: Record<string, unknown> = {}): void {
-  if (typeof window === 'undefined' || !window.fbq) return;
-  window.fbq('track', event, params);
-}
-
 export function trackBeginCheckout(plan: 'standard' | 'vip', value: number): void {
-  const itemId = `workshop-mp-definitiva-${plan}`;
-
   trackEvent('begin_checkout', {
     currency: 'BRL',
     value,
     items: [
       {
-        item_id: itemId,
+        item_id: `workshop-mp-definitiva-${plan}`,
         item_name: 'Workshop Marca Pessoal Definitiva',
         item_variant: plan === 'standard' ? 'Lote 1 Standard' : 'VIP',
         price: value,
         quantity: 1,
       },
     ],
-  });
-
-  metaPixel('InitiateCheckout', {
-    content_ids: [itemId],
-    content_type: 'product',
-    currency: 'BRL',
-    value,
-    num_items: 1,
   });
 }
 
@@ -52,11 +37,5 @@ export function trackViewPricing(): void {
       { item_id: 'workshop-mp-definitiva-standard', item_name: 'Standard', price: 47 },
       { item_id: 'workshop-mp-definitiva-vip', item_name: 'VIP', price: 297 },
     ],
-  });
-
-  metaPixel('ViewContent', {
-    content_ids: ['workshop-mp-definitiva-standard', 'workshop-mp-definitiva-vip'],
-    content_type: 'product',
-    currency: 'BRL',
   });
 }
