@@ -119,6 +119,16 @@ const heroPreload = noindex
         });
       })();
     </script>
+
+    {/* UTMify — captura UTMs e leva pro checkout (Kiwify) */}
+    <script
+      is:inline
+      src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+      data-utmify-prevent-xcod-sck
+      data-utmify-prevent-subids
+      async
+      defer
+    ></script>
   </head>
   <body class="min-h-screen overflow-x-hidden">
     {gtmId && (
