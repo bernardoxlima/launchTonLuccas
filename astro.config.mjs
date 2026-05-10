@@ -16,6 +16,6 @@ export default defineConfig({
     service: { entrypoint: 'astro/assets/services/sharp' },
   },
   build: {
-    inlineStylesheets: 'auto',
+    inlineStylesheets: 'always',
   },
 });
