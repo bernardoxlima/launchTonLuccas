@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Picture } from 'astro:assets';
 import tonHero from '../../../fotos/ton-hero-image.webp';
 import logoWorkshop from '../../../fotos/logoWorkshop.svg';
 
@@ -20,11 +20,13 @@ const tickerItems = [
       Wrapper div explicita area da foto: top:12 abaixo do header até bottom:0 */}
   <div class="relative w-full min-h-[55vh] md:min-h-[65vh] lg:min-h-[75vh]">
     <div class="absolute top-12 md:top-14 lg:top-16 left-0 right-0 bottom-0 overflow-hidden">
-      <Image
+      <Picture
         src={tonHero}
         alt="Ton Luccas — retrato conceitual representando a crise de identidade digital"
         widths={[400, 600, 800, 1200, 1600]}
         sizes="(max-width: 768px) 100vw, (max-width: 1280px) 100vw, 1600px"
+        formats={['avif', 'webp']}
+        fallbackFormat="webp"
         class="w-full h-full object-cover object-[center_top]"
         loading="eager"
         fetchpriority="high"

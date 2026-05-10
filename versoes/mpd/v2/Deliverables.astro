@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || '#pricing';
 
 const items = [
@@ -56,7 +57,7 @@ const items = [
 
           <div class="flex items-baseline justify-between mb-6 relative z-10">
             <span class="text-5xl font-serif font-medium text-[#E6E3D6]">{item.n}</span>
-            <iconify-icon class="text-[#D4F268]" icon="solar:check-circle-linear" width="24"></iconify-icon>
+            <Icon class="text-[#D4F268]" name="solar:check-circle-linear" width={24} height={24} />
           </div>
           <h3 class="text-2xl md:text-3xl font-serif font-medium text-[#E6E3D6] mb-4 leading-tight relative z-10">{item.title}</h3>
           <p class="text-base text-stone-300 leading-relaxed font-sans relative z-10">{item.body}</p>

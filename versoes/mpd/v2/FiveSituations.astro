@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || '#pricing';
 
 const situations = [
@@ -78,7 +79,7 @@ const situations = [
                 <span class={`text-5xl md:text-6xl font-serif font-medium leading-none ${t.number}`}>{s.n}</span>
               </div>
               <div class={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 ${t.iconBox}`}>
-                <iconify-icon icon={s.icon} width="28"></iconify-icon>
+                <Icon name={s.icon} width={28} height={28} />
               </div>
             </div>
 
