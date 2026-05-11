@@ -1,7 +1,7 @@
-const SCROLL_DURATION_MS = 1100;
+const SCROLL_DURATION_MS = 1400;
 
-function easeOutQuad(t: number): number {
-  return 1 - (1 - t) * (1 - t);
+function easeOutQuart(t: number): number {
+  return 1 - Math.pow(1 - t, 4);
 }
 
 export function initSmoothScroll(): void {
@@ -48,7 +48,7 @@ export function initSmoothScroll(): void {
     function step(now: number): void {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / SCROLL_DURATION_MS, 1);
-      const eased = easeOutQuad(progress);
+      const eased = easeOutQuart(progress);
       window.scrollTo(0, startY + distance * eased);
       if (progress < 1) requestAnimationFrame(step);
       else history.replaceState(null, '', href);
