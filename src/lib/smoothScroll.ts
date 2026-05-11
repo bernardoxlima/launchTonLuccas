@@ -1,9 +1,9 @@
-const SCROLL_DURATION_MS = 1200;
+const SCROLL_DURATION_MS = 1400;
 
-// Classic easeOutCubic. Starts at full velocity (no perceptual stick),
-// decelerates smoothly into the target — gentle landing.
-function easeOutCubic(t: number): number {
-  return 1 - Math.pow(1 - t, 3);
+// Classic easeInOutCubic. Starts gently, accelerates through the middle,
+// decelerates softly into the target — symmetric smooth motion all the way.
+function easeInOutCubic(t: number): number {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 
 export function initSmoothScroll(): void {
@@ -50,7 +50,7 @@ export function initSmoothScroll(): void {
     function step(now: number): void {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / SCROLL_DURATION_MS, 1);
-      const eased = easeOutCubic(progress);
+      const eased = easeInOutCubic(progress);
       // behavior:'instant' bypasses the CSS `scroll-behavior: smooth` on
       // <html>; otherwise the browser tries to smooth-scroll to every frame
       // we set and fights our own animation (visible as a stuttery start).
