@@ -22,7 +22,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') return res.status(405).end();
 
   const secret = process.env.KIRVANO_WEBHOOK_SECRET;
-  if (secret && req.query.token !== secret) return res.status(401).end();
+  if (secret) {
+    const headerToken = req.headers['authorization']?.replace('Bearer ', '')
+      || req.headers['x-webhook-token']
+      || req.headers['token']
+      || req.query.token;
+    if (headerToken !== secret) return res.status(401).end();
+  }
 
   const token = process.env.META_CAPI_TOKEN;
   const pixelId = process.env.PUBLIC_META_PIXEL_ID;
