@@ -38,6 +38,11 @@ import StickyCTA from './StickyCTA.astro';
   <StickyCTA />
 </Base>
 
+<script>
+  import { initSmoothScroll } from '@lib/smoothScroll';
+  initSmoothScroll();
+</script>
+
 <style is:global>
   @property --cta-angle {
     syntax: '<angle>';
