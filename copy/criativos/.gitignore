@@ -1,0 +1,9 @@
+# Binarios gerados — ficam local, nao sobem pro git
+02-audio/*
+03-video/*
+04-finais/*
+
+# Manter as pastas vazias no git
+!02-audio/.gitkeep
+!03-video/.gitkeep
+!04-finais/.gitkeep

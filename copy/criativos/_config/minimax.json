@@ -1,0 +1,9 @@
+{
+  "provider": "minimax",
+  "purpose": "text-to-speech para gerar audio dos scripts",
+  "voice_id": "",
+  "model": "speech-02-hd",
+  "speed": 1.0,
+  "emotion": "neutral",
+  "notes": "Preencher voice_id com o ID da voz clonada do Ton no MiniMax. Emotion varia por angulo — ver frontmatter de cada hook."
+}

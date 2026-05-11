@@ -1,0 +1,8 @@
+{
+  "provider": "heygen",
+  "purpose": "audio-to-video com avatar do Ton",
+  "avatar_id": "",
+  "quality": "high",
+  "aspect_ratio": "9:16",
+  "notes": "Preencher avatar_id com o ID do avatar do Ton no HeyGen. Aspect ratio 9:16 pra Reels/Stories. Mudar pra 16:9 se precisar de formato horizontal."
+}
