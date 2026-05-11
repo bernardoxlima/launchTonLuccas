@@ -1,6 +1,5 @@
 ---
 import { Icon } from 'astro-icon/components';
-const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || 'https://pay.kirvano.com/cd45d82c-9fe5-44f3-8b41-8fce3b50437b?utm_source=organic&utm_campaign=&utm_medium=&utm_content=&utm_term=';
 
 const situations = [
   {
@@ -92,7 +91,7 @@ const situations = [
 
     <div class="mt-16 text-center">
       <a
-        href={checkoutStandardUrl}
+        href="#pricing"
         data-cta="situations-standard"
         class="inline-flex items-center justify-center px-7 py-3.5 bg-stone-900 hover:bg-stone-800 text-[#D4F268] rounded-full text-base md:text-lg font-medium transition-all transform hover:-translate-y-0.5 shadow-xl shadow-stone-900/20 font-sans text-center"
       >
@@ -106,11 +105,9 @@ const situations = [
   import { trackEvent } from '@lib/tracking';
   document.querySelectorAll<HTMLAnchorElement>('a[data-cta="situations-standard"]').forEach((el) => {
     el.addEventListener('click', () => {
-      trackEvent('begin_checkout', {
-        currency: 'BRL',
-        value: 47,
+      trackEvent('select_promotion', {
+        promotion_name: 'pricing-section',
         cta_location: 'situations',
-        items: [{ item_id: 'workshop-mp-definitiva-standard', item_name: 'Standard', price: 47, quantity: 1 }],
       });
     });
   });

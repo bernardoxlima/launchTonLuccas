@@ -1,5 +1,4 @@
 ---
-const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || 'https://pay.kirvano.com/cd45d82c-9fe5-44f3-8b41-8fce3b50437b?utm_source=organic&utm_campaign=&utm_medium=&utm_content=&utm_term=';
 ---
 
 <section id="urgencia" class="ds-section w-full bg-[#E6E3D6] py-14 md:py-24 px-6 md:px-12 overflow-x-hidden">
@@ -56,7 +55,7 @@ const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || 'htt
     <!-- CTA — lime yellow -->
     <div class="mt-8 md:mt-10 text-center">
       <a
-        href={checkoutStandardUrl}
+        href="#pricing"
         data-cta="urgency-standard"
         class="inline-flex items-center justify-center px-7 py-3.5 bg-[#D4F268] hover:bg-[#C3E354] text-stone-900 rounded-full text-base md:text-lg font-medium transition-all transform hover:-translate-y-0.5 shadow-xl shadow-[#D4F268]/30 font-sans text-center"
       >
@@ -77,11 +76,9 @@ const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || 'htt
   import { trackEvent } from '@lib/tracking';
   document.querySelectorAll<HTMLAnchorElement>('a[data-cta="urgency-standard"]').forEach((el) => {
     el.addEventListener('click', () => {
-      trackEvent('begin_checkout', {
-        currency: 'BRL',
-        value: 47,
+      trackEvent('select_promotion', {
+        promotion_name: 'pricing-section',
         cta_location: 'urgency',
-        items: [{ item_id: 'workshop-mp-definitiva-standard', item_name: 'Standard', price: 47, quantity: 1 }],
       });
     });
   });

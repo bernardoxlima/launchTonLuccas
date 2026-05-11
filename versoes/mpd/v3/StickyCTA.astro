@@ -1,5 +1,4 @@
 ---
-const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || 'https://pay.kirvano.com/cd45d82c-9fe5-44f3-8b41-8fce3b50437b?utm_source=organic&utm_campaign=&utm_medium=&utm_content=&utm_term=';
 ---
 
 {/* Sticky CTA bar — só aparece em mobile, depois que usuário rola além do hero */}
@@ -17,7 +16,7 @@ const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || 'htt
       </div>
 
       <a
-        href={checkoutStandardUrl}
+        href="#pricing"
         data-cta="sticky-standard"
         class="flex-1 min-h-[48px] inline-flex items-center justify-center px-4 py-3 bg-[#D4F268] hover:bg-[#C3E354] active:scale-95 text-stone-900 rounded-full text-sm font-semibold transition-all shadow-lg shadow-[#D4F268]/20 font-sans text-center"
       >
@@ -100,11 +99,9 @@ const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || 'htt
 
   document.querySelectorAll<HTMLAnchorElement>('a[data-cta="sticky-standard"]').forEach((el) => {
     el.addEventListener('click', () => {
-      trackEvent('begin_checkout', {
-        currency: 'BRL',
-        value: 47,
+      trackEvent('select_promotion', {
+        promotion_name: 'pricing-section',
         cta_location: 'sticky',
-        items: [{ item_id: 'workshop-mp-definitiva-standard', item_name: 'Standard', price: 47, quantity: 1 }],
       });
     });
   });

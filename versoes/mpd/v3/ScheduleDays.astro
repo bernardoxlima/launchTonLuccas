@@ -55,7 +55,6 @@ const day2Items = [
   },
 ];
 
-const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || 'https://pay.kirvano.com/cd45d82c-9fe5-44f3-8b41-8fce3b50437b?utm_source=organic&utm_campaign=&utm_medium=&utm_content=&utm_term=';
 ---
 
 <section id="cronograma" class="ds-section w-full bg-stone-950 text-[#E6E3D6] py-14 md:py-24 px-6 md:px-12">
@@ -172,7 +171,7 @@ const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || 'htt
       </p>
 
       <a
-        href={checkoutStandardUrl}
+        href="#pricing"
         data-cta="schedule-standard"
         class="block w-full py-5 px-6 rounded-full bg-[#D4F268] hover:bg-[#C3E354] text-stone-900 text-lg md:text-xl font-semibold text-center transition-all transform hover:-translate-y-0.5 shadow-xl shadow-[#D4F268]/15 font-sans"
       >
@@ -220,11 +219,9 @@ const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || 'htt
   import { trackEvent } from '@lib/tracking';
   document.querySelectorAll<HTMLAnchorElement>('a[data-cta="schedule-standard"]').forEach((el) => {
     el.addEventListener('click', () => {
-      trackEvent('begin_checkout', {
-        currency: 'BRL',
-        value: 47,
+      trackEvent('select_promotion', {
+        promotion_name: 'pricing-section',
         cta_location: 'schedule',
-        items: [{ item_id: 'workshop-mp-definitiva-standard', item_name: 'Standard', price: 47, quantity: 1 }],
       });
     });
   });
