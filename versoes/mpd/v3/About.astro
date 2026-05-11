@@ -1,18 +1,25 @@
 ---
 import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
 import tonPortrait from '../../../fotos/ton-bio.webp';
 
-// TODO: substituir por logos das marcas quando disponíveis
-const brands = [
-  'Sicredi',
-  'Sul América',
-  'Jeep',
-  'FIAT',
-  'RAM',
-  'Duolingo',
-  'Renner',
-  'BMW',
-  'MINI',
+type Brand =
+  | { name: string; kind: 'icon'; icon: string }
+  | { name: string; kind: 'local'; src: string };
+
+// `kind: 'icon'` → renderizado via astro-icon `simple-icons:*` (monocromático, escala via CSS).
+// `kind: 'local'` → SVG em /public/brands/* (marcas BR que não estão no Simple Icons).
+// Todos passam pelo mesmo filtro CSS .brand-logo pra uniformizar visual.
+const brands: Brand[] = [
+  { name: 'Sicredi',    kind: 'local', src: '/brands/sicredi.svg' },
+  { name: 'Sul América', kind: 'local', src: '/brands/sulamerica.svg' },
+  { name: 'Jeep',       kind: 'icon',  icon: 'simple-icons:jeep' },
+  { name: 'FIAT',       kind: 'icon',  icon: 'simple-icons:fiat' },
+  { name: 'RAM',        kind: 'icon',  icon: 'simple-icons:ram' },
+  { name: 'Duolingo',   kind: 'icon',  icon: 'simple-icons:duolingo' },
+  { name: 'Renner',     kind: 'local', src: '/brands/renner.svg' },
+  { name: 'BMW',        kind: 'icon',  icon: 'simple-icons:bmw' },
+  { name: 'MINI',       kind: 'icon',  icon: 'simple-icons:mini' },
 ];
 ---
 
@@ -85,10 +92,14 @@ const brands = [
     </p>
 
     <div class="brand-marquee relative">
-      <div class="brand-track flex items-center gap-12 md:gap-20 whitespace-nowrap">
+      <div class="brand-track flex items-center gap-14 md:gap-24 whitespace-nowrap">
         {[...brands, ...brands].map((brand) => (
-          <span class="font-serif font-medium text-3xl md:text-5xl lg:text-6xl text-stone-900 shrink-0">
-            {brand}
+          <span class="brand-logo shrink-0 inline-flex items-center justify-center" aria-label={brand.name}>
+            {brand.kind === 'icon' ? (
+              <Icon name={brand.icon} class="h-9 md:h-12 lg:h-14 w-auto" />
+            ) : (
+              <img src={brand.src} alt={brand.name} loading="lazy" class="h-9 md:h-12 lg:h-14 w-auto" />
+            )}
           </span>
         ))}
       </div>
@@ -153,5 +164,23 @@ const brands = [
   .about-highlight {
     background-image: linear-gradient(transparent 60%, rgba(212, 242, 104, 0.45) 60%);
     padding: 0 0.1em;
+  }
+
+  /* Brand logo treatment — força monocromático + low contrast pra que
+     Simple Icons (já mono) e SVGs coloridos (BR) fiquem visualmente
+     coesos no marquee. Hover individual restaura a cor original. */
+  .brand-logo {
+    color: var(--color-stone-900);
+  }
+  .brand-logo svg,
+  .brand-logo img {
+    color: var(--color-stone-900);
+    filter: grayscale(1) brightness(0) opacity(0.55);
+    transition: filter 0.35s ease, opacity 0.35s ease;
+  }
+  .brand-logo:hover svg,
+  .brand-logo:hover img {
+    filter: none;
+    opacity: 1;
   }
 </style>
