@@ -1,7 +1,9 @@
 {
   "mpd": {
     "latest": "v4",
-    "frozen": ["v1", "v2", "v3"],
+    "default": "v3",
+    "default_pinned": true,
+    "frozen": ["v1", "v2"],
     "history": [
       {
         "v": "v1",

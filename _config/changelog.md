@@ -19,7 +19,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 **Refinamentos:**
 - (vazio)
 
-### v3 — 2026-05-10
+### v3 — 2026-05-10  *(PINNED como `default` desde 2026-05-11 — é o que `tonluccas.com.br/` serve)*
 
 **Forked from:** v2
 **Label:** Desktop responsive — hero 2-col, header em right col, FiveSituations 2x2, Promise 3-line, ScheduleDays Day1+Day2 lado-a-lado
@@ -27,6 +27,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 **Métrica:** begin_checkout rate via tracking.ts
 
 **Refinamentos:**
+- 2026-05-11 — **Pinned como `default` de produção.** Introduzido o campo `mpd.default` em `versions.json` (separado de `mpd.latest`) + `default_pinned: true`. `/` agora serve v3 via import direto em `src/pages/index.astro`. `latest` continua sendo o fork mais novo (v4) — semântica de "newest fork" preservada. Regra: futuras versões (v5, v6, ...) atualizam `latest` mas NÃO atualizam `default`. Só demover v3 com pedido explícito do user. v4 mantida acessível em `/mpd/v4` como variante de A/B. Reason: decisão do user — fixar v3 como página oficial enquanto novos forks rodam como variantes isoladas.
 - 2026-05-11 — Todos os CTAs fora da seção Pricing passaram a apontar pra `#pricing` em vez de ir direto pro Kiwify. Apenas os 2 botões dentro do Pricing (Standard R$47 + VIP R$297) levam pro checkout. Tracking: `begin_checkout` agora só dispara nos botões reais de checkout; CTAs intra-page disparam `select_promotion` com `promotion_name: pricing-section` e `cta_location: <hero|problem|deliverables|urgency|forwhom|situations|schedule|anchor|about|sticky>`. Reason: forçar usuário a ver Standard vs VIP antes de pagar, em vez de mandar todo mundo direto pro Standard.
 - 2026-05-11 — Refino de UX do scroll-to-pricing. (1) Smooth scroll customizado via `src/lib/smoothScroll.ts` — duração fixa 750ms com easeInOutCubic, independente da distância (CSS `scroll-behavior: smooth` nativo era visualmente rápido demais em scrolls longos do mobile). (2) Âncora dos 10 CTAs migrou de `#pricing` (topo da section) pra `#pricing-cta-standard` (id no botão "Garantir Ingresso Standard"). Combinado com `scroll-margin-top: 50vh` no botão, ele aterrissa no meio do viewport — usuário vê CTA + features acima sem precisar rolar. Respeita `prefers-reduced-motion`.
 - 2026-05-11 — Refino do card Pricing no mobile. (1) Âncora dos 10 CTAs migrou de `#pricing-cta-standard` (botão) pra `#pricing-standard` (bloco do preço R$ 47) com `scroll-margin-top: 35vh` — aterrissa de forma que preço fica acima do meio do viewport e CTA já visível dentro do fold. (2) Reorganização visual: badge "Lote 01" (Standard) e "Mais Escolhido" (VIP) saíram do topo isolado e ficaram inline com o título do card, à direita — economiza ~50px de altura por card. (3) Paddings e gaps compactados no mobile: `p-8 → p-6` no card, `mb-8/mb-10 → mb-6` nas descrições/listas, `space-y-4 → space-y-3` nas features. Desktop intacto via `md:` prefixes.

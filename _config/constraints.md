@@ -37,6 +37,12 @@ Hard rules que se aplicam a TODA edição neste projeto. A skill `landing-versio
 
 ## Roteamento
 
-16. **`/` (raiz) sempre serve a versão `latest`** via rewrite no `vercel.json`. Quando latest muda, atualizar a `destination` do rewrite.
-17. **`/dev` é o diretório interno** com `noindex` (via prop no Base + X-Robots-Tag header). Lista todas as versões (latest + frozen) lendo de `versions.json`. Não usar prefixo `_` no filename porque Astro ignora `src/pages/_*.astro` por convenção.
-18. **`/<pagina>/<v>` é a URL canônica de cada versão** pra campanhas A/B. Compartilhar essas URLs em ads, não a raiz.
+16. **`/` (raiz) serve a versão `default` (pinned), NÃO `latest`.** Source of truth: `versions.json -> mpd.default`. O import em `src/pages/index.astro` aponta pra `default`. `latest` segue como "fork mais novo" (semântica histórica), mas não controla o que `/` serve.
+17. **PINNED DEFAULT — `tonluccas.com.br` é v3 e permanece v3.** `mpd.default_pinned: true` no `versions.json` significa: ao criar novas versões (v5, v6, ...), atualizar `latest` mas NUNCA atualizar `default` nem o import em `index.astro` automaticamente. Só demover v3 se o user pedir explicitamente "trocar o default" ou "demover v3".
+18. **`/dev` é o diretório interno** com `noindex` (via prop no Base + X-Robots-Tag header). Lista todas as versões (latest + frozen) lendo de `versions.json`. Não usar prefixo `_` no filename porque Astro ignora `src/pages/_*.astro` por convenção.
+19. **`/<pagina>/<v>` é a URL canônica de cada versão** pra campanhas A/B. Compartilhar essas URLs em ads, não a raiz.
+
+## Comunicação com o user
+
+20. **Toda mudança em texto/copy, animação, cor, layout, espaçamento ou comportamento DEVE passar por `AskUserQuestion` antes da edição**, com 3 opções obrigatórias: (a) ajustar versão atual, (b) criar nova versão (fork), (c) aplicar em todas as versões ativas. Sem exceção, mesmo se o user já tiver indicado intenção — confirmar explicitamente onde a mudança vai cair.
+21. **Ao terminar qualquer task, informar no chat as URLs onde a mudança vive.** Exemplo: `Atualizado em: tonluccas.com.br/mpd/v3 (e tonluccas.com.br/ porque v3 é a default)`. Se múltiplas versões foram tocadas, listar todas. Resposta sem URL final = task incompleta.

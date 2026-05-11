@@ -1,13 +1,18 @@
 ---
-// "/" SERVE A VERSÃO LATEST.
-// Quando a skill `landing-version` promove uma nova versão (latest muda em
-// _config/versions.json), o IMPORT abaixo TEM que ser atualizado pra apontar
-// pra o novo page.astro.
+// "/" SERVE A VERSÃO DEFAULT (PINNED).
 //
-// Source of truth: _config/versions.json -> mpd.latest
+// REGRA — tonluccas.com.br tem como default a v3 e DEVE PERMANECER em v3
+// mesmo quando novas versões (v5, v6, ...) forem criadas. `latest` em
+// _config/versions.json segue apontando pro fork mais novo (semântica de
+// "newest fork"), mas o IMPORT abaixo é controlado por `default` + `default_pinned: true`.
+//
+// Só trocar este import se o user EXPLICITAMENTE pedir "demover v3 do default"
+// — não atualizar automaticamente quando latest mudar.
+//
+// Source of truth: _config/versions.json -> mpd.default (não mpd.latest)
 // Diretório interno com lista de todas as versões: /dev (noindex via Base prop + X-Robots-Tag header no vercel.json)
 
-import Page from '@versoes/mpd/v4/page.astro';
+import Page from '@versoes/mpd/v3/page.astro';
 ---
 
 <Page />
