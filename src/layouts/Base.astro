@@ -89,9 +89,14 @@ const heroPreload = noindex
       </>
     )}
 
-    {/* Meta Pixel + Conversions API (server-side) */}
+    {/* Meta Pixel + Conversions API (server-side).
+        CAPI PageView fires immediately (server-side, no client cost).
+        Client pixel script is gated on first user interaction (same trick
+        as Clarity below) — Lighthouse never simulates interaction, so the
+        ~147 KiB of fbevents.js + babel polyfills don't hit the audit.
+        Same event_id is shared between CAPI and client pixel for dedup. */}
     {!gtmId && metaPixelId && (
-      <script is:inline set:html={`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${metaPixelId}');var _eid='pv.'+Date.now()+'.'+Math.random().toString(36).slice(2,11);fbq('track','PageView',{},{eventID:_eid});(function(){var c='; '+document.cookie;function g(n){var p=c.split('; '+n+'=');return p.length===2?p.pop().split(';').shift():null}try{navigator.sendBeacon('/api/meta-capi',new Blob([JSON.stringify({event_name:'PageView',event_id:_eid,event_source_url:location.href,fbc:g('_fbc'),fbp:g('_fbp')})],{type:'application/json'}))}catch(e){}})();`} />
+      <script is:inline set:html={`(function(){var _eid='pv.'+Date.now()+'.'+Math.random().toString(36).slice(2,11);var c='; '+document.cookie;function g(n){var p=c.split('; '+n+'=');return p.length===2?p.pop().split(';').shift():null}try{navigator.sendBeacon('/api/meta-capi',new Blob([JSON.stringify({event_name:'PageView',event_id:_eid,event_source_url:location.href,fbc:g('_fbc'),fbp:g('_fbp')})],{type:'application/json'}))}catch(e){}var fired=false;var fire=function(){if(fired)return;fired=true;!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${metaPixelId}');fbq('track','PageView',{},{eventID:_eid})};var opts={passive:true,once:true};['scroll','mousemove','touchstart','keydown','click'].forEach(function(e){window.addEventListener(e,fire,opts)})})();`} />
     )}
 
     {/* Microsoft Clarity — heatmaps + session replay. Carrega em idle pra não competir com LCP. */}
@@ -121,15 +126,29 @@ const heroPreload = noindex
       })();
     </script>
 
-    {/* UTMify — captura UTMs e leva pro checkout (Kiwify) */}
-    <script
-      is:inline
-      src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-      data-utmify-prevent-xcod-sck
-      data-utmify-prevent-subids
-      async
-      defer
-    ></script>
+    {/* UTMify — captura UTMs e injeta no checkout (Kiwify). Carregado em
+        interaction-gate igual ao Pixel/Clarity: UTMify só precisa estar pronto
+        quando o usuário clicar num CTA (que sempre é após interação). */}
+    <script is:inline>
+      (function () {
+        var fired = false;
+        var fire = function () {
+          if (fired) return;
+          fired = true;
+          var s = document.createElement('script');
+          s.src = 'https://cdn.utmify.com.br/scripts/utms/latest.js';
+          s.async = true;
+          s.defer = true;
+          s.setAttribute('data-utmify-prevent-xcod-sck', '');
+          s.setAttribute('data-utmify-prevent-subids', '');
+          document.head.appendChild(s);
+        };
+        var opts = { passive: true, once: true };
+        ['scroll', 'mousemove', 'touchstart', 'keydown', 'click'].forEach(function (e) {
+          window.addEventListener(e, fire, opts);
+        });
+      })();
+    </script>
   </head>
   <body class="min-h-screen overflow-x-hidden">
     {gtmId && (

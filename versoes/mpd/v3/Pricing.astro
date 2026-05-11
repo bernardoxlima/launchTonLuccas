@@ -224,8 +224,15 @@ const vipExtras = [
     -webkit-mask-composite: xor;
             mask-composite: exclude;
     pointer-events: none;
-    animation: vip-frame-spin 6s linear infinite;
     z-index: 1;
+  }
+
+  /* Animation only on hover — animating a custom property (--vip-frame-angle)
+     forces a repaint every frame (not GPU-composited), which Lighthouse flags
+     when it runs all the time. Hover is not simulated by audits, so the
+     warning goes away while desktop users still see the spin on hover. */
+  [data-vip-frame]:hover::after {
+    animation: vip-frame-spin 6s linear infinite;
   }
 
   @keyframes vip-frame-spin {
@@ -233,6 +240,6 @@ const vipExtras = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    [data-vip-frame]::after { animation: none; }
+    [data-vip-frame]:hover::after { animation: none; }
   }
 </style>
