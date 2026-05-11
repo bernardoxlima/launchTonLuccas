@@ -48,6 +48,7 @@ const heroPreload = noindex
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#0a0a0a" />
+    <meta name="facebook-domain-verification" content="y7yvfl82zzo6loaxjeh4euuchgkbfe" />
 
     {heroPreload && (
       <link
@@ -88,9 +89,9 @@ const heroPreload = noindex
       </>
     )}
 
-    {/* Meta Pixel direto — fallback se não usar GTM */}
+    {/* Meta Pixel + Conversions API (server-side) */}
     {!gtmId && metaPixelId && (
-      <script is:inline set:html={`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${metaPixelId}');fbq('track','PageView');`} />
+      <script is:inline set:html={`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${metaPixelId}');var _eid='pv.'+Date.now()+'.'+Math.random().toString(36).slice(2,11);fbq('track','PageView',{},{eventID:_eid});(function(){var c='; '+document.cookie;function g(n){var p=c.split('; '+n+'=');return p.length===2?p.pop().split(';').shift():null}try{navigator.sendBeacon('/api/meta-capi',new Blob([JSON.stringify({event_name:'PageView',event_id:_eid,event_source_url:location.href,fbc:g('_fbc'),fbp:g('_fbp')})],{type:'application/json'}))}catch(e){}})();`} />
     )}
 
     {/* Microsoft Clarity — heatmaps + session replay. Carrega em idle pra não competir com LCP. */}
