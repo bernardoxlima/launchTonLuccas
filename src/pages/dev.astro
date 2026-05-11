@@ -12,7 +12,16 @@ const PAGE_LABELS: Record<string, string> = {
 };
 
 const pages = Object.entries(versions).map(([slug, config]) => {
-  const allVersions = [config.latest, ...config.frozen].map((v) => {
+  const defaultV = config.default ?? config.latest;
+  const seen = new Set<string>();
+  const ordered: string[] = [];
+  for (const v of [defaultV, config.latest, ...config.frozen]) {
+    if (!seen.has(v)) {
+      seen.add(v);
+      ordered.push(v);
+    }
+  }
+  const allVersions = ordered.map((v) => {
     const entry = getHistoryEntry(slug, v);
     return {
       v,
@@ -21,6 +30,7 @@ const pages = Object.entries(versions).map(([slug, config]) => {
       hypothesis: entry?.hypothesis ?? '',
       created: entry?.created ?? '',
       isLatest: v === config.latest,
+      isDefault: v === defaultV,
       isFrozen: config.frozen.includes(v),
     };
   });
@@ -72,6 +82,11 @@ const pages = Object.entries(versions).map(([slug, config]) => {
                         <span class="inline-block px-2.5 py-1 rounded-full bg-stone-100 text-[11px] font-bold text-stone-600 tracking-[0.15em] uppercase font-sans">
                           {v.v}
                         </span>
+                        {v.isDefault && (
+                          <span class="inline-block px-2.5 py-1 rounded-full bg-emerald-200 text-[11px] font-bold text-emerald-900 tracking-[0.15em] uppercase font-sans">
+                            default · /
+                          </span>
+                        )}
                         {v.isLatest && (
                           <span class="inline-block px-2.5 py-1 rounded-full bg-lime-200 text-[11px] font-bold text-lime-900 tracking-[0.15em] uppercase font-sans">
                             latest

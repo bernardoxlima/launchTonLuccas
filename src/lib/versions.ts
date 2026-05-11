@@ -11,7 +11,10 @@ export type HistoryEntry = {
 
 export type PageVersion = {
   latest: string;
+  default?: string;
+  default_pinned?: boolean;
   frozen: string[];
+  deleted?: string[];
   history: HistoryEntry[];
 };
 
@@ -25,10 +28,17 @@ export function getLatest(page: string): string {
   return config.latest;
 }
 
+export function getDefault(page: string): string {
+  const config = versions[page];
+  if (!config) throw new Error(`Page "${page}" not found in _config/versions.json`);
+  return config.default ?? config.latest;
+}
+
 export function getAllVersions(page: string): string[] {
   const config = versions[page];
   if (!config) return [];
-  return [config.latest, ...config.frozen];
+  const all = [config.latest, ...(config.default ? [config.default] : []), ...config.frozen];
+  return Array.from(new Set(all));
 }
 
 export function getAllPages(): string[] {
@@ -45,6 +55,12 @@ export function isLatest(page: string, v: string): boolean {
 
 export function isFrozen(page: string, v: string): boolean {
   return versions[page]?.frozen.includes(v) ?? false;
+}
+
+export function isDefault(page: string, v: string): boolean {
+  const config = versions[page];
+  if (!config) return false;
+  return (config.default ?? config.latest) === v;
 }
 
 export default versions;

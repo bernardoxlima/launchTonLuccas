@@ -33,23 +33,14 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 - 2026-05-11 — Refino de UX do scroll-to-pricing. (1) Smooth scroll customizado via `src/lib/smoothScroll.ts` — duração fixa 750ms com easeInOutCubic, independente da distância (CSS `scroll-behavior: smooth` nativo era visualmente rápido demais em scrolls longos do mobile). (2) Âncora dos 10 CTAs migrou de `#pricing` (topo da section) pra `#pricing-cta-standard` (id no botão "Garantir Ingresso Standard"). Combinado com `scroll-margin-top: 50vh` no botão, ele aterrissa no meio do viewport — usuário vê CTA + features acima sem precisar rolar. Respeita `prefers-reduced-motion`.
 - 2026-05-11 — Refino do card Pricing no mobile. (1) Âncora dos 10 CTAs migrou de `#pricing-cta-standard` (botão) pra `#pricing-standard` (bloco do preço R$ 47) com `scroll-margin-top: 35vh` — aterrissa de forma que preço fica acima do meio do viewport e CTA já visível dentro do fold. (2) Reorganização visual: badge "Lote 01" (Standard) e "Mais Escolhido" (VIP) saíram do topo isolado e ficaram inline com o título do card, à direita — economiza ~50px de altura por card. (3) Paddings e gaps compactados no mobile: `p-8 → p-6` no card, `mb-8/mb-10 → mb-6` nas descrições/listas, `space-y-4 → space-y-3` nas features. Desktop intacto via `md:` prefixes.
 
-### v2 — 2026-05-09
+### v2 — DELETADA em 2026-05-11
 
-**Forked from:** v1
-**Label:** Headline com ponto final
-**Mudança:** Adicionado ponto final após "lucrativa" na headline do hero, separando a declaração principal do qualifier itálico "em apenas 2 dias."
-**Hipótese:** Decisões separadas — ponto fecha a declaração principal como promessa decisiva, e "em apenas 2 dias." vira reforço separado
-**Métrica:** begin_checkout rate via tracking.ts
+Versão removida fisicamente do repo (pastas `versoes/mpd/v2/` + `src/pages/mpd/v2.astro`) por decisão do user. URL `/mpd/v2` agora cai em `src/pages/404.astro` que redireciona pra `/` (v3).
 
-**Refinamentos:**
-- (vazio)
+**Histórico (preservado pra contexto):** Forked from v1. Label: "Headline com ponto final". Hipótese: decisões separadas — ponto fecha a declaração principal como promessa decisiva e "em apenas 2 dias." vira reforço separado.
 
-### v1 — 2026-05-09
+### v1 — DELETADA em 2026-05-11
 
-**Forked from:** — (versão inicial)
-**Label:** Editorial Green Museum (escuro no hero)
-**Hipótese:** Paleta editorial clara contrasta com hero escuro pra autoridade premium
-**Métrica:** begin_checkout rate via tracking.ts
+Versão removida fisicamente do repo (pastas `versoes/mpd/v1/` + `src/pages/mpd/v1.astro`) por decisão do user. URL `/mpd/v1` agora cai em `src/pages/404.astro` que redireciona pra `/` (v3).
 
-**Refinamentos:**
-- (vazio — adicione bullets datados aqui quando refinar in-place)
+**Histórico (preservado pra contexto):** Versão inicial (Editorial Green Museum, escuro no hero). Hipótese: paleta editorial clara contrasta com hero escuro pra autoridade premium.

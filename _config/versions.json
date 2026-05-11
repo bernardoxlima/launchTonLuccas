@@ -3,24 +3,9 @@
     "latest": "v4",
     "default": "v3",
     "default_pinned": true,
-    "frozen": ["v1", "v2"],
+    "frozen": [],
+    "deleted": ["v1", "v2"],
     "history": [
-      {
-        "v": "v1",
-        "from": null,
-        "created": "2026-05-09",
-        "label": "Editorial Green Museum (escuro no hero)",
-        "hypothesis": "Paleta editorial clara contrasta com hero escuro pra autoridade premium",
-        "metric": "begin_checkout rate via tracking.ts"
-      },
-      {
-        "v": "v2",
-        "from": "v1",
-        "created": "2026-05-09",
-        "label": "Headline com ponto final",
-        "hypothesis": "Decisões separadas — ponto fecha a declaração principal como promessa decisiva, e 'em apenas 2 dias.' vira reforço separado",
-        "metric": "begin_checkout rate via tracking.ts"
-      },
       {
         "v": "v3",
         "from": "v2",
