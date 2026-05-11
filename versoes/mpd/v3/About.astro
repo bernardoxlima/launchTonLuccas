@@ -199,4 +199,21 @@ const brands: Brand[] = [
   .brand-logo[data-kind='local']:hover img {
     filter: none;
   }
+
+  /* Sul América brand kit ships a stacked/square logo (700x700 viewBox).
+     Bumping the height so it reads at roughly the same optical presence
+     as the wide logos (Renner, Sicredi). */
+  .brand-logo[data-brand='sulamerica'] img {
+    height: 5rem;
+  }
+  @media (min-width: 768px) {
+    .brand-logo[data-brand='sulamerica'] img {
+      height: 6.5rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .brand-logo[data-brand='sulamerica'] img {
+      height: 7.5rem;
+    }
+  }
 </style>
