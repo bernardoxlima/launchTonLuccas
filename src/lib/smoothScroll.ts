@@ -1,12 +1,15 @@
-const SCROLL_DURATION_MS = 1500;
+const SCROLL_DURATION_MS = 2000;
 
 // Trapezoidal-velocity easing: quadratic accel ramp -> constant cruise -> quadratic
 // decel ramp. Unlike easeInOut/easeOut curves (which spend most of the time near
 // the target), this keeps the scroll moving at a steady, visible pace through
 // the middle of the screen, so the user perceives a deliberate "smooth pan"
 // rather than a quick burst followed by a long tail.
-const ACCEL_PHASE = 0.18;
-const DECEL_PHASE = 0.22;
+// Accel kept short (200ms at 2000ms total) so there's no perceptual "stick"
+// at the start; cruise consumes 70%% of the time so the middle reads as a
+// deliberate, even pan.
+const ACCEL_PHASE = 0.10;
+const DECEL_PHASE = 0.20;
 const CRUISE_PHASE = 1 - ACCEL_PHASE - DECEL_PHASE;
 // Solve for the cruise velocity V such that total distance == 1:
 //   accel area (V*ACCEL/2) + cruise (V*CRUISE) + decel area (V*DECEL/2) = 1
