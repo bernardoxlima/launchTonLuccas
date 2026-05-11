@@ -1,43 +1,25 @@
+import type { VercelRequest, VercelResponse } from '@vercel/node';
+
 const GRAPH_API = 'https://graph.facebook.com/v21.0';
 
-export default async function handler(request: Request): Promise<Response> {
-  if (request.method !== 'POST') {
-    return new Response(null, { status: 405 });
-  }
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  if (req.method !== 'POST') return res.status(405).end();
 
   const token = process.env.META_CAPI_TOKEN;
   const pixelId = process.env.PUBLIC_META_PIXEL_ID;
-  if (!token || !pixelId) {
-    return new Response(null, { status: 500 });
-  }
+  if (!token || !pixelId) return res.status(500).end();
 
-  let body: {
-    event_name?: string;
-    event_id?: string;
-    event_source_url?: string;
-    fbc?: string | null;
-    fbp?: string | null;
-  };
-
-  try {
-    body = await request.json();
-  } catch {
-    return new Response(null, { status: 400 });
-  }
-
-  const { event_name, event_id, event_source_url, fbc, fbp } = body;
-  if (!event_name || !event_id) {
-    return new Response(null, { status: 400 });
-  }
+  const { event_name, event_id, event_source_url, fbc, fbp } = req.body || {};
+  if (!event_name || !event_id) return res.status(400).end();
 
   const userData: Record<string, string> = {};
 
-  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
-    || request.headers.get('x-real-ip')
+  const ip = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim()
+    || (req.headers['x-real-ip'] as string)
     || '';
   if (ip) userData.client_ip_address = ip;
 
-  const ua = request.headers.get('user-agent') || '';
+  const ua = req.headers['user-agent'] || '';
   if (ua) userData.client_user_agent = ua;
 
   if (fbc) userData.fbc = fbc;
@@ -60,11 +42,15 @@ export default async function handler(request: Request): Promise<Response> {
   const testCode = process.env.META_CAPI_TEST_CODE;
   if (testCode) payload.test_event_code = testCode;
 
-  const res = await fetch(`${GRAPH_API}/${pixelId}/events`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  });
+  try {
+    const metaRes = await fetch(`${GRAPH_API}/${pixelId}/events`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
 
-  return new Response(null, { status: res.ok ? 204 : 502 });
+    return res.status(metaRes.ok ? 204 : 502).end();
+  } catch {
+    return res.status(502).end();
+  }
 }
