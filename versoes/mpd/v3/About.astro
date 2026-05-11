@@ -104,9 +104,9 @@ const brands: Brand[] = [
             aria-label={brand.name}
           >
             {brand.kind === 'icon' ? (
-              <Icon name={brand.icon} class="h-9 md:h-12 lg:h-14 w-auto" />
+              <Icon name={brand.icon} class="brand-logo-art" />
             ) : (
-              <img src={brand.src} alt={brand.name} loading="lazy" class="h-9 md:h-12 lg:h-14 w-auto" />
+              <img src={brand.src} alt={brand.name} loading="lazy" class="brand-logo-art" />
             )}
           </span>
         ))}
@@ -183,6 +183,31 @@ const brands: Brand[] = [
   .brand-logo {
     color: var(--color-stone-900);
   }
+
+  /* Bounding box uniforme: cada logo cabe num retângulo max-h × max-w,
+     respeitando o aspect ratio próprio. Wide logos batem no max-width
+     antes do max-height; square logos batem no max-height. Resultado:
+     área visual aproximadamente equivalente independente do ratio. */
+  .brand-logo-art {
+    max-height: 2.5rem;
+    max-width: 9rem;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+  @media (min-width: 768px) {
+    .brand-logo-art {
+      max-height: 3.5rem;
+      max-width: 12rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .brand-logo-art {
+      max-height: 4rem;
+      max-width: 14rem;
+    }
+  }
+
   .brand-logo[data-kind='icon'] svg {
     color: var(--color-stone-900);
     opacity: 0.55;
@@ -198,22 +223,5 @@ const brands: Brand[] = [
   }
   .brand-logo[data-kind='local']:hover img {
     filter: none;
-  }
-
-  /* Sul América brand kit ships a stacked/square logo (700x700 viewBox).
-     Bumping the height so it reads at roughly the same optical presence
-     as the wide logos (Renner, Sicredi). */
-  .brand-logo[data-brand='sulamerica'] img {
-    height: 5rem;
-  }
-  @media (min-width: 768px) {
-    .brand-logo[data-brand='sulamerica'] img {
-      height: 6.5rem;
-    }
-  }
-  @media (min-width: 1024px) {
-    .brand-logo[data-brand='sulamerica'] img {
-      height: 7.5rem;
-    }
   }
 </style>
