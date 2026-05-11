@@ -1,4 +1,4 @@
-const SCROLL_DURATION_MS = 900;
+const SCROLL_DURATION_MS = 1800;
 
 function easeInOutSine(t: number): number {
   return -(Math.cos(Math.PI * t) - 1) / 2;
