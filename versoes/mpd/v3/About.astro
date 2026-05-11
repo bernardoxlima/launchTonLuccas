@@ -105,6 +105,11 @@ const brands: Brand[] = [
           >
             {brand.kind === 'icon' ? (
               <Icon name={brand.icon} class="brand-logo-art" />
+            ) : brand.slug === 'renner' ? (
+              <>
+                <img src="/brands/renner-mono.svg" alt="" aria-hidden="true" loading="lazy" class="brand-logo-art renner-view-mono" />
+                <img src="/brands/renner.svg" alt={brand.name} loading="lazy" class="brand-logo-art renner-view-color" />
+              </>
             ) : (
               <img src={brand.src} alt={brand.name} loading="lazy" class="brand-logo-art" />
             )}
@@ -232,6 +237,20 @@ const brands: Brand[] = [
     transition: filter 0.35s ease;
   }
   .brand-logo[data-kind='local']:hover img {
+    filter: none;
+  }
+
+  /* Renner: swap entre versão mono (sem bola, só wordmark) e versão
+     colorida (com bola + R branco) no hover. Necessário porque o R
+     branco DENTRO da bola some quando brightness(0) é aplicado. */
+  .brand-logo[data-brand='renner'] .renner-view-color {
+    display: none;
+  }
+  .brand-logo[data-brand='renner']:hover .renner-view-mono {
+    display: none;
+  }
+  .brand-logo[data-brand='renner']:hover .renner-view-color {
+    display: inline-block;
     filter: none;
   }
 </style>
