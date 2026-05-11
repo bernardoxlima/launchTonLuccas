@@ -11,7 +11,7 @@
         </p>
         <p class="text-lg font-serif font-light text-[#E6E3D6] leading-none">
           R$ <span class="text-2xl">47</span>
-          <span class="text-xs text-stone-500 ml-1">12x R$ 4,70</span>
+          <span class="text-xs text-stone-400 ml-1">12x R$ 4,70</span>
         </p>
       </div>
 
@@ -53,11 +53,17 @@
 <script>
   import { trackEvent } from '@lib/tracking';
 
-  const stickyEl = document.getElementById('sticky-cta');
-  const heroEl = document.getElementById('hero');
-  const pricingEl = document.getElementById('pricing');
+  // Hero is already position:relative via Tailwind (Hero.astro). No style mutation
+  // needed at setup time — that read/write was causing a forced layout reflow in
+  // Lighthouse traces. Setup is also deferred to requestIdleCallback so it doesn't
+  // compete with LCP-critical work.
+  const setupStickyObservers = () => {
+    const stickyEl = document.getElementById('sticky-cta');
+    const heroEl = document.getElementById('hero');
+    const pricingEl = document.getElementById('pricing');
 
-  if (stickyEl && heroEl && 'IntersectionObserver' in window) {
+    if (!stickyEl || !heroEl || !('IntersectionObserver' in window)) return;
+
     let heroOut = false;
     let pricingIn = false;
 
@@ -66,10 +72,8 @@
       stickyEl.dataset.visible = shouldShow ? 'true' : 'false';
     };
 
-    // Trigger ao usar 1px sentinel no fim do hero
     const sentinel = document.createElement('div');
     sentinel.style.cssText = 'position:absolute;bottom:80px;left:0;width:1px;height:1px;pointer-events:none';
-    heroEl.style.position = heroEl.style.position || 'relative';
     heroEl.appendChild(sentinel);
 
     const heroObserver = new IntersectionObserver(
@@ -95,6 +99,12 @@
       );
       pricingObserver.observe(pricingEl);
     }
+  };
+
+  if ('requestIdleCallback' in window) {
+    (window as Window & typeof globalThis).requestIdleCallback(setupStickyObservers, { timeout: 2000 });
+  } else {
+    setTimeout(setupStickyObservers, 0);
   }
 
   document.querySelectorAll<HTMLAnchorElement>('a[data-cta="sticky-standard"]').forEach((el) => {
