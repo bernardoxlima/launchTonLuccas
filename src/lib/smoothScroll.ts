@@ -1,4 +1,4 @@
-const SCROLL_DURATION_MS = 2000;
+const SCROLL_DURATION_MS = 2500;
 
 // Classic easeInOutCubic. Starts gently, accelerates through the middle,
 // decelerates softly into the target — symmetric smooth motion all the way.
