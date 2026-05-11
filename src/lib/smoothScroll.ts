@@ -1,22 +1,51 @@
-const SCROLL_DURATION_MS = 1600;
+const SCROLL_DURATION_MS = 2400;
 
-// Linear cruise (no initial accel ramp — full velocity from frame 1, so no
-// perceptual "stick" at the start) with a quadratic decel ramp only in the
-// final 15%% so the scroll lands softly on the section.
+// Three-phase velocity profile: short fast kick-off so the user immediately
+// sees motion (no "stuck" feeling), then a long slow cruise through the
+// middle of the screen (this is where the user reads the page), then a soft
+// quadratic decel that lands on the section.
 //
-// Distance math: cruise covers C until t=1-D, velocity V is constant; decel
-// covers D and contributes V*D/2 area. Total: V*(1-D) + V*D/2 = V*(1-D/2) = 1
-// => V = 1 / (1 - D/2)
+// Velocity at t=0:      KICKOFF_RATIO * V_cruise   (high — feedback)
+// Velocity at t=K:      V_cruise                   (drops linearly)
+// Velocity K -> 1-D:    V_cruise                   (constant cruise)
+// Velocity 1-D -> 1:    V_cruise -> 0              (linear, quadratic pos)
+const KICKOFF_PHASE = 0.08;
 const DECEL_PHASE = 0.15;
-const CRUISE_VELOCITY = 1 / (1 - DECEL_PHASE / 2);
-const DIST_AT_CRUISE_END = CRUISE_VELOCITY * (1 - DECEL_PHASE);
+const CRUISE_PHASE = 1 - KICKOFF_PHASE - DECEL_PHASE;
+const KICKOFF_RATIO = 3.0;
 
-function easeLinearLanding(t: number): number {
-  if (t < 1 - DECEL_PHASE) {
-    return CRUISE_VELOCITY * t;
+// Solve for V_cruise so total area (distance) is exactly 1:
+//   kickoff trapezoid: K * (KICKOFF_RATIO*V + V) / 2 = K*V*(KICKOFF_RATIO+1)/2
+//   cruise rectangle:  C * V
+//   decel triangle:    D * V / 2
+const CRUISE_VELOCITY =
+  1 /
+  ((KICKOFF_PHASE * (KICKOFF_RATIO + 1)) / 2 +
+    CRUISE_PHASE +
+    DECEL_PHASE / 2);
+const KICKOFF_INITIAL_VELOCITY = KICKOFF_RATIO * CRUISE_VELOCITY;
+const DIST_AFTER_KICKOFF =
+  (KICKOFF_PHASE * (KICKOFF_INITIAL_VELOCITY + CRUISE_VELOCITY)) / 2;
+const DIST_AFTER_CRUISE = DIST_AFTER_KICKOFF + CRUISE_VELOCITY * CRUISE_PHASE;
+
+function easeKickoffCruise(t: number): number {
+  if (t < KICKOFF_PHASE) {
+    // Linearly decreasing velocity from V_initial to V_cruise -> quadratic pos
+    return (
+      KICKOFF_INITIAL_VELOCITY * t -
+      ((KICKOFF_INITIAL_VELOCITY - CRUISE_VELOCITY) * t * t) /
+        (2 * KICKOFF_PHASE)
+    );
   }
-  const td = t - (1 - DECEL_PHASE);
-  return DIST_AT_CRUISE_END + CRUISE_VELOCITY * td - (CRUISE_VELOCITY * td * td) / (2 * DECEL_PHASE);
+  if (t < KICKOFF_PHASE + CRUISE_PHASE) {
+    return DIST_AFTER_KICKOFF + CRUISE_VELOCITY * (t - KICKOFF_PHASE);
+  }
+  const td = t - KICKOFF_PHASE - CRUISE_PHASE;
+  return (
+    DIST_AFTER_CRUISE +
+    CRUISE_VELOCITY * td -
+    (CRUISE_VELOCITY * td * td) / (2 * DECEL_PHASE)
+  );
 }
 
 export function initSmoothScroll(): void {
@@ -63,7 +92,7 @@ export function initSmoothScroll(): void {
     function step(now: number): void {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / SCROLL_DURATION_MS, 1);
-      const eased = easeLinearLanding(progress);
+      const eased = easeKickoffCruise(progress);
       window.scrollTo(0, startY + distance * eased);
       if (progress < 1) requestAnimationFrame(step);
       else history.replaceState(null, '', href);
