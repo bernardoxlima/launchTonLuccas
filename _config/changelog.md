@@ -8,6 +8,17 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 
 ## mpd
 
+### v4 — 2026-05-11
+
+**Forked from:** v3
+**Label:** Hero promise — Instagram como máquina de vendas
+**Mudança:** H1 do Hero substituída. De "Construa sua marca pessoal forte, original e lucrativa em apenas 2 dias." para "Transforme o seu Instagram em uma máquina de vendas e construa uma marca forte, original e lucrativa, em 2 dias." Estilo preservado (itálico stone-400 no reforço temporal "em 2 dias.").
+**Hipótese:** [hipótese assumida — confirme] Trocar a promessa de marca pessoal genérica por "Instagram como máquina de vendas" conecta diretamente com o pain point comercial (vendas) e amplia relevância pra tráfego frio Meta Ads, vs a promessa anterior focada só em atributos de marca (forte/original/lucrativa).
+**Métrica:** begin_checkout rate via tracking.ts
+
+**Refinamentos:**
+- (vazio)
+
 ### v3 — 2026-05-10
 
 **Forked from:** v2
