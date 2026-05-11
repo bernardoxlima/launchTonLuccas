@@ -80,10 +80,10 @@ Sem URL no fim da resposta = task incompleta. O user precisa do link pra abrir/v
 ## Roteamento em prod (Vercel)
 
 - `tonluccas.com.br/` → serve a **default** (PINNED em v3), via re-export no `src/pages/index.astro`. **NÃO segue `latest`.**
-- `tonluccas.com.br/mpd/v1` → versão 1 canônica (URL pra ads, nunca muda)
-- `tonluccas.com.br/mpd/v2` → versão 2 canônica
 - `tonluccas.com.br/mpd/v3` → versão 3 canônica (e também o que `/` serve)
 - `tonluccas.com.br/mpd/v4` → versão 4 canônica (variante isolada pra A/B; é o `latest` fork)
+- `tonluccas.com.br/mpd/v1` e `tonluccas.com.br/mpd/v2` → **DELETADAS** (`versions.json -> mpd.deleted`). Caem em `src/pages/404.astro` que redireciona pra `/`.
+- Qualquer outra URL inexistente → mesmo comportamento (404.astro é o fallback global do Astro).
 - `tonluccas.com.br/dev` → diretório interno com noindex (lista todas as versões pra navegação interna)
 
 ### Default vs latest — leia antes de criar uma nova versão
