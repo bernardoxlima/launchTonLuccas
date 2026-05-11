@@ -1,7 +1,28 @@
-const SCROLL_DURATION_MS = 1700;
+const SCROLL_DURATION_MS = 1500;
 
-function easeOutQuint(t: number): number {
-  return 1 - Math.pow(1 - t, 5);
+// Trapezoidal-velocity easing: quadratic accel ramp -> constant cruise -> quadratic
+// decel ramp. Unlike easeInOut/easeOut curves (which spend most of the time near
+// the target), this keeps the scroll moving at a steady, visible pace through
+// the middle of the screen, so the user perceives a deliberate "smooth pan"
+// rather than a quick burst followed by a long tail.
+const ACCEL_PHASE = 0.18;
+const DECEL_PHASE = 0.22;
+const CRUISE_PHASE = 1 - ACCEL_PHASE - DECEL_PHASE;
+// Solve for the cruise velocity V such that total distance == 1:
+//   accel area (V*ACCEL/2) + cruise (V*CRUISE) + decel area (V*DECEL/2) = 1
+const CRUISE_VELOCITY = 1 / (ACCEL_PHASE / 2 + CRUISE_PHASE + DECEL_PHASE / 2);
+const DIST_AFTER_ACCEL = (CRUISE_VELOCITY * ACCEL_PHASE) / 2;
+const DIST_AFTER_CRUISE = DIST_AFTER_ACCEL + CRUISE_VELOCITY * CRUISE_PHASE;
+
+function easeTrapezoid(t: number): number {
+  if (t < ACCEL_PHASE) {
+    return (CRUISE_VELOCITY * t * t) / (2 * ACCEL_PHASE);
+  }
+  if (t < ACCEL_PHASE + CRUISE_PHASE) {
+    return DIST_AFTER_ACCEL + CRUISE_VELOCITY * (t - ACCEL_PHASE);
+  }
+  const td = t - ACCEL_PHASE - CRUISE_PHASE;
+  return DIST_AFTER_CRUISE + CRUISE_VELOCITY * td - (CRUISE_VELOCITY * td * td) / (2 * DECEL_PHASE);
 }
 
 export function initSmoothScroll(): void {
@@ -48,7 +69,7 @@ export function initSmoothScroll(): void {
     function step(now: number): void {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / SCROLL_DURATION_MS, 1);
-      const eased = easeOutQuint(progress);
+      const eased = easeTrapezoid(progress);
       window.scrollTo(0, startY + distance * eased);
       if (progress < 1) requestAnimationFrame(step);
       else history.replaceState(null, '', href);
