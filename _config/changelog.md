@@ -17,7 +17,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 **Métrica:** begin_checkout rate via tracking.ts
 
 **Refinamentos:**
-- (vazio)
+- 2026-05-11 — Barra de progresso do Lote 01 no Hero subiu de 42% pra 77% (label "77% vendidos", fill visual da barra `width: 77%` e item do ticker marquee). Aumenta pressão de escassez na primeira dobra.
 
 ### v3 — 2026-05-10  *(PINNED como `default` desde 2026-05-11 — é o que `tonluccas.com.br/` serve)*
 
