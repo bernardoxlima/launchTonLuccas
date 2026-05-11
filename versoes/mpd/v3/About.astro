@@ -4,22 +4,24 @@ import { Icon } from 'astro-icon/components';
 import tonPortrait from '../../../fotos/ton-bio.webp';
 
 type Brand =
-  | { name: string; kind: 'icon'; icon: string }
-  | { name: string; kind: 'local'; src: string };
+  | { name: string; slug: string; kind: 'icon'; icon: string; hoverColor: string }
+  | { name: string; slug: string; kind: 'local'; src: string };
 
-// `kind: 'icon'` → renderizado via astro-icon `simple-icons:*` (monocromático, escala via CSS).
-// `kind: 'local'` → SVG em /public/brands/* (marcas BR que não estão no Simple Icons).
-// Todos passam pelo mesmo filtro CSS .brand-logo pra uniformizar visual.
+// `kind: 'icon'` → astro-icon simple-icons:* (mono — CSS `color` controla).
+//   `hoverColor` é a cor oficial da marca aplicada no hover (Simple Icons são
+//   monocromáticas, então sem cor explícita o hover não destacaria nada).
+// `kind: 'local'` → SVG em /public/brands/* já com cores hardcoded; o hover
+//   só remove o filtro mono e a cor original aparece naturalmente.
 const brands: Brand[] = [
-  { name: 'Sicredi',    kind: 'local', src: '/brands/sicredi.svg' },
-  { name: 'Sul América', kind: 'local', src: '/brands/sulamerica.svg' },
-  { name: 'Jeep',       kind: 'icon',  icon: 'simple-icons:jeep' },
-  { name: 'FIAT',       kind: 'icon',  icon: 'simple-icons:fiat' },
-  { name: 'RAM',        kind: 'icon',  icon: 'simple-icons:ram' },
-  { name: 'Duolingo',   kind: 'icon',  icon: 'simple-icons:duolingo' },
-  { name: 'Renner',     kind: 'local', src: '/brands/renner.svg' },
-  { name: 'BMW',        kind: 'icon',  icon: 'simple-icons:bmw' },
-  { name: 'MINI',       kind: 'icon',  icon: 'simple-icons:mini' },
+  { name: 'Sicredi',    slug: 'sicredi',    kind: 'local', src: '/brands/sicredi.svg' },
+  { name: 'Sul América', slug: 'sulamerica', kind: 'local', src: '/brands/sulamerica.svg' },
+  { name: 'Jeep',       slug: 'jeep',       kind: 'icon',  icon: 'simple-icons:jeep',     hoverColor: '#000000' },
+  { name: 'FIAT',       slug: 'fiat',       kind: 'icon',  icon: 'simple-icons:fiat',     hoverColor: '#A6192E' },
+  { name: 'RAM',        slug: 'ram',        kind: 'icon',  icon: 'simple-icons:ram',      hoverColor: '#000000' },
+  { name: 'Duolingo',   slug: 'duolingo',   kind: 'icon',  icon: 'simple-icons:duolingo', hoverColor: '#58CC02' },
+  { name: 'Renner',     slug: 'renner',     kind: 'local', src: '/brands/renner.svg' },
+  { name: 'BMW',        slug: 'bmw',        kind: 'icon',  icon: 'simple-icons:bmw',      hoverColor: '#0066B1' },
+  { name: 'MINI',       slug: 'mini',       kind: 'icon',  icon: 'simple-icons:mini',     hoverColor: '#000000' },
 ];
 ---
 
@@ -94,7 +96,13 @@ const brands: Brand[] = [
     <div class="brand-marquee relative">
       <div class="brand-track flex items-center gap-14 md:gap-24 whitespace-nowrap">
         {[...brands, ...brands].map((brand) => (
-          <span class="brand-logo shrink-0 inline-flex items-center justify-center" aria-label={brand.name}>
+          <span
+            class="brand-logo shrink-0 inline-flex items-center justify-center"
+            data-brand={brand.slug}
+            data-kind={brand.kind}
+            style={brand.kind === 'icon' ? `--brand-hover: ${brand.hoverColor}` : undefined}
+            aria-label={brand.name}
+          >
             {brand.kind === 'icon' ? (
               <Icon name={brand.icon} class="h-9 md:h-12 lg:h-14 w-auto" />
             ) : (
@@ -166,21 +174,29 @@ const brands: Brand[] = [
     padding: 0 0.1em;
   }
 
-  /* Brand logo treatment — força monocromático + low contrast pra que
-     Simple Icons (já mono) e SVGs coloridos (BR) fiquem visualmente
-     coesos no marquee. Hover individual restaura a cor original. */
+  /* Brand logo treatment — todas as logos saem monocromáticas (stone-900
+     + opacity 0.55) por padrão pra ficarem visualmente coesas no marquee.
+     No hover, cada uma volta pra cor real:
+     - `kind=local`: SVG tem cor própria hardcoded; basta tirar o filtro.
+     - `kind=icon`: Simple Icons são mono via `currentColor`; aplicamos a
+       cor oficial da marca via `--brand-hover` setada inline no <span>. */
   .brand-logo {
     color: var(--color-stone-900);
   }
-  .brand-logo svg,
-  .brand-logo img {
+  .brand-logo[data-kind='icon'] svg {
     color: var(--color-stone-900);
-    filter: grayscale(1) brightness(0) opacity(0.55);
-    transition: filter 0.35s ease, opacity 0.35s ease;
+    opacity: 0.55;
+    transition: color 0.35s ease, opacity 0.35s ease;
   }
-  .brand-logo:hover svg,
-  .brand-logo:hover img {
-    filter: none;
+  .brand-logo[data-kind='icon']:hover svg {
+    color: var(--brand-hover, var(--color-stone-900));
     opacity: 1;
+  }
+  .brand-logo[data-kind='local'] img {
+    filter: grayscale(1) brightness(0) opacity(0.55);
+    transition: filter 0.35s ease;
+  }
+  .brand-logo[data-kind='local']:hover img {
+    filter: none;
   }
 </style>
