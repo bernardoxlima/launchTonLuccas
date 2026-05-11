@@ -184,27 +184,37 @@ const brands: Brand[] = [
     color: var(--color-stone-900);
   }
 
-  /* Bounding box uniforme: cada logo cabe num retângulo max-h × max-w,
-     respeitando o aspect ratio próprio. Wide logos batem no max-width
-     antes do max-height; square logos batem no max-height. Resultado:
-     área visual aproximadamente equivalente independente do ratio. */
+  /* Altura fixa baseline pra todos os logos (height + width:auto preserva
+     ratio). Pra ratios atípicos (Sul América quadrado, etc) ajustamos
+     via override por marca abaixo. */
   .brand-logo-art {
-    max-height: 2.5rem;
-    max-width: 9rem;
+    height: 2.25rem;
     width: auto;
-    height: auto;
-    object-fit: contain;
   }
   @media (min-width: 768px) {
     .brand-logo-art {
-      max-height: 3.5rem;
-      max-width: 12rem;
+      height: 3rem;
     }
   }
   @media (min-width: 1024px) {
     .brand-logo-art {
-      max-height: 4rem;
-      max-width: 14rem;
+      height: 3.5rem;
+    }
+  }
+
+  /* Sul América: SVG quadrado (700x700), sem essa boost o logo parece
+     bem menor que Renner/Sicredi (wide) ao lado. */
+  .brand-logo[data-brand='sulamerica'] .brand-logo-art {
+    height: 3.5rem;
+  }
+  @media (min-width: 768px) {
+    .brand-logo[data-brand='sulamerica'] .brand-logo-art {
+      height: 4.5rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .brand-logo[data-brand='sulamerica'] .brand-logo-art {
+      height: 5.5rem;
     }
   }
 
