@@ -1,7 +1,8 @@
 # Criativos — Pipeline de Producao de Video
 
 Pipeline: Texto -> Voz (MiniMax API) -> Avatar (HeyGen API) -> Montagem (ffmpeg).
-30 hooks x 3 meats x 2 CTAs = 30 criativos finais a partir de 35 takes unicos.
+30 hooks x 3 meats x 3 CTAs = ate 270 criativos possiveis a partir de 36 takes unicos.
+Nao pre-definimos combinacoes. Produzimos, testamos, e o dado decide o que funciona.
 
 ## Estagios
 
@@ -10,7 +11,7 @@ Pipeline: Texto -> Voz (MiniMax API) -> Avatar (HeyGen API) -> Montagem (ffmpeg)
 | 1 | `01-scripts/` | Briefing + copy-anti-ai.md | .md com status `aprovado` | Claude + humano |
 | 2 | `02-audio/` | Texto aprovado + _config/minimax.json | .mp3 por componente | MiniMax API |
 | 3 | `03-video/` | Audio .mp3 + _config/heygen.json | .mp4 por componente | HeyGen API |
-| 4 | `04-finais/` | Videos .mp4 + combinacoes.json | Criativos montados | ffmpeg |
+| 4 | `04-finais/` | Videos .mp4 de 03-video/ | Criativos montados | ffmpeg (parametrizado) |
 
 Estagio 1 committed no git. Estagios 2-4 gitignored (binarios pesados).
 
@@ -21,10 +22,9 @@ Estagio 1 committed no git. Estagios 2-4 gitignored (binarios pesados).
 | Escrever/editar copy | `01-scripts/` + `rules/copy-anti-ai.md` | `01-scripts/*.md` |
 | Gerar audio | `01-scripts/*.md` (texto) + `_config/minimax.json` | `02-audio/` |
 | Gerar video | `02-audio/*.mp3` + `_config/heygen.json` | `03-video/` |
-| Montar criativos | `03-video/*.mp4` + `combinacoes.json` | `04-finais/` |
-| Adicionar combinacao | `combinacoes.json` | `combinacoes.json` |
-| Adicionar abordagem | `01-scripts/hooks/{awareness}/` | criar subpasta + hooks + atualizar combinacoes.json |
-| Adicionar awareness | `01-scripts/hooks/` | criar pasta + subpastas + hooks + atualizar combinacoes.json |
+| Montar criativos | `03-video/*.mp4` | `04-finais/` |
+| Adicionar abordagem | `01-scripts/hooks/{awareness}/` | criar subpasta + hooks |
+| Adicionar awareness | `01-scripts/hooks/` | criar pasta + subpastas + hooks |
 
 ## Organizacao dos hooks
 
@@ -61,8 +61,14 @@ Awareness levels disponiveis (Schwartz via Hormozi):
 
 `{abordagem}-h{XX}_{meat}_{cta}`
 
-O nome carrega: abordagem emocional, numero do hook, meat e CTA.
-Awareness level fica no folder, nao no ID (eh derivavel pela abordagem).
+O nome **eh** a combinacao. Nao precisa de manifesto ou JSON externo.
+Dado o ID, voce sabe exatamente quais 3 videos concatenar:
+
+```
+injustica-h01_diag_tempo  →  03-video/injustica-h01.mp4
+                              03-video/meat-diag.mp4
+                              03-video/cta-tempo.mp4
+```
 
 ### Decoder (meats e CTAs)
 
@@ -87,19 +93,19 @@ Awareness level fica no folder, nao no ID (eh derivavel pela abordagem).
 
 | ID | Leitura |
 |----|---------|
-| `injustica-h01_diag_esc` | Angulo injustica, hook 1, meat diagnostico, CTA escassez |
-| `espelho-h05_metodo_ancor` | Angulo espelho, hook 5, meat metodo, CTA ancoragem |
-| `urgencia-h08_prova_esc` | Angulo urgencia, hook 8, meat prova social, CTA escassez |
+| `injustica-h01_diag_tempo` | Abordagem injustica, hook 1, meat diagnostico, CTA urgencia temporal |
+| `espelho-h05_metodo_ancor` | Abordagem espelho, hook 5, meat metodo, CTA ancoragem |
+| `urgencia-h08_prova_esc` | Abordagem urgencia, hook 8, meat prova social, CTA escassez |
 
 ### Para mensuracao (Meta Ads)
 
 O ID do criativo vai no nome do anuncio. Para filtrar performance:
 
-- Por angulo: `injustica-*` vs `espelho-*` vs `urgencia-*`
+- Por abordagem: `injustica-*` vs `espelho-*` vs `urgencia-*`
 - Por meat: `*_diag_*` vs `*_metodo_*` vs `*_prova_*`
-- Por CTA: `*_esc` vs `*_ancor`
-- Por combo meat+cta: `*_diag_esc` vs `*_metodo_ancor`
-- Por hook: comparar hooks dentro do mesmo angulo
+- Por CTA: `*_esc` vs `*_ancor` vs `*_tempo`
+- Por combo meat+cta: `*_diag_esc` vs `*_metodo_ancor` etc
+- Por hook individual: comparar hooks dentro da mesma abordagem
 
 ## Naming dos arquivos gerados (estagios 2-4)
 
@@ -117,35 +123,39 @@ Flat, sem subpastas. O nome carrega a identidade:
 04-finais/injustica-h01_diag_esc.mp4   <- criativo montado
 ```
 
+## Montagem (estagio 4) — parametrizada
+
+Sem manifesto pre-definido. A combinacao eh definida no momento da montagem.
+
+**Montar um criativo especifico:**
+```bash
+ffmpeg -i 03-video/injustica-h01.mp4 -i 03-video/meat-diag.mp4 -i 03-video/cta-tempo.mp4 \
+  -filter_complex "[0:v][0:a][1:v][1:a][2:v][2:a]concat=n=3:v=1:a=1[outv][outa]" \
+  -map "[outv]" -map "[outa]" 04-finais/injustica-h01_diag_tempo.mp4
+```
+
+**Montar um lote (todos hooks de uma abordagem x todos meats x todos CTAs):**
+```bash
+for hook in 03-video/injustica-*.mp4; do
+  for meat in 03-video/meat-*.mp4; do
+    for cta in 03-video/cta-*.mp4; do
+      # extrair IDs dos nomes dos arquivos → montar nome do output
+      ffmpeg -i "$hook" -i "$meat" -i "$cta" ...
+    done
+  done
+done
+```
+
+**Montar tudo (270 combinacoes):**
+Mesmo loop, mas iterando sobre todos os hooks de 03-video/.
+
+Filosofia: produz tudo, testa no Meta Ads, dado decide o que funciona (Hormozi).
+
 ## Status dos scripts
 
 Frontmatter de cada .md em 01-scripts/:
 
 `rascunho` -> `aprovado` -> `audio-ok` -> `video-ok`
-
-## Matriz de compatibilidade
-
-```
-                        MEATS
-          ┌──────────┬──────────┬──────────┐
-          │   diag   │  metodo  │  prova   │
-          ├──────────┼──────────┼──────────┤
-injustica │   +++    │    +     │    ++    │
-espelho   │   +++    │    ++    │    +     │
-urgencia  │    +     │   +++    │    ++    │
-          └──────────┴──────────┴──────────┘
-
-                        CTAS
-          ┌──────────┬──────────┐
-          │   esc    │  ancor   │
-          ├──────────┼──────────┤
-diag      │   +++    │    ++    │
-metodo    │    ++    │   +++    │
-prova     │   +++    │    +     │
-          └──────────┴──────────┘
-
-+++ = combo principal    ++ = alternativo    + = funciona mas nao eh obvio
-```
 
 ## Framework de referencia (Hormozi — $100M GOATed Ads)
 
@@ -156,7 +166,7 @@ Serve como referencia pra criar novos hooks, classificar os existentes e analisa
 
 Hook -> Meat -> CTA
 
-- **Hook**: "Whatever people see and/or hear first." 80% do esforço criativo vai aqui.
+- **Hook**: "Whatever people see and/or hear first." 80% do esforco criativo vai aqui.
 - **Meat**: "The part of the ad that fulfills your hook." Rotaciona menos porque menos gente ve.
 - **CTA**: "Tell them exactly what to do next. S-P-E-L-L it out." 1-2 que funcionam, manter.
 
@@ -181,7 +191,7 @@ urgencia eh **promise-driven** (solution-aware/).
 |------|-----------|---------|
 | `statement` | Afirmacao direta | "A coisa mais inteligente que voce pode fazer hoje..." |
 | `question` | Pergunta sim/nao ou aberta | "Ja aconteceu de voce gravar um video e..." |
-| `conditional` | Se voce [condição], entao... | "Se voce posta ha 2 anos e continua anonimo..." |
+| `conditional` | Se voce [condicao], entao... | "Se voce posta ha 2 anos e continua anonimo..." |
 | `label` | Rotula o publico | "Especialistas que faturam menos do que deveriam" |
 | `command` | Ordem direta | "Para de tentar copiar o jeito dos outros" |
 | `narrative` | Historia/anedota | "Eu ja vi especialistas brilhantes ficarem invisiveis..." |
@@ -200,9 +210,9 @@ urgencia eh **promise-driven** (solution-aware/).
 | `faceless` | Screenshots, texto, slides, animacoes |
 
 Nossos meats atuais:
-- diagnostico → `education` (explainer do problema)
-- metodo → `education` (explainer da solucao)
-- prova-social → `testimonial` (casos reais)
+- diagnostico -> `education` (explainer do problema)
+- metodo -> `education` (explainer da solucao)
+- prova-social -> `testimonial` (casos reais)
 
 ### Regra 70-20-10 (inovacao criativa — Hormozi via Google)
 
@@ -221,7 +231,7 @@ Se experimental vence, vira core. Se perde, documenta e segue.
 - "I record 10 or so hooks for every 1 piece of ad content. Yes, 10x."
 - Hooks devem ser distribuidos entre awareness levels ("spread across buckets")
 
-### Mapeamento: nossos termos → Hormozi
+### Mapeamento: nossos termos -> Hormozi
 
 | Nosso termo | Termo Hormozi | Nota |
 |-------------|---------------|------|
@@ -230,32 +240,27 @@ Se experimental vence, vira core. Se perde, documenta e segue.
 | CTA | CTA | Identico |
 | abordagem emocional | Nao existe como termo unico | Combinacao de awareness level + angulo criativo |
 | awareness level (folder) | "Buckets" por awareness | Organizacao primaria dos hooks |
-| combinacoes.json | "Ad Assembly Process" | Montagem modular hook+meat+CTA |
-| variacao: true | Parte do 20% emerging | Combos alternativos pra teste |
+| montagem parametrizada | "Ad Assembly Process" | Combinatorial: todo hook x todo meat x todo CTA |
 
 ## Como adicionar
 
 ### Novo hook
 1. Crie `01-scripts/hooks/{awareness}/{abordagem}/h{XX}.md` com frontmatter
-2. Adicione combinacao em `combinacoes.json`
-3. Rode pipeline (estagios 2-4)
-
-### Nova combinacao (remix)
-1. Adicione linha em `combinacoes.json`
-2. Rode so estagio 4 (ffmpeg) — takes ja existem
+2. Gere audio (estagio 2) e video (estagio 3)
+3. Monte criativos (estagio 4) com os meats e CTAs que quiser
 
 ### Nova abordagem emocional (dentro de awareness existente)
 1. Crie subpasta `01-scripts/hooks/{awareness}/{nome-da-abordagem}/`
 2. Crie hooks com frontmatter
-3. Adicione combinacoes em `combinacoes.json`
+3. Rode pipeline (estagios 2-4)
 
 ### Novo awareness level
 1. Crie pasta `01-scripts/hooks/{awareness-level}/`
 2. Crie subpastas de abordagem dentro
 3. Crie hooks com frontmatter
-4. Adicione combinacoes em `combinacoes.json`
+4. Rode pipeline (estagios 2-4)
 
 ### Novo meat ou CTA
 1. Crie .md em `01-scripts/meats/` ou `01-scripts/ctas/`
 2. Gere audio + video (estagios 2-3)
-3. Adicione combinacoes em `combinacoes.json`
+3. Monte criativos (estagio 4) — o novo componente fica disponivel pra qualquer combinacao
