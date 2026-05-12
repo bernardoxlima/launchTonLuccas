@@ -157,6 +157,125 @@ Frontmatter de cada .md em 01-scripts/:
 
 `rascunho` -> `aprovado` -> `audio-ok` -> `video-ok`
 
+## API — Estagio 2: Geracao de audio (MiniMax)
+
+Config: `_config/minimax.json`
+Env: `MINIMAX_API_KEY` em `.env` (raiz do projeto)
+
+### ANTES de gerar audio: verificar se a voz clonada existe
+
+Vozes clonadas **expiram apos 7 dias sem uso**. Sempre verificar antes de gerar.
+
+```bash
+source .env && curl -s -X POST "https://api.minimax.io/v1/get_voice" \
+  -H "Authorization: Bearer $MINIMAX_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"voice_type": "voice_cloning"}'
+```
+
+Procurar `ton-luccas-v1` no array `voice_cloning` da resposta.
+- **Encontrou** → voz ativa, seguir direto pra geracao de audio (T2A)
+- **Nao encontrou** → voz expirou, rodar o fluxo de re-clonagem abaixo
+
+### Fluxo de voice clone (rodar SO se a verificacao acima falhar)
+
+**Passo 1 — Upload do audio fonte:**
+```bash
+source .env && curl -s -X POST "https://api.minimax.io/v1/files/upload" \
+  -H "Authorization: Bearer $MINIMAX_API_KEY" \
+  -F "purpose=voice_clone" \
+  -F "file=@/caminho/para/audio-do-ton.mp3"
+```
+Retorna `file_id` (int64). Audio fonte: mp3/m4a/wav, 10s-5min, max 20MB.
+
+**Passo 2 — Clonar a voz:**
+```bash
+source .env && curl -s -X POST "https://api.minimax.io/v1/voice_clone" \
+  -H "Authorization: Bearer $MINIMAX_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "file_id": FILE_ID_DO_PASSO_1,
+    "voice_id": "ton-luccas-v1",
+    "model": "speech-2.8-hd",
+    "text": "Texto de preview pra testar a voz clonada.",
+    "language_boost": "auto",
+    "need_noise_reduction": true
+  }'
+```
+Regras do voice_id: 8-256 chars, comeca com letra, alfanumerico + `-` e `_`.
+Resposta inclui `demo_audio` (URL valida 24h) se `text` foi fornecido.
+
+### Geracao de audio (T2A) — o que roda pra cada hook/meat/CTA
+
+**Endpoint:** `POST https://api.minimax.io/v1/t2a_v2`
+
+**Request:**
+```bash
+source .env && curl -s -X POST "https://api.minimax.io/v1/t2a_v2" \
+  -H "Authorization: Bearer $MINIMAX_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "speech-2.8-hd",
+    "text": "TEXTO DO HOOK/MEAT/CTA AQUI",
+    "output_format": "hex",
+    "language_boost": "auto",
+    "audio_setting": {
+      "format": "mp3",
+      "sample_rate": 32000,
+      "bitrate": 128000
+    },
+    "voice_setting": {
+      "voice_id": "ton-luccas-v1",
+      "speed": 1.0,
+      "vol": 5,
+      "pitch": 0
+    }
+  }'
+```
+
+**Resposta:** audio em hex. Converter pra MP3:
+```python
+audio_bytes = bytes.fromhex(response["data"]["audio"])
+with open("02-audio/injustica-h01.mp3", "wb") as f:
+    f.write(audio_bytes)
+```
+
+**Controles de voz disponiveis:**
+
+| Parametro | Range | Default | O que faz |
+|-----------|-------|---------|-----------|
+| `speed` | 0.5-2.0 | 1.0 | Velocidade da fala |
+| `vol` | 0-10 | 5 | Volume |
+| `pitch` | -12 a 12 | 0 | Tom (negativo=grave, positivo=agudo) |
+| `emotion` | ver lista | auto | Emocao da fala |
+
+Emocoes disponiveis: `happy`, `sad`, `angry`, `fearful`, `disgusted`, `surprised`, `calm`, `fluent`, `whisper`
+
+**Textos acima de 3000 chars:** usar `"stream": true`.
+
+### Erros comuns
+
+| Codigo | Significado |
+|--------|-------------|
+| 0 | Sucesso |
+| 1002 | Rate limit |
+| 1004 | Autenticacao falhou — checar MINIMAX_API_KEY |
+| 1008 | Saldo insuficiente — recarregar na plataforma |
+| 2013 | Parametros invalidos |
+
+## API — Estagio 3: Geracao de video (HeyGen)
+
+Config: `_config/heygen.json`
+Env: `HEYGEN_API_KEY` em `.env` (raiz do projeto)
+
+Fluxo: enviar audio .mp3 do estagio 2 + avatar_id → receber video .mp4.
+Ao gerar, perguntar ao user qual avatar usar via AskUserQuestion.
+
+Avatares disponiveis em `_config/heygen.json` com descricao visual de cada um.
+Sugestao de match: l1/l2 (casual) pra espelho/injustica, l3/l4 (producao alta) pra urgencia/prova.
+
+Documentacao da API HeyGen: preencher quando integrar.
+
 ## Framework de referencia (Hormozi — $100M GOATed Ads)
 
 Terminologia e classificacoes baseadas no framework de Alex Hormozi.

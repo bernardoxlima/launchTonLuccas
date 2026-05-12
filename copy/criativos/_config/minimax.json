@@ -1,9 +1,18 @@
 {
   "provider": "minimax",
   "purpose": "text-to-speech para gerar audio dos scripts",
-  "voice_id": "",
-  "model": "speech-02-hd",
-  "speed": 1.0,
-  "emotion": "neutral",
-  "notes": "Preencher voice_id com o ID da voz clonada do Ton no MiniMax. Emotion varia por angulo — ver frontmatter de cada hook."
+  "model": "speech-2.8-hd",
+  "voice_id": "ton-luccas-v1",
+  "language_boost": "auto",
+  "audio_setting": {
+    "format": "mp3",
+    "sample_rate": 32000,
+    "bitrate": 128000
+  },
+  "voice_setting_defaults": {
+    "speed": 1.0,
+    "vol": 5,
+    "pitch": 0
+  },
+  "notes": "voice_id ton-luccas-v1 clonado em 2026-05-12 a partir de IMG_4429.mp3 (2min54s). Voz auto-deleta apos 7 dias sem uso — se expirar, re-clonar com o mesmo audio."
 }
