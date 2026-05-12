@@ -198,7 +198,7 @@ source .env && curl -s -X POST "https://api.minimax.io/v1/voice_clone" \
     "voice_id": "ton-luccas-v1",
     "model": "speech-2.8-hd",
     "text": "Texto de preview pra testar a voz clonada.",
-    "language_boost": "auto",
+    "language_boost": "Portuguese",
     "need_noise_reduction": true
   }'
 ```
@@ -208,6 +208,9 @@ Resposta inclui `demo_audio` (URL valida 24h) se `text` foi fornecido.
 ### Geracao de audio (T2A) — o que roda pra cada hook/meat/CTA
 
 **Endpoint:** `POST https://api.minimax.io/v1/t2a_v2`
+**Endpoint alternativo (menor latencia):** `POST https://api-uw.minimax.io/v1/t2a_v2`
+
+Todos os valores default estao em `_config/minimax.json`. Ler o JSON e montar o request a partir dele.
 
 **Request:**
 ```bash
@@ -217,41 +220,71 @@ source .env && curl -s -X POST "https://api.minimax.io/v1/t2a_v2" \
   -d '{
     "model": "speech-2.8-hd",
     "text": "TEXTO DO HOOK/MEAT/CTA AQUI",
-    "output_format": "hex",
-    "language_boost": "auto",
+    "output_format": "url",
+    "language_boost": "Portuguese",
     "audio_setting": {
       "format": "mp3",
       "sample_rate": 32000,
-      "bitrate": 128000
+      "bitrate": 128000,
+      "channel": 1
     },
     "voice_setting": {
       "voice_id": "ton-luccas-v1",
-      "speed": 1.0,
-      "vol": 5,
-      "pitch": 0
+      "speed": 1.1,
+      "vol": 1,
+      "pitch": 0,
+      "emotion": "angry",
+      "text_normalization": true
+    },
+    "pronunciation_dict": {
+      "tone": ["Vorus/Vórus", "Ton/Tón"]
     }
   }'
 ```
 
-**Resposta:** audio em hex. Converter pra MP3:
-```python
-audio_bytes = bytes.fromhex(response["data"]["audio"])
-with open("02-audio/injustica-h01.mp3", "wb") as f:
-    f.write(audio_bytes)
+**Resposta (output_format: url):** campo `data.audio` contem URL direta pro MP3 (valida 24h).
+```bash
+url=$(echo $response | python3 -c "import sys,json; print(json.load(sys.stdin)['data']['audio'])")
+curl -sL -o "02-audio/injustica-h01.mp3" "$url"
 ```
 
-**Controles de voz disponiveis:**
+### Controles de texto (perguntar ao user antes de usar)
 
-| Parametro | Range | Default | O que faz |
-|-----------|-------|---------|-----------|
-| `speed` | 0.5-2.0 | 1.0 | Velocidade da fala |
-| `vol` | 0-10 | 5 | Volume |
-| `pitch` | -12 a 12 | 0 | Tom (negativo=grave, positivo=agudo) |
-| `emotion` | ver lista | auto | Emocao da fala |
+**Pausas customizadas** — inserir respiracao natural entre frases:
+```
+Texto antes <#1.5#> texto depois da pausa de 1.5 segundos.
+```
+Range: 0.01-99.99 segundos.
 
-Emocoes disponiveis: `happy`, `sad`, `angry`, `fearful`, `disgusted`, `surprised`, `calm`, `fluent`, `whisper`
+**Interjeicoes** — tags que criam sons naturais (so speech-2.8-hd e speech-2.8-hd):
+`(laughs)`, `(chuckle)`, `(coughs)`, `(clear-throat)`, `(groans)`, `(breath)`,
+`(pant)`, `(inhale)`, `(exhale)`, `(gasps)`, `(sniffs)`, `(sighs)`, `(snorts)`,
+`(burps)`, `(lip-smacking)`, `(humming)`, `(hissing)`, `(emm)`, `(sneezes)`
 
-**Textos acima de 3000 chars:** usar `"stream": true`.
+Exemplo: `"(sighs) A razao pela qual voce posta ha meses..."`
+
+**Antes de inserir pausas ou interjeicoes:** perguntar ao user via AskUserQuestion.
+
+### Pronuncia customizada
+
+Registrada em `_config/minimax.json` no campo `pronunciation_dict.tone`.
+Formato: `"original/como pronunciar"`.
+
+Valores atuais: `Vorus/Vórus`, `Ton/Tón`.
+
+**Ao encontrar nomes proprios novos no texto:** perguntar ao user se quer adicionar pronuncia.
+
+### Config fixa (nao mexer sem pedir ao user)
+
+| Parametro | Valor | Motivo |
+|-----------|-------|--------|
+| `model` | `speech-2.8-hd` | Melhor resultado pra voz do Ton |
+| `speed` | 1.1 | Ritmo natural do Ton |
+| `emotion` | `angry` | Funciona melhor de forma geral pra todas as abordagens |
+| `text_normalization` | true | Ler valores (R$ 47, 60 mil) corretamente |
+| `output_format` | `url` | Retorna link direto, sem converter hex |
+
+**Textos acima de 3000 chars:** usar `"stream": true` (meats longos podem precisar).
 
 ### Erros comuns
 
