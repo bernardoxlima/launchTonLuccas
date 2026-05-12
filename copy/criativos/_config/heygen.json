@@ -1,8 +1,29 @@
 {
   "provider": "heygen",
   "purpose": "audio-to-video com avatar do Ton",
-  "avatar_id": "",
   "quality": "high",
   "aspect_ratio": "9:16",
-  "notes": "Preencher avatar_id com o ID do avatar do Ton no HeyGen. Aspect ratio 9:16 pra Reels/Stories. Mudar pra 16:9 se precisar de formato horizontal."
+  "avatares": [
+    {
+      "id": "8f027b074c8843cbb782edd3f2e1baeb",
+      "nome": "ton luccas - v1 - l1",
+      "descricao": "Casa/sala de estar, camiseta preta, oculos marrom, enquadramento meio corpo, fundo com sofa bege e cozinha ao fundo, luz natural, clima casual/domestico"
+    },
+    {
+      "id": "ae13385a74a14aa6b4618de6087b564c",
+      "nome": "ton luccas - v1 - l2",
+      "descricao": "Varanda/area externa apartamento, camiseta preta, oculos marrom, enquadramento meio corpo, fundo com cortina branca e janela com vista pra area verde, luz natural forte, clima leve/arejado"
+    },
+    {
+      "id": "df0ddf226faa4abfaae0918a9edef324",
+      "nome": "ton luccas - v1 - l3",
+      "descricao": "Escritorio/biblioteca, moletom preto com capuz, oculos vermelho, enquadramento busto com mesa, fundo com estante de livros e iluminacao quente, clima profissional/intelectual, alta producao"
+    },
+    {
+      "id": "91dae42aa50c4e71929b63f1774303d1",
+      "nome": "ton luccas - v1 - l4",
+      "descricao": "Escritorio/estudio podcast, camiseta preta, oculos vermelho, enquadramento meio corpo com microfone condensador em primeiro plano, fundo escuro com plantas, iluminacao de estudio, clima autoridade/conteudo premium"
+    }
+  ],
+  "notes": "Ao gerar video, perguntar ao user qual avatar usar via AskUserQuestion. Sugestao de match por territorio do hook: l1/l2 (casual) pra hooks de espelho e injustica, l3/l4 (producao alta) pra hooks de urgencia e prova social."
 }
