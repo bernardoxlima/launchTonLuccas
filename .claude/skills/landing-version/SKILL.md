@@ -31,7 +31,7 @@ PARAR. Perguntar via `AskUserQuestion`:
 
 Editar o arquivo na versão latest. NÃO tocar em outras versões ainda.
 
-Se a mudança envolve microcopy nova: validar contra `rules/copy-anti-ai.md` antes de escrever.
+Se a mudança envolve microcopy nova: validar contra `copy/criativos/_config/reference/copy-anti-ai.md` antes de escrever.
 
 ### Step 3 — REQUIRED: AskUserQuestion sobre versionamento
 

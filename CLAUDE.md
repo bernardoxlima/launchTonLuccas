@@ -25,7 +25,7 @@ Sistema de versionamento de páginas de vendas Astro pra rodar A/B test e itera�
 | `src/lib/tracking.ts` | Helpers de tracking (begin_checkout) | NÃO editar via skill |
 | `vercel.json` | Headers `/dev` (noindex). Sem rewrites — Astro gera /index.html e arquivo estático ganha do rewrite | Raramente |
 | `copy/` | Copy fonte do cliente — NÃO ALTERAR | Lendo conteúdo |
-| `rules/copy-anti-ai.md` | Regras de microcopy | Escrevendo qualquer texto novo |
+| `copy/criativos/_config/reference/copy-anti-ai.md` | Regras de microcopy | Escrevendo qualquer texto novo |
 | `cases/`, `fotos/` | Assets compartilhados | Importando assets |
 | `_archive/` | Docs históricos (não ler em runtime) | Curiosidade |
 

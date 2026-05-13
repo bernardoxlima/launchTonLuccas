@@ -13,13 +13,13 @@ Hard rules que se aplicam a TODA edição neste projeto. A skill `landing-versio
 ## Arquivos compartilhados
 
 6. **NUNCA editar durante uma task de versão:** `src/layouts/Base.astro`, `src/lib/tracking.ts`, `src/lib/versions.ts`, `package.json`, `astro.config.mjs`, `tsconfig.json`. Eles têm seu próprio fluxo (fora da skill).
-7. **NUNCA alterar:** `copy/`, `rules/copy-anti-ai.md`, `cases/`, `fotos/`. Fontes da verdade do cliente.
+7. **NUNCA alterar:** `copy/`, `copy/criativos/_config/reference/copy-anti-ai.md`, `cases/`, `fotos/`. Fontes da verdade do cliente.
 8. **Cada versão é independente.** Pode trocar paleta, tipografia, layout. Compartilha apenas Base + tracking + assets de `cases/` `fotos/`.
 
 ## Copy / microcopy
 
 9. Copy fonte (do cliente) em `copy/paginas/` — nunca alterar.
-10. Microcopy nova (alt text, error messages, button labels, loading states) — passar pelo checklist `rules/copy-anti-ai.md`.
+10. Microcopy nova (alt text, error messages, button labels, loading states) — passar pelo checklist `copy/criativos/_config/reference/copy-anti-ai.md`.
 
 ## Mobile-first
 
