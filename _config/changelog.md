@@ -8,6 +8,17 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 
 ## mpd
 
+### v6 — 2026-05-13
+
+**Forked from:** v5
+**Label:** Standard-only com promessa v3 (sem Instagram máquina de vendas)
+**Mudança:** H1 do Hero revertida pra wording original da v3 — "Construa sua marca pessoal forte, original e lucrativa em apenas 2 dias." Tudo o mais idêntico à v5 (single-card Pricing, 10 CTAs diretos pro Kirvano, tracking begin_checkout, FAQ sem VIP). Único diff vs v5 é a primeira dobra.
+**Hipótese:** Isolar o efeito da promessa do hero. v6 mantém o setup Standard-only/CTAs diretos da v5 mas volta a promessa original da v3. Comparar v5 vs v6 mede o impacto puro da copy "Instagram como máquina de vendas", controlando o restante da página.
+**Métrica:** begin_checkout rate via tracking.ts
+
+**Refinamentos:**
+- (vazio)
+
 ### v5 — 2026-05-13
 
 **Forked from:** v4
