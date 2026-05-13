@@ -14,7 +14,7 @@ Antes de começar, leia OBRIGATORIAMENTE:
 1. /versoes/README.md — guia técnico do projeto
 2. /copy/paginaVendas/Workshop Marca Pessoal Definitiva.md — copy fonte
 3. /copy/paginaVendas/ofertaWorkshop.md — copy de pricing/oferta
-4. /rules/copy-anti-ai.md — regras obrigatórias de microcopy
+4. /copy/criativos/_config/reference/copy-anti-ai.md — regras obrigatórias de microcopy
 
 Stack: Astro 5 + Tailwind 4 + TypeScript. Mobile-first.
 Dev server: `npm run dev` (localhost:4321).
@@ -62,7 +62,7 @@ Definitiva. Estamos em /Users/bernardoxlima/Desktop/tonluccas_launchOS.
 Antes de começar, leia:
 1. /versoes/README.md — guia técnico do projeto
 2. /copy/paginaObrigado/ — copy da página (se existir)
-3. /rules/copy-anti-ai.md — regras de microcopy
+3. /copy/criativos/_config/reference/copy-anti-ai.md — regras de microcopy
 
 Stack: Astro 5 + Tailwind 4 + TypeScript. Mobile-first.
 
@@ -119,7 +119,7 @@ métrica que vai medir.
 
 3. **Mobile-first é regra, não preferência** — 80%+ do tráfego de Meta Ads é mobile. Sempre testar em 390px primeiro.
 
-4. **Copy é sagrada** — texto do cliente em `/copy/` não se altera. Microcopy nova passa pelo checklist anti-IA em `/rules/copy-anti-ai.md`.
+4. **Copy é sagrada** — texto do cliente em `/copy/` não se altera. Microcopy nova passa pelo checklist anti-IA em `/copy/criativos/_config/reference/copy-anti-ai.md`.
 
 5. **Cada versão é independente** — pode usar tipografia diferente, paleta diferente, layout diferente. O que compartilham é apenas a infraestrutura (Base, tracking).
 

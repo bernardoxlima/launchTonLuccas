@@ -101,7 +101,7 @@ Acesse http://localhost:4321/pagina-vendas/v2
 
 ### Copy
 - A copy fonte está em `/copy/paginaVendas/` — **nunca alterar sem permissão do cliente**
-- Microcopy nova (botões, alt text, error messages) **deve passar pelo checklist** de `/rules/copy-anti-ai.md`
+- Microcopy nova (botões, alt text, error messages) **deve passar pelo checklist** de `/copy/criativos/_config/reference/copy-anti-ai.md`
 - Lista de palavras proibidas, padrões anti-IA, vocabulário marketeiro — tudo lá
 
 ### Path aliases (do tsconfig.json)
@@ -152,7 +152,7 @@ Definidas em `.env.example` — copie pra `.env.local` quando tiver os IDs reais
 
 ## Workflow recomendado
 
-1. Antes de codar: ler `/copy/paginaVendas/Workshop Marca Pessoal Definitiva.md` + `/rules/copy-anti-ai.md`
+1. Antes de codar: ler `/copy/paginaVendas/Workshop Marca Pessoal Definitiva.md` + `/copy/criativos/_config/reference/copy-anti-ai.md`
 2. Copiar v1 como base
 3. Trabalhar componente por componente, validando no localhost a cada mudança
 4. Testar mobile (390-500px), tablet (768px), desktop (1024px+)
