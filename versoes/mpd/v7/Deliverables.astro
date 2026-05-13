@@ -1,0 +1,99 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || 'https://pay.kirvano.com/cd45d82c-9fe5-44f3-8b41-8fce3b50437b?utm_source=organic&utm_campaign=&utm_medium=&utm_content=&utm_term=';
+
+const items = [
+  {
+    n: '01',
+    title: 'O seu território de marca',
+    body: 'O espaço mental que você deve ocupar para deixar de ser comparado com todo mundo e começar a ser percebido como uma referência única.',
+  },
+  {
+    n: '02',
+    title: 'A sua mensagem central',
+    body: 'A frase, a ideia e a visão de mundo que fazem o público entender rapidamente quem você é, o que você defende e por que deveria prestar atenção em você.',
+  },
+  {
+    n: '03',
+    title: 'O seu diferencial autoral',
+    body: 'Aquilo que nasce da sua história, da sua experiência e da sua forma de pensar — e que não pode ser copiado por concorrentes.',
+  },
+  {
+    n: '04',
+    title: 'A sua narrativa de autoridade',
+    body: 'Como transformar trajetória, repertório, visão e posicionamento em uma marca que transmite confiança antes mesmo da venda.',
+  },
+  {
+    n: '05',
+    title: 'O seu formato de conteúdo',
+    body: 'A forma de produzir conteúdo que combina com sua personalidade, sua energia e sua essência.',
+  },
+  {
+    n: '06',
+    title: 'O seu caminho de diferenciação',
+    body: 'O que você precisa ajustar na comunicação, imagem e conteúdo para deixar de parecer "mais um especialista" e começar a ser lembrado.',
+  },
+];
+---
+
+<section id="entregaveis" class="ds-section w-full bg-stone-950 text-[#E6E3D6] py-14 md:py-24 lg:py-16 px-6 md:px-12">
+  <div class="max-w-7xl mx-auto">
+    <div class="max-w-3xl lg:max-w-5xl mx-auto text-center mb-10 md:mb-16 lg:mb-10">
+      <h2 class="text-3xl md:text-5xl lg:text-[2.75rem] leading-[1.1] tracking-tight text-[#E6E3D6] mb-8 font-serif font-medium">
+        Em 2 dias, você não vai apenas entender sobre marca pessoal.
+        <span class="italic text-stone-400">Você vai construir a sua.</span>
+      </h2>
+
+      <p class="text-lg lg:text-base text-stone-300 leading-relaxed font-sans">
+        Ao final do workshop, você terá clareza sobre:
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-6">
+      {items.map((item) => (
+        <article class="bg-gradient-to-br from-[#D4F268]/[0.16] via-transparent to-[#D4F268]/[0.28] rounded-3xl p-8 lg:p-6 border border-[#D4F268]/25 flex flex-col relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-64 h-64 bg-[#D4F268]/15 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+          <div class="absolute bottom-0 left-0 w-72 h-72 bg-[#D4F268]/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+
+          <div class="flex items-baseline justify-between mb-6 relative z-10">
+            <span class="text-5xl font-serif font-medium text-[#E6E3D6]">{item.n}</span>
+            <Icon class="text-[#D4F268]" name="solar:check-circle-linear" width={24} height={24} />
+          </div>
+          <h3 class="text-2xl md:text-3xl lg:text-xl font-serif font-medium text-[#E6E3D6] mb-4 leading-tight relative z-10">{item.title}</h3>
+          <p class="text-base lg:text-sm text-stone-300 leading-relaxed font-sans relative z-10">{item.body}</p>
+        </article>
+      ))}
+    </div>
+
+    <div class="mt-10 md:mt-16 max-w-3xl mx-auto text-center">
+      <p class="text-xl md:text-2xl font-serif italic text-[#E6E3D6] leading-snug">
+        Você vai sair com um mapa claro para transformar quem você é em uma marca pessoal forte, original e lucrativa.
+      </p>
+    </div>
+
+    <div class="mt-10 text-center">
+      <a
+        href={checkoutStandardUrl}
+        data-cta="deliverables-standard"
+        class="inline-flex items-center justify-center px-8 py-4 bg-[#D4F268] hover:bg-[#C3E354] text-stone-900 rounded-full text-lg font-semibold transition-all transform hover:-translate-y-0.5 shadow-xl shadow-[#D4F268]/15 font-sans text-center"
+      >
+        Garantir minha vaga por R$ 47
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { trackEvent } from '@lib/tracking';
+  document.querySelectorAll<HTMLAnchorElement>('a[data-cta="deliverables-standard"]').forEach((el) => {
+    el.addEventListener('click', () => {
+      trackEvent('begin_checkout', {
+        currency: 'BRL',
+        value: 47,
+        cta_location: 'deliverables',
+        items: [{ item_id: 'workshop-mp-definitiva-standard', item_name: 'Standard', price: 47, quantity: 1 }],
+      });
+    });
+  });
+</script>

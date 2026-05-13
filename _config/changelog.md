@@ -8,6 +8,22 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 
 ## mpd
 
+### v7 — 2026-05-13
+
+**Forked from:** v6
+**Label:** Hero com eyebrow + promessa de posicionamento e formato de conteúdo
+**Mudança:**
+- Adicionada eyebrow acima do H1: "O mais conhecido vence o melhor — sempre." Estilo: `text-[11px] sm:text-xs md:text-sm font-sans uppercase tracking-[0.2em] text-[#D4F268] font-semibold mb-3 md:mb-4`. Cor lime accent (#D4F268) pra amarrar com CTA + ticker dots + progress bar e criar hierarquia visual eyebrow → cream H1 → italic stone-400 explanation → CTA.
+- H1 substituída de "Construa sua marca pessoal forte, original e lucrativa em apenas 2 dias." para "Torne a sua marca pessoal conhecida, desejada e escolhida — construindo o posicionamento e o formato de conteúdo que atrai o público que vai comprar de você." Padrão visual preservado: segunda metade após o em-dash em italic stone-400 (mesmo dimming do "em apenas 2 dias" da v6).
+- `page.astro` description atualizada pra refletir nova promessa (afeta SEO + share previews).
+- Resto idêntico à v6 (Standard-only Pricing, 10 CTAs diretos pro Kirvano, tracking begin_checkout, FAQ sem VIP).
+
+**Hipótese:** Eyebrow manifesto prepara o terreno antes do H1, e a nova promessa troca atributos de marca (forte/original/lucrativa) por mecanismo concreto (posicionamento + formato de conteúdo que atrai o público que compra). Reposicionar a oferta como solução de aquisição de clientes (não só branding) aumenta relevância pra audiência que precisa vender, mantendo o setup Standard-only da v6.
+**Métrica:** begin_checkout rate via tracking.ts
+
+**Refinamentos:**
+- (vazio)
+
 ### v6 — 2026-05-13
 
 **Forked from:** v5

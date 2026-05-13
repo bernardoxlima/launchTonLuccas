@@ -1,9 +1,9 @@
 {
   "mpd": {
-    "latest": "v6",
+    "latest": "v7",
     "default": "v3",
     "default_pinned": true,
-    "frozen": ["v4", "v5"],
+    "frozen": ["v4", "v5", "v6"],
     "deleted": ["v1", "v2"],
     "history": [
       {
@@ -36,6 +36,14 @@
         "created": "2026-05-13",
         "label": "Standard-only com promessa v3 (sem Instagram máquina de vendas)",
         "hypothesis": "Isolar o efeito da promessa do hero — v6 mantém o setup Standard-only/CTAs diretos da v5 mas volta a promessa original da v3 ('Construa sua marca pessoal forte, original e lucrativa em apenas 2 dias'). Comparar v5 vs v6 mede o impacto puro da copy de Instagram-as-sales-machine, controlando o restante da página.",
+        "metric": "begin_checkout rate via tracking.ts"
+      },
+      {
+        "v": "v7",
+        "from": "v6",
+        "created": "2026-05-13",
+        "label": "Hero com eyebrow + promessa de posicionamento e formato de conteúdo",
+        "hypothesis": "Eyebrow manifesto ('O mais conhecido vence o melhor — sempre.') prepara o terreno antes do H1, e a nova promessa troca atributos de marca (forte/original/lucrativa) por mecanismo concreto (posicionamento + formato de conteúdo que atrai o público que compra). Hipótese: reposicionar a oferta como solução de aquisição de clientes (não só branding) aumenta relevância pra audiência que precisa vender, mantendo o setup Standard-only da v6.",
         "metric": "begin_checkout rate via tracking.ts"
       }
     ]

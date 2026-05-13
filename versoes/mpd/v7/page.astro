@@ -1,0 +1,103 @@
+---
+import Base from '@layouts/Base.astro';
+import Hero from './Hero.astro';
+import ProblemDiagnosis from './ProblemDiagnosis.astro';
+import Deliverables from './Deliverables.astro';
+import Urgency from './Urgency.astro';
+import ForWhom from './ForWhom.astro';
+import FiveSituations from './FiveSituations.astro';
+import ScheduleDays from './ScheduleDays.astro';
+import SocialProof from './SocialProof.astro';
+import Pricing from './Pricing.astro';
+import Anchor60k from './Anchor60k.astro';
+import About from './About.astro';
+import Cases from './Cases.astro';
+import FAQ from './FAQ.astro';
+import Footer from './Footer.astro';
+import StickyCTA from './StickyCTA.astro';
+---
+
+<Base
+  title="Workshop Marca Pessoal Definitiva · Ton Luccas"
+  description="23 e 24 de maio. Torne a sua marca pessoal conhecida, desejada e escolhida — construindo o posicionamento e o formato de conteúdo que atrai o público que vai comprar de você. Workshop ao vivo conduzido por Ton Luccas (TEDxSpeaker, CEO da Vorus)."
+>
+  <Hero />
+  <ProblemDiagnosis />
+  <Deliverables />
+  <Urgency />
+  <ForWhom />
+  <FiveSituations />
+  <ScheduleDays />
+  <SocialProof />
+  <Pricing />
+  <Anchor60k />
+  <About />
+  <Cases />
+  <FAQ />
+  <Footer />
+  <StickyCTA />
+</Base>
+
+<script>
+  import { initSmoothScroll } from '@lib/smoothScroll';
+  initSmoothScroll();
+</script>
+
+<style is:global>
+  @property --cta-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  [data-cta] {
+    position: relative;
+    isolation: isolate;
+  }
+
+  [data-cta]::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    background: conic-gradient(
+      from var(--cta-angle),
+      transparent 0deg,
+      transparent 220deg,
+      rgba(212, 242, 104, 0.25) 280deg,
+      rgba(212, 242, 104, 0.7) 330deg,
+      #D4F268 360deg
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  [data-cta]:hover {
+    box-shadow:
+      0 12px 32px -12px rgba(212, 242, 104, 0.55),
+      0 0 24px rgba(212, 242, 104, 0.28);
+  }
+
+  [data-cta]:hover::before {
+    opacity: 1;
+    animation: cta-tail 2.6s linear infinite;
+  }
+
+  @keyframes cta-tail {
+    to { --cta-angle: 360deg; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-cta]:hover::before {
+      animation: none;
+    }
+  }
+</style>
