@@ -14,13 +14,16 @@ NC2_h01_b02_c03.mp4  →  NC2 (Problem-Aware), Hook 1, Body 2, CTA 3
 
 ## Decoder
 
-**Hooks (h01-h30):**
+**Hooks** — numeracao globalmente unica, NC vem da pasta, angulo vem do frontmatter:
 
-| ID | NC | Abordagem | Resumo do texto |
-|----|----|-----------|-----------------|
-| h01-h10 | NC2 | injustica | Competentes ficando pra tras enquanto menos preparados crescem |
-| h11-h20 | NC2 | espelho | Descreve a cena exata que o prospect vive |
-| h21-h30 | NC3 | urgencia | Custo concreto de nao agir agora |
+| ID | NC | Angulo | Resumo |
+|----|----|--------|--------|
+| h01 | NC2 | injustica | Competentes ficando pra tras enquanto menos preparados crescem |
+
+Tabela cresce conforme novos hooks sao criados. Consultar frontmatter de cada `.md` pra estado atual:
+```bash
+find 01-scripts/hooks -name 'h*.md' -exec grep -l '' {} \; | sort -t'h' -k2 -n
+```
 
 **Bodies (b01-b05):**
 
@@ -45,15 +48,13 @@ NC2_h01_b02_c03.mp4  →  NC2 (Problem-Aware), Hook 1, Body 2, CTA 3
 | Criativo | Leitura |
 |----------|---------|
 | `NC2_h01_b02_c03` | NC2 (Problem-Aware), Hook 1, Body 2, CTA 3 |
-| `NC3_h21_b03_c01` | NC3 (Solution-Aware), Hook 21, Body 3, CTA 1 |
-| `NC2_h15_b04_c02` | NC2 (Problem-Aware), Hook 15, Body 4, CTA 2 |
 
 ## Para mensuracao (Meta Ads)
 
 O ID do criativo vai no nome do anuncio. Para filtrar performance:
 
 - Por NC: `NC2_*` vs `NC3_*`
-- Por hook: `*_h01_*` vs `*_h15_*`
+- Por hook: `*_h01_*` vs `*_h05_*`
 - Por body: `*_b02_*` vs `*_b05_*`
 - Por CTA: `*_c01` vs `*_c02` vs `*_c03`
 - Por combo body+CTA: `*_b02_c03` vs `*_b05_c01`
@@ -65,7 +66,7 @@ Novo componente = proximo numero disponivel. Numeros nunca sao reusados.
 ```bash
 # Proximo hook disponivel:
 find 01-scripts/hooks -name 'h*.md' | sort -t'h' -k2 -n | tail -1
-# → h30.md → proximo eh h31
+# → h01.md → proximo eh h02
 
 # Proximo body:
 find 01-scripts/body -name 'b*.md' | sort | tail -1
@@ -73,17 +74,18 @@ find 01-scripts/body -name 'b*.md' | sort | tail -1
 ```
 
 Awareness level vem do folder onde o arquivo vive, nao do numero.
+Angulo (abordagem emocional) vem do frontmatter `angulo:`, nao do folder.
 
 ## Naming dos arquivos gerados (estagios 2-4)
 
 Estagios 2 e 3 espelham a estrutura de 01-scripts. Estagio 4 organizado por NC do hook.
 
 ```
-02-audio/hooks/NC2-problem-aware/injustica/h01.mp3
+02-audio/hooks/NC2-problem-aware/h01.mp3
 02-audio/body/NC2-problem-aware/b02.mp3
 02-audio/ctas/c01.mp3
 
-03-video/hooks/NC2-problem-aware/injustica/h01.mp4
+03-video/hooks/NC2-problem-aware/h01.mp4
 03-video/body/NC2-problem-aware/b02.mp4
 03-video/ctas/c01.mp4
 

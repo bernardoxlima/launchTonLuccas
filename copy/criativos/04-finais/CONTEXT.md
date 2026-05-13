@@ -17,17 +17,17 @@ Sem manifesto. Combinacoes definidas na hora da montagem.
 ### Montar UM criativo especifico
 
 ```bash
-ffmpeg -i ../03-video/hooks/NC2-problem-aware/injustica/h01.mp4 \
+ffmpeg -i ../03-video/hooks/NC2-problem-aware/h01.mp4 \
   -i ../03-video/body/NC2-problem-aware/b02.mp4 \
   -i ../03-video/ctas/c03.mp4 \
   -filter_complex "[0:v][0:a][1:v][1:a][2:v][2:a]concat=n=3:v=1:a=1[outv][outa]" \
   -map "[outv]" -map "[outa]" NC2-problem-aware/NC2_h01_b02_c03.mp4
 ```
 
-### Montar um LOTE (todos hooks de uma abordagem x todos bodies x todos CTAs)
+### Montar um LOTE (todos hooks de um NC x todos bodies x todos CTAs)
 
 ```bash
-for hook in ../03-video/hooks/NC2-problem-aware/injustica/*.mp4; do
+for hook in ../03-video/hooks/NC2-problem-aware/*.mp4; do
   for body in ../03-video/body/*/*.mp4; do
     for cta in ../03-video/ctas/*.mp4; do
       # extrair IDs dos nomes → montar NC{X}_h{XX}_b{XX}_c{XX}

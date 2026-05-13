@@ -2,31 +2,38 @@
 
 NC1 = menos consciente (topo do funil), NC5 = mais consciente (fundo do funil).
 
-| NC | Nome | Hook driver | Hooks | Body |
-|----|------|-------------|-------|------|
-| NC1 | Completely Unaware | curiosity-driven | — | b01 |
-| NC2 | Problem-Aware | pain-driven | h01-h20 (injustica, espelho) | b02 |
-| NC3 | Solution-Aware | promise-driven | h21-h30 (urgencia) | b03 |
-| NC4 | Product-Aware | proof-driven | — | b04 |
-| NC5 | Most Aware | offer-driven | — | b05 |
+| NC | Nome | Hook driver | Body |
+|----|------|-------------|------|
+| NC1 | Completely Unaware | curiosity-driven | b01 |
+| NC2 | Problem-Aware | pain-driven | b02 |
+| NC3 | Solution-Aware | promise-driven | b03 |
+| NC4 | Product-Aware | proof-driven | b04 |
+| NC5 | Most Aware | offer-driven | b05 |
+
+Hooks vivem dentro da pasta do NC que atacam. A abordagem emocional (injustica, espelho, urgencia, etc) vive no frontmatter `angulo:`, nao como subfolder.
+
+## Abordagens emocionais (angulos)
+
+| Angulo | NC tipico | O que faz |
+|--------|-----------|-----------|
+| injustica | NC2 | Competentes ficando pra tras enquanto menos preparados crescem |
+| espelho | NC2 | Descreve a cena exata que o prospect vive |
+| urgencia | NC3 | Custo concreto de nao agir agora |
+
+Novas abordagens podem ser criadas a qualquer momento. O angulo eh um campo livre — nao precisa de pasta nova.
 
 ## Organizacao por NC
 
 Hooks, bodies e finais seguem a mesma hierarquia: **NC como primeiro nivel**.
 
-### Hooks: NC > abordagem emocional > arquivo
+### Hooks: NC > arquivo (angulo no frontmatter)
 
 ```
 01-scripts/hooks/
 ├── NC1-completely-unaware/
 ├── NC2-problem-aware/
-│   ├── injustica/
-│   │   └── h01.md .. h10.md
-│   └── espelho/
-│       └── h11.md .. h20.md
+│   └── h01.md  (angulo: injustica)
 ├── NC3-solution-aware/
-│   └── urgencia/
-│       └── h21.md .. h30.md
 ├── NC4-product-aware/
 └── NC5-most-aware/
 ```

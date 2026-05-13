@@ -48,7 +48,7 @@ _config/
 ## Layer 4 — artefatos por run (mudam por execucao)
 
 ```
-01-scripts/<tipo>/NC<X>-<awareness>/[abordagem/]*.md
+01-scripts/<tipo>/NC<X>-<awareness>/*.md
 02-audio/   (mesma hierarquia, .mp3)
 03-video/   (mesma hierarquia, .mp4)
 04-finais/NC<X>-<awareness>/NC<X>_h<XX>_b<XX>_c<XX>.mp4

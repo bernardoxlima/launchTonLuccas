@@ -71,7 +71,7 @@ Resposta `output_format: url`: campo `data.audio` contem URL direta (valida 24h)
 
 ```bash
 url=$(echo $response | python3 -c "import sys,json; print(json.load(sys.stdin)['data']['audio'])")
-curl -sL -o "hooks/NC2-problem-aware/injustica/h01.mp3" "$url"
+curl -sL -o "hooks/NC2-problem-aware/h01.mp3" "$url"
 ```
 
 ### 4. Atualizar status do .md fonte
@@ -83,7 +83,7 @@ Promover `status: aprovado` → `status: audio-ok` no frontmatter do .md em `01-
 Mesma hierarquia de `01-scripts/`, com extensao `.mp3`:
 
 ```
-02-audio/hooks/NC<X>-<awareness>/<abordagem>/h<XX>.mp3
+02-audio/hooks/NC<X>-<awareness>/h<XX>.mp3
 02-audio/body/NC<X>-<awareness>/b<XX>.mp3
 02-audio/ctas/c<XX>.mp3
 ```

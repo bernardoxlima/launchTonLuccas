@@ -33,7 +33,7 @@ Escreve hooks, bodies e CTAs. Saida: `.md` com `status: aprovado`.
 Espelha a hierarquia da taxonomia (`taxonomy.md`):
 
 ```
-01-scripts/hooks/NC<X>-<awareness>/<abordagem>/h<XX>.md
+01-scripts/hooks/NC<X>-<awareness>/h<XX>.md
 01-scripts/body/NC<X>-<awareness>/b<XX>.md
 01-scripts/ctas/c<XX>.md
 ```
@@ -48,8 +48,8 @@ rascunho → aprovado → audio-ok → video-ok
 
 ### Hook
 1. `find hooks -name 'h*.md' | sort -t'h' -k2 -n | tail -1` → proximo numero
-2. Decidir NC + abordagem (taxonomy.md)
-3. Criar `hooks/NC<X>-<awareness>/<abordagem>/h<XX>.md`
+2. Decidir NC (taxonomy.md) + angulo emocional (injustica/espelho/urgencia/novo)
+3. Criar `hooks/NC<X>-<awareness>/h<XX>.md` com `angulo:` no frontmatter
 4. Promover pra `aprovado` apos revisao
 
 ### Body
@@ -61,8 +61,8 @@ rascunho → aprovado → audio-ok → video-ok
 2. Criar `ctas/c<XX>.md` (flat — CTAs sao standalone)
 
 ### Nova abordagem emocional dentro de NC existente
-1. Criar subpasta `hooks/NC<X>-<awareness>/<nome>/`
-2. Hooks dentro pegam proximo numero global disponivel
+1. Criar hook em `hooks/NC<X>-<awareness>/h<XX>.md` com `angulo: <novo-nome>` no frontmatter
+2. Proximo numero global disponivel (nao precisa de subpasta)
 
 ## Regras criticas
 
