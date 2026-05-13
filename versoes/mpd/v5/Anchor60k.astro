@@ -1,0 +1,78 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || 'https://pay.kirvano.com/cd45d82c-9fe5-44f3-8b41-8fce3b50437b?utm_source=organic&utm_campaign=&utm_medium=&utm_content=&utm_term=';
+---
+
+<section id="ancoragem" class="ds-section w-full bg-stone-950 text-[#E6E3D6] py-14 md:py-24 px-6 md:px-12 relative overflow-hidden">
+  {/* Glow decorativo */}
+  <div class="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 lg:w-[500px] lg:h-[500px] bg-[#D4F268]/5 rounded-full blur-3xl"></div>
+  <div class="absolute bottom-0 right-0 w-96 h-96 lg:w-[600px] lg:h-[600px] bg-[#9EA08F]/10 rounded-full blur-3xl translate-y-1/2 translate-x-1/2"></div>
+
+  <div class="max-w-4xl lg:max-w-5xl mx-auto relative z-10">
+    <h2 class="text-3xl md:text-5xl lg:text-5xl leading-[1.05] tracking-tight mb-8 md:mb-12 font-serif font-medium text-center">
+      Pague menos de <span class="text-[#D4F268]">R$100</span> pelo método <span class="italic text-stone-400">que custa R$60k na consultoria do Ton.</span>
+    </h2>
+
+    <div class="space-y-6 text-lg md:text-xl text-stone-300 leading-relaxed font-sans">
+      <p>
+        Empresários e especialistas pagam <mark class="bg-[#FBFCD4] text-stone-900 font-semibold px-1 py-0.5 rounded-sm box-decoration-clone whitespace-nowrap">R$ 60.000</mark> para ele construir uma marca pessoal do zero com eles.
+      </p>
+
+      <p>
+        No workshop ao vivo, o Ton vai te guiar pelo <span class="text-[#FBFCD4]">mesmo passo a passo</span> e você sai de lá com a <mark class="bg-[#FBFCD4] text-stone-900 font-semibold px-1 py-0.5 rounded-sm box-decoration-clone">sua marca pronta</mark>:
+      </p>
+
+      <ul class="space-y-3 pl-0 list-none">
+        <li class="flex items-start gap-3">
+          <Icon class="text-[#D4F268] mt-1 shrink-0" name="solar:check-circle-bold" width={20} height={20} />
+          <span>território definido</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <Icon class="text-[#D4F268] mt-1 shrink-0" name="solar:check-circle-bold" width={20} height={20} />
+          <span>mensagem clara</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <Icon class="text-[#D4F268] mt-1 shrink-0" name="solar:check-circle-bold" width={20} height={20} />
+          <span>imagem alinhada</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <Icon class="text-[#D4F268] mt-1 shrink-0" name="solar:check-circle-bold" width={20} height={20} />
+          <span>conteúdo que você já consegue produzir</span>
+        </li>
+      </ul>
+
+      <p>
+        É o <span class="text-[#FBFCD4]">mesmo processo</span> que ele usa nos clientes que pagam o <span class="text-[#FBFCD4]">valor cheio</span>, com os mesmos critérios e a mesma sequência de decisões.
+      </p>
+
+      <p class="text-sm md:text-base font-sans font-bold tracking-[0.25em] uppercase text-[#D4F268] text-center pt-4">
+        Tudo isso por menos de R$100.
+      </p>
+    </div>
+
+    <div class="text-center mt-10 md:mt-16">
+      <a
+        href={checkoutStandardUrl}
+        data-cta="anchor-standard"
+        class="inline-flex items-center justify-center px-8 py-4 bg-[#D4F268] hover:bg-[#C3E354] text-stone-900 rounded-full text-lg font-medium transition-all transform hover:-translate-y-0.5 shadow-xl shadow-[#D4F268]/20 font-sans text-center"
+      >
+        Quero garantir minha vaga por R$ 47
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { trackEvent } from '@lib/tracking';
+  document.querySelectorAll<HTMLAnchorElement>('a[data-cta="anchor-standard"]').forEach((el) => {
+    el.addEventListener('click', () => {
+      trackEvent('begin_checkout', {
+        currency: 'BRL',
+        value: 47,
+        cta_location: 'anchor',
+        items: [{ item_id: 'workshop-mp-definitiva-standard', item_name: 'Standard', price: 47, quantity: 1 }],
+      });
+    });
+  });
+</script>

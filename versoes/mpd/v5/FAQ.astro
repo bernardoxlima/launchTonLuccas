@@ -1,0 +1,125 @@
+---
+const faqs = [
+  {
+    q: 'O workshop vai ser ao vivo?',
+    a: 'Sim. O Workshop Marca Pessoal Definitiva acontece <mark class="faq-mark">ao vivo</mark>, nos dias <mark class="faq-mark">23 e 24 de maio</mark>, das 9h30 às 17h.',
+  },
+  {
+    q: 'Vai ter gravação?',
+    a: 'O ingresso de <mark class="faq-mark">R$ 47</mark> dá acesso ao workshop ao vivo. A gravação é vendida separadamente para quem quiser rever ou assistir depois.',
+  },
+  {
+    q: 'Se eu não puder assistir ao vivo, vale comprar?',
+    a: 'Vale apenas se você quiser garantir sua participação ao vivo ou comprar a gravação separadamente depois. A experiência principal foi pensada para quem quer estar presente, acompanhar o processo e construir junto em tempo real.',
+  },
+  {
+    q: 'Esse workshop é para quem está começando?',
+    a: 'Sim, desde que você queira <mark class="faq-mark">construir uma marca pessoal com intenção</mark> desde o início. Inclusive, começar com clareza de território evita anos de tentativa, cópia e posicionamento genérico.',
+  },
+  {
+    q: 'Esse workshop é para quem já tem audiência?',
+    a: 'Sim. Muitas vezes, quem já tem audiência sente que cresceu, mas <mark class="faq-mark">ainda não construiu uma marca forte de verdade</mark>. O workshop vai ajudar você a organizar sua mensagem, imagem, narrativa e território para ser percebido com mais clareza e autoridade.',
+  },
+  {
+    q: 'Preciso ter muitos seguidores para participar?',
+    a: 'Não. Marca pessoal não começa com número de seguidores. Começa com <mark class="faq-mark">clareza de identidade, território e percepção</mark>.',
+  },
+  {
+    q: 'É só para especialistas do digital?',
+    a: 'Não. O workshop é para especialistas, consultores, mentores, empresários, founders, creators, infoprodutores e prestadores de serviço que querem transformar sua história, repertório e autoridade em uma marca pessoal forte.',
+  },
+  {
+    q: 'O workshop é sobre conteúdo ou posicionamento?',
+    a: 'Os dois. Mas o ponto central é: <mark class="faq-mark">o conteúdo nasce do posicionamento</mark>. Antes de decidir o que postar, você precisa entender qual território ocupa, qual mensagem sustenta e qual percepção quer construir.',
+  },
+  {
+    q: 'Vou sair com minha marca pessoal pronta?',
+    a: 'Você vai sair com a <mark class="faq-mark">base estratégica construída</mark>: território, mensagem, narrativa, imagem e direção de conteúdo. Não é uma consultoria individual completa, mas é um processo prático para você começar a construir sua marca pessoal com clareza.',
+  },
+  {
+    q: 'Qual é o valor do ingresso?',
+    a: 'O Lote 1 está disponível por <mark class="faq-mark">R$ 47</mark>. Quando o lote acabar, o valor será reajustado.',
+  },
+  {
+    q: 'Como vou receber o acesso?',
+    a: 'Depois da inscrição, você recebe as instruções de acesso ao workshop e ao grupo oficial do evento por email.',
+  },
+  {
+    q: 'E se eu comprar e não conseguir participar?',
+    a: 'Como o ingresso dá acesso ao evento ao vivo, a recomendação é reservar os dias <mark class="faq-mark">23 e 24 de maio</mark>, das 9h30 às 17h, para participar da experiência completa. A gravação é uma compra separada.',
+  },
+];
+---
+
+<section id="faq" class="ds-section w-full bg-[#E6E3D6] py-14 md:py-24 px-6 md:px-12">
+  <div class="max-w-3xl mx-auto">
+    <h2 class="text-3xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-stone-900 mb-10 md:mb-14 font-serif font-light whitespace-nowrap">
+      Perguntas Frequentes
+    </h2>
+
+    <div class="border-t border-stone-900/15">
+      {faqs.map((item) => (
+        <div class="faq-item border-b border-stone-900/15" data-faq>
+          <button
+            type="button"
+            class="faq-trigger w-full flex items-center justify-between gap-6 py-6 md:py-7 text-left cursor-pointer group"
+            aria-expanded="false"
+          >
+            <h3 class="text-lg md:text-2xl text-stone-900 leading-snug font-serif font-medium pr-2">{item.q}</h3>
+            <span class="faq-icon-wrap shrink-0 w-9 h-9 md:w-10 md:h-10 rounded-full border border-stone-900/25 group-hover:border-stone-900/60 group-hover:bg-stone-900/5 flex items-center justify-center transition-colors duration-300">
+              <svg viewBox="0 0 14 14" class="faq-icon w-3.5 h-3.5 text-stone-800 transition-transform duration-[450ms] ease-[cubic-bezier(0.65,0,0.35,1)]" aria-hidden="true">
+                <line x1="7" y1="1" x2="7" y2="13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                <line x1="1" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+              </svg>
+            </span>
+          </button>
+          <div class="faq-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-[450ms] ease-[cubic-bezier(0.65,0,0.35,1)]">
+            <div class="overflow-hidden">
+              <p class="pb-7 md:pb-8 pr-2 md:pr-12 text-base md:text-lg text-stone-700 leading-relaxed font-sans" set:html={item.a}></p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  #faq .faq-mark {
+    background-color: #FBFCD4;
+    color: #1c1917;
+    font-weight: 600;
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.125rem;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+  #faq [data-faq][data-open="true"] .faq-icon {
+    transform: rotate(45deg);
+  }
+  #faq [data-faq][data-open="true"] .faq-icon-wrap {
+    background-color: rgba(28, 25, 23, 0.06);
+    border-color: rgba(28, 25, 23, 0.5);
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-faq]').forEach((item) => {
+    const trigger = item.querySelector<HTMLButtonElement>('.faq-trigger');
+    const content = item.querySelector<HTMLElement>('.faq-content');
+    if (!trigger || !content) return;
+
+    trigger.addEventListener('click', () => {
+      const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+      if (isOpen) {
+        trigger.setAttribute('aria-expanded', 'false');
+        item.removeAttribute('data-open');
+        content.style.gridTemplateRows = '0fr';
+      } else {
+        trigger.setAttribute('aria-expanded', 'true');
+        item.setAttribute('data-open', 'true');
+        content.style.gridTemplateRows = '1fr';
+      }
+    });
+  });
+</script>

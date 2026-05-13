@@ -1,9 +1,9 @@
 {
   "mpd": {
-    "latest": "v4",
+    "latest": "v5",
     "default": "v3",
     "default_pinned": true,
-    "frozen": [],
+    "frozen": ["v4"],
     "deleted": ["v1", "v2"],
     "history": [
       {
@@ -20,6 +20,14 @@
         "created": "2026-05-11",
         "label": "Hero promise — Instagram como máquina de vendas",
         "hypothesis": "[hipótese assumida — confirme] Trocar a promessa de marca pessoal genérica por 'Instagram como máquina de vendas' conecta diretamente com o pain point comercial (vendas) e amplia relevância pra tráfego frio Meta Ads, vs a promessa anterior focada só em atributos de marca (forte/original/lucrativa)",
+        "metric": "begin_checkout rate via tracking.ts"
+      },
+      {
+        "v": "v5",
+        "from": "v4",
+        "created": "2026-05-13",
+        "label": "Standard-only — todos os CTAs direto pro checkout Kirvano",
+        "hypothesis": "Single-tier reduz fricção — eliminar VIP elimina paradoxo da escolha e CTAs diretos reduzem etapas até o checkout, aumentando conversão em tráfego frio. Sacrifica AOV do VIP em troca de volume de pixel/audience pra o funil de retargeting.",
         "metric": "begin_checkout rate via tracking.ts"
       }
     ]

@@ -1,0 +1,85 @@
+---
+const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || 'https://pay.kirvano.com/cd45d82c-9fe5-44f3-8b41-8fce3b50437b?utm_source=organic&utm_campaign=&utm_medium=&utm_content=&utm_term=';
+---
+
+<section id="problema" class="ds-section w-full bg-[#E6E3D6] py-12 md:py-20 lg:py-16 px-6 md:px-12 overflow-x-hidden">
+  <div class="max-w-3xl lg:max-w-5xl mx-auto">
+    <h2 class="text-[2rem] sm:text-4xl md:text-5xl lg:text-[2.75rem] leading-[1.1] tracking-tight text-stone-900 mb-8 md:mb-10 font-serif font-medium text-center">
+      Te falam que você precisa<br class="lg:hidden" /> de uma marca pessoal forte
+      <span class="block italic text-stone-600 mt-1.5 text-[1.75rem] sm:text-[2.125rem] md:text-[2.5rem] lg:text-[2.25rem]">mas ninguém nunca te ensinou<br class="lg:hidden" /> como construir de verdade</span>
+    </h2>
+
+    <div class="lg:grid lg:grid-cols-2 lg:gap-12 lg:items-start">
+      <div class="space-y-4 md:space-y-5 text-base md:text-lg text-stone-700 leading-relaxed font-sans">
+        <p>
+          Quem ensinou marca pessoal nos últimos anos te entregou uma <mark class="bg-[#FBFCD4] text-stone-900 font-semibold px-1 py-0.5 rounded-sm box-decoration-clone">fórmula genérica</mark>. Que serviu pra ele. Que ele leu nos livros. E vendeu <mark class="bg-[#FBFCD4] text-stone-900 font-semibold px-1 py-0.5 rounded-sm box-decoration-clone">como se fosse universal</mark>.
+        </p>
+
+        <!-- INLINE CALLOUT — lime yellow -->
+        <div class="my-6 md:my-8 pl-5 pr-5 py-4 md:py-5 bg-[#D4F268]/40 border-l-4 border-[#D4F268] rounded-r-xl">
+          <p class="text-stone-900 font-medium text-base md:text-lg leading-relaxed">
+            Você mesmo já comprovou que não dá certo. <strong class="font-bold">Fórmulas genéricas nunca vão resolver problemas específicos.</strong>
+          </p>
+        </div>
+
+        <p>
+          <mark class="bg-[#EBC8D6] text-stone-900 font-semibold px-1 py-0.5 rounded-sm box-decoration-clone">O instagram está cheio de gente que parece a mesma pessoa.</mark> Mesmo gancho. Mesmo arquétipo. Mesma estrutura de fala. Mesmo cenário de fundo.
+        </p>
+      </div>
+
+      <div class="space-y-4 md:space-y-5 text-base md:text-lg text-stone-700 leading-relaxed font-sans">
+        <!-- MANIFESTO TICKET — sage green, rotacionado -->
+        <div class="relative my-10 md:my-14 lg:my-0 lg:mb-8 flex justify-center">
+          <div class="w-full max-w-md bg-[#9EA08F] shadow-2xl rounded-t-lg overflow-hidden transform -rotate-2 hover:rotate-0 transition-transform duration-500">
+            <!-- Body -->
+            <div class="px-6 py-7">
+              <p class="text-white font-serif text-xl md:text-2xl leading-snug">
+                Marca pessoal é o <strong class="font-bold">oposto</strong> de fórmula. É o que sobra de você quando você tira tudo que é genérico.
+              </p>
+              <p class="text-white font-serif text-xl md:text-2xl leading-snug italic mt-3">
+                A parte que não dá pra copiar nem se quiser.
+              </p>
+            </div>
+            <!-- Serrated bottom -->
+            <div class="h-3 w-full bg-[#E6E3D6]" style="mask-image: radial-gradient(circle at 10px 0, transparent 0, transparent 5px, black 5px); mask-size: 20px 10px; mask-repeat: repeat-x; -webkit-mask-image: radial-gradient(circle at 10px 0, transparent 0, transparent 5px, black 5px); -webkit-mask-size: 20px 10px; -webkit-mask-repeat: repeat-x;"></div>
+          </div>
+        </div>
+
+        <div class="space-y-4 md:space-y-5 text-center">
+          <p>
+            E ninguém ensinou isso porque <mark class="bg-[#FBFCD4] text-stone-900 font-semibold px-1 py-0.5 rounded-sm box-decoration-clone">ninguém sabia ensinar</mark>. Era mais fácil <mark class="bg-[#FBFCD4] text-stone-900 font-semibold px-1 py-0.5 rounded-sm box-decoration-clone">empacotar a própria fórmula</mark> e vender pra dez mil pessoas diferentes.
+          </p>
+
+          <p>
+            A boa notícia é que existe <mark class="bg-[#FBFCD4] text-stone-900 font-semibold px-1 py-0.5 rounded-sm box-decoration-clone">um caminho oposto</mark>. Que parte do que ninguém te ensinou a usar: <mark class="bg-[#FBFCD4] text-stone-900 font-semibold px-1 py-0.5 rounded-sm box-decoration-clone whitespace-nowrap">você mesmo</mark>.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA — lime yellow -->
+    <div class="mt-8 md:mt-10 text-center">
+      <a
+        href={checkoutStandardUrl}
+        data-cta="problem-standard"
+        class="inline-flex items-center justify-center px-7 py-3.5 bg-[#D4F268] hover:bg-[#C3E354] text-stone-900 rounded-full text-base md:text-lg font-medium transition-all transform hover:-translate-y-0.5 shadow-xl shadow-[#D4F268]/30 font-sans text-center"
+      >
+        Quero minha vaga no Lote 1 · R$ 47
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { trackEvent } from '@lib/tracking';
+  document.querySelectorAll<HTMLAnchorElement>('a[data-cta="problem-standard"]').forEach((el) => {
+    el.addEventListener('click', () => {
+      trackEvent('begin_checkout', {
+        currency: 'BRL',
+        value: 47,
+        cta_location: 'problem',
+        items: [{ item_id: 'workshop-mp-definitiva-standard', item_name: 'Standard', price: 47, quantity: 1 }],
+      });
+    });
+  });
+</script>

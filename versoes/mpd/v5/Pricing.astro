@@ -1,0 +1,118 @@
+---
+import { Icon } from 'astro-icon/components';
+const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || 'https://pay.kirvano.com/cd45d82c-9fe5-44f3-8b41-8fce3b50437b?utm_source=organic&utm_campaign=&utm_medium=&utm_content=&utm_term=';
+
+const standardFeatures = [
+  { title: 'Workshop ao vivo com Ton Luccas', body: 'Dias 23 e 24 de maio' },
+  { title: 'Materiais das aulas', body: 'Arquivos e materiais usados durante o workshop' },
+  { title: 'Tarefas práticas do ao vivo', body: 'Exercícios liberados durante a experiência ao vivo' },
+  { title: 'Construção da sua marca pessoal em tempo real', body: '' },
+];
+---
+
+<section id="pricing" class="ds-section w-full bg-stone-950 text-[#E6E3D6] py-14 md:py-24 px-6 md:px-12">
+  <div class="max-w-7xl mx-auto">
+    <div class="max-w-3xl mx-auto text-center mb-10 md:mb-16">
+      <h2 class="text-4xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-[#E6E3D6] mb-6 font-serif font-medium">
+        Seu investimento:
+      </h2>
+
+      <p class="text-lg text-stone-300 leading-relaxed font-sans">
+        Workshop ao vivo, 2 dias de construção da sua marca pessoal. Lote 01 promocional, vagas limitadas.
+      </p>
+    </div>
+
+    {/* Single card centered */}
+    <div class="max-w-xl mx-auto mb-12">
+      <article class="bg-transparent rounded-3xl p-6 md:p-10 border border-[#D4F268]/30 hover:border-[#D4F268]/60 flex flex-col group transition-colors duration-300">
+        <div class="flex items-start justify-between gap-3 mb-3">
+          <h3 class="text-2xl md:text-4xl font-serif font-medium text-[#E1306C] leading-tight tracking-wider uppercase">Ingresso Standard</h3>
+          <span class="shrink-0 inline-block px-3 py-1 rounded-full bg-stone-800 text-[11px] font-bold text-stone-300 tracking-[0.15em] uppercase font-sans border border-stone-700">Lote 01</span>
+        </div>
+
+        <p class="text-base text-stone-300 mb-6 leading-relaxed font-sans">
+          Para quem quer participar ao vivo dos 2 dias de construção da Marca Pessoal Definitiva.
+        </p>
+
+        <div class="flex items-end gap-3 mb-4">
+          <span class="flex items-baseline gap-1">
+            <span class="text-2xl text-stone-400 font-sans">R$</span>
+            <span class="text-6xl md:text-7xl font-serif font-light text-[#E6E3D6] leading-none">47</span>
+          </span>
+          <span class="flex flex-col leading-tight pb-3 font-sans">
+            <span class="text-base text-stone-300">à vista</span>
+            <span class="text-sm text-stone-400 whitespace-nowrap">ou 12x de R$ 4,70</span>
+          </span>
+        </div>
+
+        <div class="w-24 h-px bg-stone-700 mb-4"></div>
+
+        <p class="text-xs text-stone-400 font-sans mb-2">Lote 01 · 77% vendidos</p>
+
+        {/* Barra de progresso */}
+        <div class="w-full h-1.5 bg-stone-800 rounded-full overflow-hidden mb-6">
+          <div class="h-full bg-[#D4F268] rounded-full" style="width: 77%"></div>
+        </div>
+
+        <ul class="space-y-3 md:space-y-4 mb-6 md:mb-10 flex-1">
+          {standardFeatures.map((f) => (
+            <li class="flex items-start gap-3">
+              <Icon class="text-[#D4F268] mt-1 shrink-0" name="solar:check-circle-bold" width={20} height={20} />
+              <div>
+                <p class="text-base text-[#E6E3D6] leading-snug font-sans font-medium">{f.title}</p>
+                {f.body && <p class="text-sm text-stone-400 leading-snug font-sans mt-0.5">{f.body}</p>}
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        <a
+          href={checkoutStandardUrl}
+          data-cta="pricing-standard"
+          class="w-full py-4 px-6 rounded-full bg-[#D4F268] hover:bg-[#C3E354] text-stone-900 font-semibold text-base transition-all transform hover:-translate-y-0.5 inline-flex items-center justify-center font-sans text-center shadow-lg shadow-[#D4F268]/30"
+        >
+          Garantir Ingresso Standard
+        </a>
+      </article>
+    </div>
+
+    {/* Disclaimer abaixo */}
+    <div class="max-w-2xl mx-auto text-center">
+      <p class="text-sm text-stone-400 font-sans">
+        Pagamento processado via Kiwify. Acesso enviado por email logo após a confirmação.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { trackEvent, trackViewPricing } from '@lib/tracking';
+
+  document.querySelectorAll<HTMLAnchorElement>('a[data-cta="pricing-standard"]').forEach((el) => {
+    el.addEventListener('click', () => {
+      trackEvent('begin_checkout', {
+        currency: 'BRL',
+        value: 47,
+        cta_location: 'pricing',
+        items: [{ item_id: 'workshop-mp-definitiva-standard', item_name: 'Standard', price: 47, quantity: 1 }],
+      });
+    });
+  });
+
+  // Disparar view_item_list quando o bloco entrar no viewport
+  const pricingSection = document.getElementById('pricing');
+  if (pricingSection && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            trackViewPricing();
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(pricingSection);
+  }
+</script>

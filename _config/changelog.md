@@ -8,6 +8,22 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 
 ## mpd
 
+### v5 — 2026-05-13
+
+**Forked from:** v4
+**Label:** Standard-only — todos os CTAs direto pro checkout Kirvano
+**Mudança:**
+- `Pricing.astro` virou single-card centered (`max-w-xl mx-auto`). Removidos: bloco VIP inteiro, array `vipExtras`, constante `checkoutVipUrl`, handler de tracking `pricing-vip`, `<style is:global>` do frame animado VIP. Botão Standard ganhou estilo verde forte (`bg-[#D4F268]`) que antes era exclusivo do VIP. Header copy ajustado: "Workshop ao vivo, 2 dias de construção da sua marca pessoal. Lote 01 promocional, vagas limitadas."
+- Os 10 CTAs intra-page (Hero, ProblemDiagnosis, Deliverables, Urgency, ForWhom, FiveSituations, ScheduleDays, Anchor60k, About, StickyCTA) passaram a apontar `href={checkoutStandardUrl}` direto pro Kirvano. Cada frontmatter recebeu a constante `checkoutStandardUrl` lendo `PUBLIC_CHECKOUT_STANDARD_URL` com fallback hardcoded.
+- Tracking: os 10 CTAs trocaram `trackEvent('select_promotion', {...})` por `trackEvent('begin_checkout', { currency: 'BRL', value: 47, cta_location, items: [{ item_id: 'workshop-mp-definitiva-standard', ... }] })`. Agora qualquer botão da página dispara `begin_checkout` — antes só os 2 dentro do Pricing disparavam.
+- `FAQ.astro`: 3 perguntas mencionavam o Ingresso VIP (gravação inclusa, preço R$ 297, gravação inclusa no VIP). Reescrito pra remover qualquer referência a VIP — agora só fala do Standard R$ 47 e da gravação como compra separada.
+
+**Hipótese:** Single-tier reduz fricção — eliminar VIP elimina paradoxo da escolha e CTAs diretos reduzem etapas até o checkout, aumentando conversão em tráfego frio. Sacrifica AOV do VIP em troca de volume de pixel/audience pra o funil de retargeting.
+**Métrica:** begin_checkout rate via tracking.ts
+
+**Refinamentos:**
+- (vazio)
+
 ### v4 — 2026-05-11
 
 **Forked from:** v3

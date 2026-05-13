@@ -1,0 +1,272 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import tonPortrait from '../../../fotos/ton-bio.webp';
+
+const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || 'https://pay.kirvano.com/cd45d82c-9fe5-44f3-8b41-8fce3b50437b?utm_source=organic&utm_campaign=&utm_medium=&utm_content=&utm_term=';
+
+type Brand =
+  | { name: string; slug: string; kind: 'icon'; icon: string; hoverColor: string }
+  | { name: string; slug: string; kind: 'local'; src: string };
+
+// `kind: 'icon'` → astro-icon simple-icons:* (mono — CSS `color` controla).
+//   `hoverColor` é a cor oficial da marca aplicada no hover (Simple Icons são
+//   monocromáticas, então sem cor explícita o hover não destacaria nada).
+// `kind: 'local'` → SVG em /public/brands/* já com cores hardcoded; o hover
+//   só remove o filtro mono e a cor original aparece naturalmente.
+const brands: Brand[] = [
+  { name: 'Sicredi',    slug: 'sicredi',    kind: 'local', src: '/brands/sicredi.png' },
+  { name: 'Sul América', slug: 'sulamerica', kind: 'local', src: '/brands/sulamerica.svg' },
+  { name: 'Jeep',       slug: 'jeep',       kind: 'icon',  icon: 'simple-icons:jeep',     hoverColor: '#000000' },
+  { name: 'FIAT',       slug: 'fiat',       kind: 'icon',  icon: 'simple-icons:fiat',     hoverColor: '#A6192E' },
+  { name: 'RAM',        slug: 'ram',        kind: 'icon',  icon: 'simple-icons:ram',      hoverColor: '#000000' },
+  { name: 'Duolingo',   slug: 'duolingo',   kind: 'icon',  icon: 'simple-icons:duolingo', hoverColor: '#58CC02' },
+  { name: 'Renner',     slug: 'renner',     kind: 'local', src: '/brands/renner.svg' },
+  { name: 'BMW',        slug: 'bmw',        kind: 'icon',  icon: 'simple-icons:bmw',      hoverColor: '#0066B1' },
+  { name: 'MINI',       slug: 'mini',       kind: 'icon',  icon: 'simple-icons:mini',     hoverColor: '#000000' },
+];
+---
+
+<section id="sobre" class="ds-section w-full bg-[#E6E3D6] py-14 md:py-24 overflow-hidden">
+  {/* Header — mobile/tablet only (centered acima da foto). Em lg+ ele vive na coluna direita acima do texto. */}
+  <div class="max-w-4xl mx-auto text-center mb-14 md:mb-20 px-6 md:px-12 lg:hidden">
+    <p class="text-[11px] font-bold tracking-[0.2em] uppercase text-stone-500 mb-7 font-sans">
+      Quem é Ton Luccas
+    </p>
+
+    <h2 class="text-3xl md:text-5xl leading-[1.05] tracking-tight text-stone-900 font-serif font-medium">
+      Ele posicionou Sicredi,<br />
+      BMW, Duolingo.
+      <span class="block italic text-stone-600 mt-2">Agora ensina líderes a posicionar quem eles são.</span>
+    </h2>
+  </div>
+
+  {/* Photo + Bio */}
+  <div class="max-w-7xl mx-auto px-6 md:px-12 mb-16 md:mb-24 lg:mt-16">
+    <div class="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
+      <div class="w-full lg:w-2/5">
+        <div class="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl shadow-stone-900/20 lg:max-w-[480px]">
+          <Image
+            src={tonPortrait}
+            alt="Ton Luccas conduzindo palestra"
+            widths={[400, 600, 800]}
+            sizes="(max-width: 1024px) 100vw, 480px"
+            class="w-full h-full object-cover scale-125 lg:scale-100"
+            loading="lazy"
+          />
+          <div class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-stone-950/65 via-stone-950/25 to-transparent pointer-events-none"></div>
+          <div class="absolute bottom-7 left-7 right-7">
+            <div class="flex gap-4 items-stretch">
+              <div class="w-[2px] bg-[#D4F268]/80 self-stretch"></div>
+              <div class="py-0.5">
+                <p class="text-lg md:text-xl font-serif font-light leading-tight text-[#E6E3D6]">TEDxSpeaker</p>
+                <p class="text-lg md:text-xl font-serif font-light leading-tight text-stone-300 mt-1">CEO da Vorus</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full lg:w-3/5 space-y-6 lg:space-y-8 text-lg lg:text-3xl text-stone-700 leading-relaxed font-sans">
+        {/* Header — só em lg+ (em mobile/tablet ele aparece acima da foto) */}
+        <div class="hidden lg:block mb-2">
+          <p class="text-[11px] font-bold tracking-[0.2em] uppercase text-stone-500 mb-5 font-sans">
+            Quem é Ton Luccas
+          </p>
+          <p class="text-3xl leading-[1.05] tracking-tight text-stone-900 font-serif font-medium mb-6">
+            Ele posicionou Sicredi, BMW, Duolingo.
+            <span class="block italic text-stone-600 mt-2">Agora ensina líderes a posicionar quem eles são.</span>
+          </p>
+        </div>
+
+        <p>
+          Há <span class="about-highlight font-medium text-stone-900">anos posicionando marcas Top 100 do Brasil</span> — bancos, automotivas, edtechs e varejo — em territórios mentais únicos que deixam de ser comparados com qualquer concorrente.
+        </p>
+        <p>
+          Agora, esse mesmo trabalho, antes reservado a marcas que valem bilhões, chega a líderes que querem ocupar o topo da sua categoria.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  {/* Brand marquee — full bleed */}
+  <div class="mb-16 md:mb-24">
+    <p class="text-[11px] font-bold tracking-[0.2em] uppercase text-stone-500 mb-10 font-sans text-center px-6 md:px-12">
+      As marcas que ele posicionou
+    </p>
+
+    <div class="brand-marquee relative">
+      <div class="brand-track flex items-center gap-14 md:gap-24 whitespace-nowrap">
+        {[...brands, ...brands].map((brand, index) => {
+          const isClone = index >= brands.length;
+          const dims = brand.slug === 'sicredi'
+            ? { w: 710, h: 210 }
+            : brand.slug === 'sulamerica'
+              ? { w: 700, h: 700 }
+              : brand.slug === 'renner'
+                ? { w: 395, h: 92 }
+                : { w: 24, h: 24 };
+          return (
+          <span
+            class="brand-logo shrink-0 inline-flex items-center justify-center"
+            data-brand={brand.slug}
+            data-kind={brand.kind}
+            style={brand.kind === 'icon' ? `--brand-hover: ${brand.hoverColor}` : undefined}
+            role="img"
+            aria-label={isClone ? undefined : brand.name}
+            aria-hidden={isClone ? 'true' : undefined}
+          >
+            {brand.kind === 'icon' ? (
+              <Icon name={brand.icon} width={dims.w} height={dims.h} class="brand-logo-art" />
+            ) : brand.slug === 'renner' ? (
+              <>
+                <img src="/brands/renner-mono.svg" alt="" aria-hidden="true" loading="lazy" width={395} height={92} class="brand-logo-art renner-view-mono" />
+                <img src="/brands/renner.svg" alt="" aria-hidden="true" loading="lazy" width={500} height={92} class="brand-logo-art renner-view-color" />
+              </>
+            ) : (
+              <img src={brand.src} alt="" aria-hidden="true" loading="lazy" width={dims.w} height={dims.h} class="brand-logo-art" />
+            )}
+          </span>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+
+  {/* Pull-quote */}
+  <div class="max-w-3xl mx-auto text-center px-6 md:px-12 mb-10">
+    <p class="text-2xl md:text-3xl lg:text-4xl font-serif italic text-stone-900 leading-snug">
+      &ldquo;O método que posiciona marcas que valem bilhões, agora aplicado em quem você é.&rdquo;
+    </p>
+  </div>
+
+  {/* CTA */}
+  <div class="text-center px-6 md:px-12">
+    <a
+      href={checkoutStandardUrl}
+      data-cta="about-standard"
+      class="inline-flex items-center justify-center px-8 py-4 bg-stone-900 hover:bg-stone-800 text-[#E6E3D6] rounded-full text-lg font-medium transition-all transform hover:-translate-y-0.5 shadow-xl shadow-stone-900/10 font-sans text-center"
+    >
+      Quero minha vaga no Workshop
+    </a>
+  </div>
+</section>
+
+<script>
+  import { trackEvent } from '@lib/tracking';
+  document.querySelectorAll<HTMLAnchorElement>('a[data-cta="about-standard"]').forEach((el) => {
+    el.addEventListener('click', () => {
+      trackEvent('begin_checkout', {
+        currency: 'BRL',
+        value: 47,
+        cta_location: 'about',
+        items: [{ item_id: 'workshop-mp-definitiva-standard', item_name: 'Standard', price: 47, quantity: 1 }],
+      });
+    });
+  });
+</script>
+
+<style is:global>
+  @keyframes brand-marquee-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .brand-marquee {
+    mask-image: linear-gradient(90deg, transparent 0, black 8%, black 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, black 8%, black 92%, transparent 100%);
+  }
+
+  .brand-track {
+    width: max-content;
+    animation: brand-marquee-scroll 70s linear infinite;
+  }
+
+  .brand-marquee:hover .brand-track {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brand-track { animation: none; }
+  }
+
+  .about-highlight {
+    background-image: linear-gradient(transparent 60%, rgba(212, 242, 104, 0.45) 60%);
+    padding: 0 0.1em;
+  }
+
+  /* Brand logo treatment — todas as logos saem monocromáticas (stone-900
+     + opacity 0.55) por padrão pra ficarem visualmente coesas no marquee.
+     No hover, cada uma volta pra cor real:
+     - `kind=local`: SVG tem cor própria hardcoded; basta tirar o filtro.
+     - `kind=icon`: Simple Icons são mono via `currentColor`; aplicamos a
+       cor oficial da marca via `--brand-hover` setada inline no <span>. */
+  .brand-logo {
+    color: var(--color-stone-900);
+  }
+
+  /* Altura fixa baseline pra todos os logos (height + width:auto preserva
+     ratio). Pra ratios atípicos (Sul América quadrado, etc) ajustamos
+     via override por marca abaixo. */
+  .brand-logo-art {
+    height: 2.25rem;
+    width: auto;
+  }
+  @media (min-width: 768px) {
+    .brand-logo-art {
+      height: 3rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .brand-logo-art {
+      height: 3.5rem;
+    }
+  }
+
+  /* Sul América: SVG quadrado (700x700), sem essa boost o logo parece
+     bem menor que Renner/Sicredi (wide) ao lado. */
+  .brand-logo[data-brand='sulamerica'] .brand-logo-art {
+    height: 3.5rem;
+  }
+  @media (min-width: 768px) {
+    .brand-logo[data-brand='sulamerica'] .brand-logo-art {
+      height: 4.5rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .brand-logo[data-brand='sulamerica'] .brand-logo-art {
+      height: 5.5rem;
+    }
+  }
+
+  .brand-logo[data-kind='icon'] svg {
+    color: var(--color-stone-900);
+    opacity: 0.55;
+    transition: color 0.35s ease, opacity 0.35s ease;
+  }
+  .brand-logo[data-kind='icon']:hover svg {
+    color: var(--brand-hover, var(--color-stone-900));
+    opacity: 1;
+  }
+  .brand-logo[data-kind='local'] img {
+    filter: grayscale(1) brightness(0) opacity(0.55);
+    transition: filter 0.35s ease;
+  }
+  .brand-logo[data-kind='local']:hover img {
+    filter: none;
+  }
+
+  /* Renner: swap entre versão mono (sem bola, só wordmark) e versão
+     colorida (com bola + R branco) no hover. Necessário porque o R
+     branco DENTRO da bola some quando brightness(0) é aplicado. */
+  .brand-logo[data-brand='renner'] .renner-view-color {
+    display: none;
+  }
+  .brand-logo[data-brand='renner']:hover .renner-view-mono {
+    display: none;
+  }
+  .brand-logo[data-brand='renner']:hover .renner-view-color {
+    display: inline-block;
+    filter: none;
+  }
+</style>
