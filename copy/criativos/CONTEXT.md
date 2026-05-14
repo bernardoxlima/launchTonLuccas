@@ -1,7 +1,7 @@
 # Criativos — Pipeline de Producao de Video
 
 Workspace ICM-aligned. Texto -> Voz (MiniMax) -> Avatar (HeyGen) -> Montagem (ffmpeg).
-30 hooks x 5 bodies x 3 CTAs = ate 450 criativos a partir de 38 takes unicos.
+10 hooks x 3 bodies x 3 CTAs = 90 criativos (NC5, exhaustive dentro do mesmo NC).
 Filosofia Hormozi: produz tudo, testa no Meta Ads, dado decide.
 
 ## Stages (numeracao = ordem de execucao)

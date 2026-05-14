@@ -19,7 +19,7 @@ Escreve hooks, bodies e CTAs. Saida: `.md` com `status: aprovado`.
    ```bash
    find hooks -name 'h*.md' | sort -t'h' -k2 -n | tail -1
    find body  -name 'b*.md' | sort | tail -1
-   find ctas  -name 'c*.md' | sort | tail -1
+   find ctas  -name 'cta*.md' | sort | tail -1
    ```
 3. Aplicar **regras de microcopy** (copy-anti-ai.md) ao texto.
 4. Salvar com **frontmatter completo**:
@@ -35,7 +35,7 @@ Espelha a hierarquia da taxonomia (`taxonomy.md`):
 ```
 01-scripts/hooks/NC<X>-<awareness>/h<XX>.md
 01-scripts/body/NC<X>-<awareness>/b<XX>.md
-01-scripts/ctas/c<XX>.md
+01-scripts/ctas/cta<XX>.md
 ```
 
 Status do .md fonte avanca conforme stages downstream completam:
@@ -57,8 +57,8 @@ rascunho → aprovado → audio-ok → video-ok
 2. Criar `body/NC<X>-<awareness>/b<XX>.md`
 
 ### CTA
-1. `find ctas -name 'c*.md' | sort | tail -1` → proximo numero
-2. Criar `ctas/c<XX>.md` (flat — CTAs sao standalone)
+1. `find ctas -name 'cta*.md' | sort | tail -1` → proximo numero
+2. Criar `ctas/cta<XX>.md` (flat — CTAs sao universais)
 
 ### Nova abordagem emocional dentro de NC existente
 1. Criar hook em `hooks/NC<X>-<awareness>/h<XX>.md` com `angulo: <novo-nome>` no frontmatter

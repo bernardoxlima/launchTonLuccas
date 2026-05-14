@@ -85,7 +85,7 @@ Mesma hierarquia de `01-scripts/`, com extensao `.mp3`:
 ```
 02-audio/hooks/NC<X>-<awareness>/h<XX>.mp3
 02-audio/body/NC<X>-<awareness>/b<XX>.mp3
-02-audio/ctas/c<XX>.mp3
+02-audio/ctas/cta<XX>.mp3
 ```
 
 ## Controles de texto (perguntar ao user antes de usar)

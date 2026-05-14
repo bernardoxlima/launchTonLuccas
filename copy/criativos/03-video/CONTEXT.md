@@ -30,7 +30,7 @@ Mesma hierarquia, extensao `.mp4`:
 ```
 03-video/hooks/NC<X>-<awareness>/h<XX>.mp4
 03-video/body/NC<X>-<awareness>/b<XX>.mp4
-03-video/ctas/c<XX>.mp4
+03-video/ctas/cta<XX>.mp4
 ```
 
 ## Config
