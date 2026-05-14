@@ -59,32 +59,53 @@ NC do output = NC do hook (dimensao de targeting no Meta Ads).
 | 4 (working) | `../03-video/ctas/*.mp4` | CTAs renderizados |
 | 3 (referencia) | `../_config/reference/nomenclature.md` | ID format |
 
-## Process
+## Process — 3 etapas sequenciais
 
-### Montar UM criativo especifico
+### Etapa 1: Legendar componentes (16 arquivos)
+
+Ver secao "Legendas" abaixo. Gera `_legendado/` dentro de cada pasta de `03-video/`.
+
+### Etapa 2: Acelerar componentes legendados (1.15x)
+
+Velocidade padrao: **1.15x**. Aplicar ANTES do concat (16 speed-ups reusados vs 90).
 
 ```bash
-ffmpeg -i ../03-video/hooks/NC5-most-aware/h01.mp4 \
-  -i ../03-video/body/NC5-most-aware/b01.mp4 \
-  -i ../03-video/ctas/cta1.mp4 \
+# Por componente:
+ffmpeg -y -i componente_legendado.mp4 \
+  -filter_complex "[0:v]setpts=PTS/1.15[v];[0:a]atempo=1.15[a]" \
+  -map "[v]" -map "[a]" \
+  -c:v libx264 -preset fast -crf 18 -c:a aac -b:a 128k \
+  componente_pronto.mp4
+```
+
+Resultado: 16 componentes prontos (legendados + acelerados) em `_pronto/`.
+
+### Etapa 3: Concat (90 combos)
+
+Usa componentes prontos da etapa 2.
+
+**UM criativo:**
+```bash
+ffmpeg -i _pronto/hooks/NC5-most-aware/h01.mp4 \
+  -i _pronto/body/NC5-most-aware/b01.mp4 \
+  -i _pronto/ctas/cta1.mp4 \
   -filter_complex "[0:v][0:a][1:v][1:a][2:v][2:a]concat=n=3:v=1:a=1[outv][outa]" \
   -map "[outv]" -map "[outa]" NC5-most-aware/NC5_h01_b01_cta01.mp4
 ```
 
-### Montar TODOS de um NC (exhaustive)
-
+**TODOS de um NC (exhaustive):**
 ```bash
 NC="NC5-most-aware"
-NC_NUM="${NC%%-*}"  # extrai "NC5"
+NC_NUM="${NC%%-*}"
 
-for hook in ../03-video/hooks/$NC/*.mp4; do
-  h_id=$(basename "$hook" .mp4)                    # h01
-  for body in ../03-video/body/$NC/*.mp4; do
-    b_id=$(basename "$body" .mp4)                  # b01
-    for cta in ../03-video/ctas/*.mp4; do
-      cta_id=$(basename "$cta" .mp4)               # cta1
-      cta_num=$(echo "$cta_id" | grep -o '[0-9]*') # 1
-      cta_fmt=$(printf "cta%02d" "$cta_num")       # cta01
+for hook in _pronto/hooks/$NC/*.mp4; do
+  h_id=$(basename "$hook" .mp4)
+  for body in _pronto/body/$NC/*.mp4; do
+    b_id=$(basename "$body" .mp4)
+    for cta in _pronto/ctas/*.mp4; do
+      cta_id=$(basename "$cta" .mp4)
+      cta_num=$(echo "$cta_id" | grep -o '[0-9]*')
+      cta_fmt=$(printf "cta%02d" "$cta_num")
       out="${NC_NUM}_${h_id}_${b_id}_${cta_fmt}.mp4"
 
       ffmpeg -i "$hook" -i "$body" -i "$cta" \
@@ -95,16 +116,25 @@ for hook in ../03-video/hooks/$NC/*.mp4; do
 done
 ```
 
-### Montar TUDO (todos NCs)
-
+**TODOS NCs:**
 ```bash
-for nc_dir in ../03-video/hooks/NC*; do
+for nc_dir in _pronto/hooks/NC*; do
   NC=$(basename "$nc_dir")
-  # mesmo loop de cima, aplicado a cada NC
+  # mesmo loop de cima
 done
 ```
 
-A chave: body loop usa `../03-video/body/$NC/` (mesmo NC do hook, nao `*`).
+Body loop usa `_pronto/body/$NC/` (mesmo NC do hook, nao `*`).
+
+## Config de exportacao
+
+| Parametro | Valor | Motivo |
+|-----------|-------|--------|
+| Velocidade | **1.15x** | Ritmo mais dinamico, validado no prototipo |
+| Codec video | libx264, preset fast, crf 18 | Qualidade alta, encode rapido |
+| Codec audio | aac, 128kbps | Padrao Meta Ads |
+| Resolucao | 1080x1920 (9:16) | Reels/Stories |
+| FPS | 25 (herda do HeyGen) | Padrao |
 
 ## Outputs
 
