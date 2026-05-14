@@ -22,7 +22,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 **Métrica:** begin_checkout rate via tracking.ts
 
 **Refinamentos:**
-- (vazio)
+- 2026-05-14 — Hero compactado pra CTA caber acima da dobra (desktop + mobile). (1) Italic span da H1 ("— construindo o posicionamento...") virou sub-statement em bloco, classes `block italic ... text-base sm:text-lg md:text-xl lg:text-2xl leading-snug mt-2 md:mt-3 font-normal` — antes era inline no mesmo tamanho da H1 e ocupava 8-10 linhas no lg. (2) H1 principal reduzida: `text-[2rem] sm:text-4xl md:text-5xl lg:text-6xl → text-[1.75rem] sm:text-3xl md:text-4xl lg:text-5xl`. (3) Top padding lg reduzido: `lg:pt-32 → lg:pt-20`. (4) Negative margin mobile aumentado: `-mt-16 md:-mt-20 → -mt-24 md:-mt-28` (puxa text column 32px mais pra cima sobre a foto). (5) Gaps compactados: eyebrow mb 3/4→2/3, H1 mb 6/8→3/4, body mb 8/10→5/6, body text base/lg→sm/base, CTA py 4/5→3.5/4, CTA mb 8→5/6.
 
 ### v6 — 2026-05-13
 
