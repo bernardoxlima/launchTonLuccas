@@ -15,7 +15,7 @@
   },
   "voice_setting": {
     "voice_id": "ton-luccas-v2",
-    "speed": 1.0,
+    "speed": 1.15,
     "vol": 1,
     "pitch": 0,
     "emotion": "auto",
