@@ -121,9 +121,46 @@ A chave: body loop usa `../03-video/body/$NC/` (mesmo NC do hook, nao `*`).
 └── ...
 ```
 
+## Legendas
+
+Estilo: amarelo `#F5C527`, outline black 3px, Arial Bold 72px, streaming (3 palavras por vez), bottom center.
+
+### Fonte dos timestamps
+
+**Produção nova** (áudios gerados com `subtitle_enable: true`):
+- MiniMax retorna `data.subtitle_file` (JSON com word timestamps em ms)
+- Arquivo salvo como `.subtitle.json` ao lado do `.mp3` em `02-audio/`
+- Texto fonte: `.md` de `01-scripts/` (texto exato, nao transcricao)
+
+**Áudios legados** (gerados sem `subtitle_enable`):
+- Whisper com `--word_timestamps True` no `.mp3` existente → extrai timings
+- Texto: usar `.md` de `01-scripts/` (nao a transcricao do Whisper)
+- Alinhar word timestamps do Whisper com texto do .md
+
+### Pipeline de legendas (por componente)
+
+```
+1. Obter timestamps (MiniMax .subtitle.json OU Whisper)
+2. Obter texto (01-scripts/*.md — corpo sem frontmatter)
+3. Gerar .ass com estilo customizado (3 palavras por grupo)
+4. Burn: ffmpeg -i componente.mp4 -vf "ass=componente.ass" -c:v libx264 -preset fast -crf 18 -c:a copy legendado.mp4
+```
+
+Legendar os **16 componentes** (nao os 90 finais). Cada componente legendado eh reusado em N combos.
+
+### Estilo .ass (template)
+
+```
+[V4+ Styles]
+Style: Default,Arial,72,&H0027C5F5,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,2,40,40,120,1
+```
+
+Cores ASS (formato &H00BBGGRR): `&H0027C5F5` = amarelo #F5C527. Outline: `&H00000000` = black. Thickness: 3.
+
 ## Regras
 
 - **NC do output = NC do hook.** Decoder em `_config/reference/nomenclature.md`.
 - **ID no nome do arquivo = ID no Meta Ads.** Filtrar por NC/hook/body/CTA.
 - **Exhaustive dentro do NC.** Sem manifesto. Dado decide (Hormozi).
 - **04-finais/ eh gitignored.** Re-rodar montagem eh barato vs storage.
+- **Legendar componentes, nao finais.** 16 burns em vez de 90.

@@ -2,9 +2,11 @@
   "provider": "minimax",
   "purpose": "text-to-speech para gerar audio dos scripts",
   "model": "speech-2.8-hd",
-  "voice_id": "ton-luccas-v1",
+  "voice_id": "ton-luccas-v2",
   "language_boost": "Portuguese",
   "output_format": "url",
+  "subtitle_enable": true,
+  "subtitle_type": "word",
   "audio_setting": {
     "format": "mp3",
     "sample_rate": 32000,
@@ -12,23 +14,20 @@
     "channel": 1
   },
   "voice_setting": {
-    "voice_id": "ton-luccas-v1",
-    "speed": 1.1,
+    "voice_id": "ton-luccas-v2",
+    "speed": 1.0,
     "vol": 1,
     "pitch": 0,
-    "emotion": "angry",
+    "emotion": "auto",
     "text_normalization": true
   },
   "pronunciation_dict": {
-    "tone": [
-      "Vorus/Vórus",
-      "Ton/Tón"
-    ]
+    "tone": ["Vorus/Vórus", "Ton/Tón"]
   },
   "voice_clone": {
     "source_audio": "/Users/bernardoxlima/Desktop/videosTon/IMG_4429.mp3",
-    "cloned_at": "2026-05-12",
+    "cloned_at": "2026-05-13",
     "ttl": "7 dias sem uso — verificar via get_voice antes de gerar"
   },
-  "notes": "Antes de gerar: verificar se ton-luccas-v1 existe via POST /v1/get_voice. Se nao existir, re-clonar com o audio fonte. Interjeicoes (sighs, breath, etc) e pausas (<#x#>) — perguntar ao user antes de inserir no texto. Pronunciation_dict — perguntar ao user se tem nomes proprios novos pra adicionar."
+  "notes": "Antes de gerar: verificar se ton-luccas-v2 existe via POST /v1/get_voice. Se nao existir, re-clonar com o audio fonte. Interjeicoes (sighs, breath, etc) e pausas (<#x#>) — perguntar ao user antes de inserir no texto. Pronunciation_dict — perguntar ao user se tem nomes proprios novos pra adicionar. Subtitle: response retorna data.subtitle_file (URL JSON com word timestamps em ms). Baixar e salvar como .json ao lado do .mp3."
 }

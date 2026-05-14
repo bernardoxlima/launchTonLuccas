@@ -44,6 +44,8 @@ source .env && curl -s -X POST "https://api.minimax.io/v1/t2a_v2" \
     "model": "speech-2.8-hd",
     "text": "TEXTO DO HOOK/BODY/CTA AQUI",
     "output_format": "url",
+    "subtitle_enable": true,
+    "subtitle_type": "word",
     "language_boost": "Portuguese",
     "audio_setting": {
       "format": "mp3",
@@ -65,14 +67,19 @@ source .env && curl -s -X POST "https://api.minimax.io/v1/t2a_v2" \
   }'
 ```
 
-### 3. Baixar URL
+### 3. Baixar audio + legendas
 
-Resposta `output_format: url`: campo `data.audio` contem URL direta (valida 24h).
+Resposta contem `data.audio` (URL mp3, valida 24h) e `data.subtitle_file` (URL JSON com word timestamps em ms).
 
 ```bash
-url=$(echo $response | python3 -c "import sys,json; print(json.load(sys.stdin)['data']['audio'])")
-curl -sL -o "hooks/NC2-problem-aware/h01.mp3" "$url"
+audio_url=$(echo $response | python3 -c "import sys,json; print(json.load(sys.stdin)['data']['audio'])")
+sub_url=$(echo $response | python3 -c "import sys,json; print(json.load(sys.stdin)['data']['subtitle_file'])")
+
+curl -sL -o "hooks/NC5-most-aware/h01.mp3" "$audio_url"
+curl -sL -o "hooks/NC5-most-aware/h01.subtitle.json" "$sub_url"
 ```
+
+O `.subtitle.json` contem timestamps por palavra em milissegundos. Usado em `04-finais/` pra gerar legendas `.ass` com estilo customizado.
 
 ### 4. Atualizar status do .md fonte
 
@@ -80,12 +87,15 @@ Promover `status: aprovado` → `status: audio-ok` no frontmatter do .md em `01-
 
 ## Outputs
 
-Mesma hierarquia de `01-scripts/`, com extensao `.mp3`:
+Mesma hierarquia de `01-scripts/`, com `.mp3` + `.subtitle.json`:
 
 ```
 02-audio/hooks/NC<X>-<awareness>/h<XX>.mp3
+02-audio/hooks/NC<X>-<awareness>/h<XX>.subtitle.json
 02-audio/body/NC<X>-<awareness>/b<XX>.mp3
+02-audio/body/NC<X>-<awareness>/b<XX>.subtitle.json
 02-audio/ctas/cta<XX>.mp3
+02-audio/ctas/cta<XX>.subtitle.json
 ```
 
 ## Controles de texto (perguntar ao user antes de usar)
