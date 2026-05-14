@@ -2,25 +2,40 @@
 
 NC1 = menos consciente (topo do funil), NC5 = mais consciente (fundo do funil).
 
-| NC | Nome | Hook driver | Body |
-|----|------|-------------|------|
-| NC1 | Completely Unaware | curiosity-driven | b01 |
-| NC2 | Problem-Aware | pain-driven | b02 |
-| NC3 | Solution-Aware | promise-driven | b03 |
-| NC4 | Product-Aware | proof-driven | b04 |
-| NC5 | Most Aware | offer-driven | b05 |
+| NC | Nome | Hook driver |
+|----|------|-------------|
+| NC1 | Completely Unaware | curiosity-driven |
+| NC2 | Problem-Aware | pain-driven |
+| NC3 | Solution-Aware | promise-driven |
+| NC4 | Product-Aware | proof-driven |
+| NC5 | Most Aware | offer-driven |
 
-Hooks vivem dentro da pasta do NC que atacam. A abordagem emocional (injustica, espelho, urgencia, etc) vive no frontmatter `angulo:`, nao como subfolder.
+## Estado atual do pipeline
+
+Producao atual concentrada em **NC5 (Most Aware)** — fundo do funil.
+
+| NC | Hooks | Bodies | Status |
+|----|-------|--------|--------|
+| NC5 | h01-h10 (10 hooks) | b01-b03 (3 bodies) | **ativo** |
+| NC1-NC4 | — | — | pastas criadas, sem conteudo |
+
+Quando escalar pra outros NCs, criar hooks e bodies na pasta `NC<X>-<awareness>/` correspondente. A regra de montagem (`04-finais/CONTEXT.md`) automaticamente pega qualquer NC novo.
 
 ## Abordagens emocionais (angulos)
 
-| Angulo | NC tipico | O que faz |
-|--------|-----------|-----------|
-| injustica | NC2 | Competentes ficando pra tras enquanto menos preparados crescem |
-| espelho | NC2 | Descreve a cena exata que o prospect vive |
-| urgencia | NC3 | Custo concreto de nao agir agora |
+Angulo vive no frontmatter `angulo:` de cada hook, nao como subfolder.
 
-Novas abordagens podem ser criadas a qualquer momento. O angulo eh um campo livre — nao precisa de pasta nova.
+| Angulo | O que faz |
+|--------|-----------|
+| ancoragem | Compara valor alto vs preco acessivel |
+| oferta-direta | Apresenta a oferta sem rodeio |
+| escassez | Vagas limitadas, lote vai virar |
+| novidade | Primeira vez, nunca feito antes |
+| urgencia | Custo concreto de nao agir agora |
+| comando | Ordem direta ao viewer |
+| convite | Tom de convite pessoal |
+
+Novas abordagens podem ser criadas a qualquer momento — campo livre no frontmatter.
 
 ## Organizacao por NC
 
@@ -32,10 +47,13 @@ Hooks, bodies e finais seguem a mesma hierarquia: **NC como primeiro nivel**.
 01-scripts/hooks/
 ├── NC1-completely-unaware/
 ├── NC2-problem-aware/
-│   └── h01.md  (angulo: injustica)
 ├── NC3-solution-aware/
 ├── NC4-product-aware/
 └── NC5-most-aware/
+    ├── h01.md  (angulo: ancoragem)
+    ├── h02.md  (angulo: oferta-direta)
+    ├── ...
+    └── h10.md  (angulo: convite)
 ```
 
 ### Body: NC > arquivo
@@ -43,22 +61,20 @@ Hooks, bodies e finais seguem a mesma hierarquia: **NC como primeiro nivel**.
 ```
 01-scripts/body/
 ├── NC1-completely-unaware/
-│   └── b01.md
 ├── NC2-problem-aware/
-│   └── b02.md
 ├── NC3-solution-aware/
-│   └── b03.md
 ├── NC4-product-aware/
-│   └── b04.md
 └── NC5-most-aware/
-    └── b05.md
+    ├── b01.md  (guia pratico)
+    ├── b02.md  (deal-driven)
+    └── b03.md  (primeira vez + urgencia)
 ```
 
-### CTAs: flat (sem NC — sao standalone)
+### CTAs: flat (universais — combinam com qualquer NC)
 
 ```
 01-scripts/ctas/
-├── c01.md
-├── c02.md
-└── c03.md
+├── cta1.md  (escassez)
+├── cta2.md  (ancoragem)
+└── cta3.md  (urgencia temporal)
 ```
