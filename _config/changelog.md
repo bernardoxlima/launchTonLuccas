@@ -25,6 +25,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 - 2026-05-14 — Hero compactado pra CTA caber acima da dobra (desktop + mobile). (1) Italic span da H1 ("— construindo o posicionamento...") virou sub-statement em bloco, classes `block italic ... text-base sm:text-lg md:text-xl lg:text-2xl leading-snug mt-2 md:mt-3 font-normal` — antes era inline no mesmo tamanho da H1 e ocupava 8-10 linhas no lg. (2) H1 principal reduzida: `text-[2rem] sm:text-4xl md:text-5xl lg:text-6xl → text-[1.75rem] sm:text-3xl md:text-4xl lg:text-5xl`. (3) Top padding lg reduzido: `lg:pt-32 → lg:pt-20`. (4) Negative margin mobile aumentado: `-mt-16 md:-mt-20 → -mt-24 md:-mt-28` (puxa text column 32px mais pra cima sobre a foto). (5) Gaps compactados: eyebrow mb 3/4→2/3, H1 mb 6/8→3/4, body mb 8/10→5/6, body text base/lg→sm/base, CTA py 4/5→3.5/4, CTA mb 8→5/6.
 - 2026-05-14 — Italic sub-statement do Hero bumpado um step em cada breakpoint pra ficar mais presente: `text-lg sm:text-xl md:text-2xl lg:text-2xl → text-xl sm:text-2xl md:text-3xl lg:text-3xl` (mobile 18→20px, sm 20→24px, md 24→30px, lg 24→30px). Hierarquia H1 vs italic: mobile 28/20 (1.4), sm 30/24 (1.25), md 36/30 (1.2), lg 48/30 (1.6) — subordinado claro mas com mais peso visual.
 - 2026-05-14 — Segunda passada de refino do Hero, fixando 2 bugs do refino anterior. (1) Eyebrow estava sobrepondo o logo no desktop em viewports menores que 800px de altura — `lg:justify-center` permitia overflow vertical pra cima quando content > available space. Mudou pra `lg:justify-start` (content sempre ancorado no topo do padding) + restaurou `lg:pt-32` (vs `lg:pt-20` do refino anterior). Garante eyebrow a 128px do top, logo termina em ~104px, gap 24px. (2) Italic sub-statement estava muito pequeno no mobile (`text-base sm:text-lg → text-lg sm:text-xl`). (3) Removido o body p ("Você vai sair com um plano claro...") — frees ~80-100px de altura vertical, e a italic já carrega o papel explicativo. Sem body p o conteúdo cabe melhor sem precisar comprimir margens — restaurados `mb-3/4 → mb-3/4` no eyebrow, `mb-3/4 → mb-6/8` no H1, `py-3.5/4 → py-4/5` no CTA, `-mt-24/28 → -mt-16/20` no mobile (não preciso puxar texto tanto pra cima sem o body p inflando altura).
+- 2026-05-18 HOTFIX (checkout): migração Kirvano → Eduzz. Standard `pay.kirvano.com/cd45d82c-9fe5-44f3-8b41-8fce3b50437b` → `chk.eduzz.com/39ZREE8OWE`. Aplicado nos 11 arquivos da v7 (Pricing + 10 CTAs). UTM suffix preservado. Hotfix global em todas as versões ativas (v3 default + v4/v5/v6/v7) — ver nota no fim da seção v3.
 
 ### v6 — 2026-05-13
 
@@ -35,7 +36,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 **Métrica:** begin_checkout rate via tracking.ts
 
 **Refinamentos:**
-- (vazio)
+- 2026-05-18 HOTFIX (checkout): migração Kirvano → Eduzz. Standard `pay.kirvano.com/cd45d82c...` → `chk.eduzz.com/39ZREE8OWE`. 11 arquivos (Pricing + 10 CTAs). UTM preservado. Hotfix global — ver nota no fim da seção v3.
 
 ### v5 — 2026-05-13
 
@@ -51,7 +52,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 **Métrica:** begin_checkout rate via tracking.ts
 
 **Refinamentos:**
-- (vazio)
+- 2026-05-18 HOTFIX (checkout): migração Kirvano → Eduzz. Standard `pay.kirvano.com/cd45d82c...` → `chk.eduzz.com/39ZREE8OWE`. 11 arquivos (Pricing + 10 CTAs). UTM preservado. Hotfix global — ver nota no fim da seção v3.
 
 ### v4 — 2026-05-11
 
@@ -63,6 +64,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 
 **Refinamentos:**
 - 2026-05-11 — Barra de progresso do Lote 01 subiu de 42% pra 77% em Hero (label, fill, ticker marquee) E em Pricing (label "Lote 01 · 77% vendidos" + fill da barra do card Standard). Aumenta pressão de escassez na primeira dobra e no momento da decisão de compra.
+- 2026-05-18 HOTFIX (checkout): migração Kirvano → Eduzz. Standard `pay.kirvano.com/cd45d82c...` → `chk.eduzz.com/39ZREE8OWE`; VIP `pay.kirvano.com/5971d946...` → `chk.eduzz.com/Q9N2PPDP01` (v4 tem ambos no Pricing). UTM preservado. Hotfix global — ver nota no fim da seção v3.
 
 ### v3 — 2026-05-10  *(PINNED como `default` desde 2026-05-11 — é o que `tonluccas.com.br/` serve)*
 
@@ -77,6 +79,17 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 - 2026-05-11 — Todos os CTAs fora da seção Pricing passaram a apontar pra `#pricing` em vez de ir direto pro Kiwify. Apenas os 2 botões dentro do Pricing (Standard R$47 + VIP R$297) levam pro checkout. Tracking: `begin_checkout` agora só dispara nos botões reais de checkout; CTAs intra-page disparam `select_promotion` com `promotion_name: pricing-section` e `cta_location: <hero|problem|deliverables|urgency|forwhom|situations|schedule|anchor|about|sticky>`. Reason: forçar usuário a ver Standard vs VIP antes de pagar, em vez de mandar todo mundo direto pro Standard.
 - 2026-05-11 — Refino de UX do scroll-to-pricing. (1) Smooth scroll customizado via `src/lib/smoothScroll.ts` — duração fixa 750ms com easeInOutCubic, independente da distância (CSS `scroll-behavior: smooth` nativo era visualmente rápido demais em scrolls longos do mobile). (2) Âncora dos 10 CTAs migrou de `#pricing` (topo da section) pra `#pricing-cta-standard` (id no botão "Garantir Ingresso Standard"). Combinado com `scroll-margin-top: 50vh` no botão, ele aterrissa no meio do viewport — usuário vê CTA + features acima sem precisar rolar. Respeita `prefers-reduced-motion`.
 - 2026-05-11 — Refino do card Pricing no mobile. (1) Âncora dos 10 CTAs migrou de `#pricing-cta-standard` (botão) pra `#pricing-standard` (bloco do preço R$ 47) com `scroll-margin-top: 35vh` — aterrissa de forma que preço fica acima do meio do viewport e CTA já visível dentro do fold. (2) Reorganização visual: badge "Lote 01" (Standard) e "Mais Escolhido" (VIP) saíram do topo isolado e ficaram inline com o título do card, à direita — economiza ~50px de altura por card. (3) Paddings e gaps compactados no mobile: `p-8 → p-6` no card, `mb-8/mb-10 → mb-6` nas descrições/listas, `space-y-4 → space-y-3` nas features. Desktop intacto via `md:` prefixes.
+- 2026-05-18 HOTFIX (checkout): migração Kirvano → Eduzz. Standard `pay.kirvano.com/cd45d82c...` → `chk.eduzz.com/39ZREE8OWE`; VIP `pay.kirvano.com/5971d946...` → `chk.eduzz.com/Q9N2PPDP01`. UTM suffix preservado nos dois.
+
+---
+
+#### NOTA — HOTFIX checkout Kirvano → Eduzz (2026-05-18)
+
+Aplicado globalmente em TODAS as versões ativas: v3 (default, serve `/`), v4, v5, v6, v7. Total: 35 ocorrências Standard + 2 VIP (v3/v4 Pricing) substituídas no fallback hardcoded. `.env.example` atualizado pra refletir Eduzz.
+
+**ATENÇÃO — env var na Vercel:** o código usa `import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || '<fallback>'`. A troca acima mexe só no `<fallback>`. Se `PUBLIC_CHECKOUT_STANDARD_URL` / `PUBLIC_CHECKOUT_VIP_URL` estiverem setadas no painel da Vercel (Settings → Environment Variables), produção usa o valor de LÁ e o fallback não tem efeito. Nesse caso é obrigatório atualizar as 2 vars no painel da Vercel + redeploy. Status dessa verificação: PENDENTE confirmação do user.
+
+**Webhook não migrado:** `KIRVANO_WEBHOOK_SECRET` + a Vercel Function de webhook Kirvano → Meta CAPI continuam configurados pra Kirvano. Migrar pagamento pra Eduzz quebra o tracking server-side de `purchase` até o webhook ser reconfigurado pra Eduzz. Fora do escopo deste hotfix — flagado pro user.
 
 ### v2 — DELETADA em 2026-05-11
 
