@@ -23,6 +23,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 
 **Refinamentos:**
 - 2026-05-20 — Progress bar do Lote 01 subiu de 77% pra 93% (Hero ticker + label + fill, Pricing label + fill). Sync global aplicado em todas as versões ativas (v3/v4/v5/v6/v7/v8) — atualiza pressão de escassez.
+- 2026-05-20 — Hero progress bar alinhada ao CTA no desktop. Wrapper ganhou `lg:mx-0` (mantém `mx-auto` no mobile/tablet com text-center). Fix global — antes a barra ficava centralizada enquanto o CTA `w-full sm:w-auto` aterrissava left-aligned via `lg:text-left`, desalinhando no lg+.
 
 ### v7 — 2026-05-13
 
@@ -43,6 +44,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 - 2026-05-14 — Segunda passada de refino do Hero, fixando 2 bugs do refino anterior. (1) Eyebrow estava sobrepondo o logo no desktop em viewports menores que 800px de altura — `lg:justify-center` permitia overflow vertical pra cima quando content > available space. Mudou pra `lg:justify-start` (content sempre ancorado no topo do padding) + restaurou `lg:pt-32` (vs `lg:pt-20` do refino anterior). Garante eyebrow a 128px do top, logo termina em ~104px, gap 24px. (2) Italic sub-statement estava muito pequeno no mobile (`text-base sm:text-lg → text-lg sm:text-xl`). (3) Removido o body p ("Você vai sair com um plano claro...") — frees ~80-100px de altura vertical, e a italic já carrega o papel explicativo. Sem body p o conteúdo cabe melhor sem precisar comprimir margens — restaurados `mb-3/4 → mb-3/4` no eyebrow, `mb-3/4 → mb-6/8` no H1, `py-3.5/4 → py-4/5` no CTA, `-mt-24/28 → -mt-16/20` no mobile (não preciso puxar texto tanto pra cima sem o body p inflando altura).
 - 2026-05-18 HOTFIX (checkout): migração Kirvano → Eduzz. Standard `pay.kirvano.com/cd45d82c-9fe5-44f3-8b41-8fce3b50437b` → `chk.eduzz.com/39ZREE8OWE`. Aplicado nos 11 arquivos da v7 (Pricing + 10 CTAs). UTM suffix preservado. Hotfix global em todas as versões ativas (v3 default + v4/v5/v6/v7) — ver nota no fim da seção v3.
 - 2026-05-20 — Progress bar do Lote 01 subiu de 77% pra 93% (Hero ticker + label + fill, Pricing label + fill). Sync global aplicado em todas as versões ativas (v3/v4/v5/v6/v7/v8) — atualiza pressão de escassez.
+- 2026-05-20 — Hero progress bar alinhada ao CTA no desktop. Wrapper ganhou `lg:mx-0` (mantém `mx-auto` no mobile/tablet com text-center). Fix global — antes a barra ficava centralizada enquanto o CTA `w-full sm:w-auto` aterrissava left-aligned via `lg:text-left`, desalinhando no lg+.
 
 ### v6 — 2026-05-13
 
@@ -55,6 +57,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 **Refinamentos:**
 - 2026-05-18 HOTFIX (checkout): migração Kirvano → Eduzz. Standard `pay.kirvano.com/cd45d82c...` → `chk.eduzz.com/39ZREE8OWE`. 11 arquivos (Pricing + 10 CTAs). UTM preservado. Hotfix global — ver nota no fim da seção v3.
 - 2026-05-20 — Progress bar do Lote 01 subiu de 77% pra 93% (Hero ticker + label + fill, Pricing label + fill). Sync global aplicado em todas as versões ativas (v3/v4/v5/v6/v7/v8) — atualiza pressão de escassez.
+- 2026-05-20 — Hero progress bar alinhada ao CTA no desktop. Wrapper ganhou `lg:mx-0` (mantém `mx-auto` no mobile/tablet com text-center). Fix global — antes a barra ficava centralizada enquanto o CTA `w-full sm:w-auto` aterrissava left-aligned via `lg:text-left`, desalinhando no lg+.
 
 ### v5 — 2026-05-13
 
@@ -72,6 +75,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 **Refinamentos:**
 - 2026-05-18 HOTFIX (checkout): migração Kirvano → Eduzz. Standard `pay.kirvano.com/cd45d82c...` → `chk.eduzz.com/39ZREE8OWE`. 11 arquivos (Pricing + 10 CTAs). UTM preservado. Hotfix global — ver nota no fim da seção v3.
 - 2026-05-20 — Progress bar do Lote 01 subiu de 77% pra 93% (Hero ticker + label + fill, Pricing label + fill). Sync global aplicado em todas as versões ativas (v3/v4/v5/v6/v7/v8) — atualiza pressão de escassez.
+- 2026-05-20 — Hero progress bar alinhada ao CTA no desktop. Wrapper ganhou `lg:mx-0` (mantém `mx-auto` no mobile/tablet com text-center). Fix global — antes a barra ficava centralizada enquanto o CTA `w-full sm:w-auto` aterrissava left-aligned via `lg:text-left`, desalinhando no lg+.
 
 ### v4 — 2026-05-11
 
@@ -85,6 +89,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 - 2026-05-11 — Barra de progresso do Lote 01 subiu de 42% pra 77% em Hero (label, fill, ticker marquee) E em Pricing (label "Lote 01 · 77% vendidos" + fill da barra do card Standard). Aumenta pressão de escassez na primeira dobra e no momento da decisão de compra.
 - 2026-05-18 HOTFIX (checkout): migração Kirvano → Eduzz. Standard `pay.kirvano.com/cd45d82c...` → `chk.eduzz.com/39ZREE8OWE`; VIP `pay.kirvano.com/5971d946...` → `chk.eduzz.com/Q9N2PPDP01` (v4 tem ambos no Pricing). UTM preservado. Hotfix global — ver nota no fim da seção v3.
 - 2026-05-20 — Progress bar do Lote 01 subiu de 77% pra 93% (Hero ticker + label + fill, Pricing label + fill). Sync global aplicado em todas as versões ativas (v3/v4/v5/v6/v7/v8) — atualiza pressão de escassez.
+- 2026-05-20 — Hero progress bar alinhada ao CTA no desktop. Wrapper ganhou `lg:mx-0` (mantém `mx-auto` no mobile/tablet com text-center). Fix global — antes a barra ficava centralizada enquanto o CTA `w-full sm:w-auto` aterrissava left-aligned via `lg:text-left`, desalinhando no lg+.
 
 ### v3 — 2026-05-10  *(PINNED como `default` desde 2026-05-11 — é o que `tonluccas.com.br/` serve)*
 
@@ -101,6 +106,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 - 2026-05-11 — Refino do card Pricing no mobile. (1) Âncora dos 10 CTAs migrou de `#pricing-cta-standard` (botão) pra `#pricing-standard` (bloco do preço R$ 47) com `scroll-margin-top: 35vh` — aterrissa de forma que preço fica acima do meio do viewport e CTA já visível dentro do fold. (2) Reorganização visual: badge "Lote 01" (Standard) e "Mais Escolhido" (VIP) saíram do topo isolado e ficaram inline com o título do card, à direita — economiza ~50px de altura por card. (3) Paddings e gaps compactados no mobile: `p-8 → p-6` no card, `mb-8/mb-10 → mb-6` nas descrições/listas, `space-y-4 → space-y-3` nas features. Desktop intacto via `md:` prefixes.
 - 2026-05-18 HOTFIX (checkout): migração Kirvano → Eduzz. Standard `pay.kirvano.com/cd45d82c...` → `chk.eduzz.com/39ZREE8OWE`; VIP `pay.kirvano.com/5971d946...` → `chk.eduzz.com/Q9N2PPDP01`. UTM suffix preservado nos dois.
 - 2026-05-20 — Progress bar do Lote 01 subiu de 77% pra 93% (Hero ticker + label + fill, Pricing label + fill). Sync global aplicado em todas as versões ativas (v3/v4/v5/v6/v7/v8) — atualiza pressão de escassez.
+- 2026-05-20 — Hero progress bar alinhada ao CTA no desktop. Wrapper ganhou `lg:mx-0` (mantém `mx-auto` no mobile/tablet com text-center). Fix global — antes a barra ficava centralizada enquanto o CTA `w-full sm:w-auto` aterrissava left-aligned via `lg:text-left`, desalinhando no lg+.
 
 ---
 
