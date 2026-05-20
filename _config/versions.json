@@ -1,9 +1,9 @@
 {
   "mpd": {
-    "latest": "v7",
+    "latest": "v8",
     "default": "v3",
     "default_pinned": true,
-    "frozen": ["v4", "v5", "v6"],
+    "frozen": ["v4", "v5", "v6", "v7"],
     "deleted": ["v1", "v2"],
     "history": [
       {
@@ -45,6 +45,14 @@
         "label": "Hero com eyebrow + promessa de posicionamento e formato de conteúdo",
         "hypothesis": "Eyebrow manifesto ('O mais conhecido vence o melhor — sempre.') prepara o terreno antes do H1, e a nova promessa troca atributos de marca (forte/original/lucrativa) por mecanismo concreto (posicionamento + formato de conteúdo que atrai o público que compra). Hipótese: reposicionar a oferta como solução de aquisição de clientes (não só branding) aumenta relevância pra audiência que precisa vender, mantendo o setup Standard-only da v6.",
         "metric": "begin_checkout rate via tracking.ts"
+      },
+      {
+        "v": "v8",
+        "from": "v7",
+        "created": "2026-05-20",
+        "label": "Hero v7 + VIP de volta (Pricing 2-tier, CTAs scroll pra Pricing)",
+        "hypothesis": "Mesma promessa de Hero da v7 (posicionamento + formato de conteúdo) mas com VIP de volta como opção paralela em Pricing 2-tier. Os 10 CTAs intra-page voltam ao padrão v3/v4 (scroll pra #pricing-standard, dispara select_promotion). Hipótese: oferecer Standard E VIP em paralelo aumenta AOV via Q&A exclusivo/aulas/12 meses do VIP, mantendo o Standard como entrada acessível. Comparar v7 (Standard-only) vs v8 (2-tier) com Hero idêntico mede impacto puro de oferecer upsell VIP na conversão e receita por visitante.",
+        "metric": "begin_checkout rate via tracking.ts (separado por Standard vs VIP) + revenue per visitor"
       }
     ]
   }

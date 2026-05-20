@@ -8,6 +8,22 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 
 ## mpd
 
+### v8 — 2026-05-20
+
+**Forked from:** v7
+**Label:** Hero v7 + VIP de volta (Pricing 2-tier, CTAs scroll pra Pricing)
+**Mudança:**
+- `Pricing.astro` voltou pra 2-card grid (template v4): Standard (R$ 47, botão cream `bg-[#E6E3D6]`) + VIP (R$ 297, botão lime `bg-[#D4F268]` com frame animado conic-gradient + badge "Mais Escolhido" + `lg:-translate-y-4`). Header copy "Duas formas de entrar no workshop. Ambas dão acesso aos 2 dias ao vivo. O VIP estende a experiência além do evento." `data-vip-frame` styles `<style is:global>` restaurados. Disclaimer atualizada de "via Kiwify" pra "via Eduzz".
+- Os 10 CTAs intra-page voltaram ao padrão v3/v4: `href="#pricing-standard"` (scroll-to-pricing) em vez de `href={checkoutStandardUrl}` (checkout direto). `const checkoutStandardUrl` removido do frontmatter dos 10 componentes (Pricing.astro mantém). Tracking trocou de `begin_checkout` pra `select_promotion` com `promotion_name: 'pricing-section'` e `cta_location: <hero|problem|deliverables|urgency|forwhom|situations|schedule|anchor|about|sticky>`.
+- `FAQ.astro`: as 3 menções a VIP que tinham sido removidas em v5 foram restauradas — "ou está incluída no Ingresso VIP" (gravação), "O Ingresso VIP por R$ 297" (preço), "ou já vem inclusa no VIP" (gravação).
+- Hero, Base, demais componentes idênticos à v7 (mesma promessa, eyebrow, italic sub-statement).
+
+**Hipótese:** Hero idêntico à v7 → único variável é Standard-only (v7) vs Pricing 2-tier com VIP (v8). Oferecer VIP em paralelo aumenta AOV via os extras (Q&A exclusivo, 12 meses de acesso, gravação organizada em aulas), mantendo Standard como porta de entrada acessível. Comparar v7 vs v8 isola o impacto de oferecer upsell VIP — esperado: revenue per visitor sobe na v8 (mesmo que conversion rate caia um pouco por ter mais opção/fricção).
+**Métrica:** begin_checkout rate via tracking.ts (separado por Standard vs VIP) + revenue per visitor
+
+**Refinamentos:**
+- (vazio)
+
 ### v7 — 2026-05-13
 
 **Forked from:** v6
