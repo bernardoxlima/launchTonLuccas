@@ -153,7 +153,7 @@ Body loop usa `_pronto/body/$NC/` (mesmo NC do hook, nao `*`).
 
 ## Legendas
 
-Estilo: amarelo `#F5C527`, outline black 3px, Arial Bold 72px, streaming (3 palavras por vez), bottom center.
+Estilo: amarelo `#F5C527`, outline black 3px, Arial Bold 72px, bottom center. Agrupamento por frase natural (pausas na fala + pontuacao), NAO por numero fixo de palavras.
 
 ### Fonte dos timestamps
 
@@ -172,7 +172,7 @@ Estilo: amarelo `#F5C527`, outline black 3px, Arial Bold 72px, streaming (3 pala
 ```
 1. Obter timestamps (MiniMax .subtitle.json OU Whisper)
 2. Obter texto (01-scripts/*.md — corpo sem frontmatter)
-3. Gerar .ass com estilo customizado (3 palavras por grupo)
+3. Gerar .ass com estilo customizado (frases naturais baseadas em pausas e pontuacao)
 4. Burn: ffmpeg -i componente.mp4 -vf "ass=componente.ass" -c:v libx264 -preset fast -crf 18 -c:a copy legendado.mp4
 ```
 

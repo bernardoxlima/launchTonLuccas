@@ -14,9 +14,7 @@
 
 barra de progresso: 42% dos ingressos vendidos do lote 01
 
-**Tem 5 anos que te falam que você precisa de uma marca pessoal forte, mas ninguém nunca te ensinou como construir de verdade.**
-
-### 
+### **Tem 5 anos que te falam que você precisa de uma marca pessoal forte, mas ninguém nunca te ensinou como construir de verdade.**
 
 O mercado te vendeu uma promessa por cinco anos: "siga o método e você vira referência."
 
@@ -463,4 +461,3 @@ Depois da inscrição, você receberá as instruções de acesso ao workshop e a
 Como o ingresso dá acesso ao evento ao vivo, a recomendação é reservar os dias **23 e 24 de maio**, das **9h30 às 17h**, para participar da experiência completa.
 
 A gravação será uma compra separada.
-

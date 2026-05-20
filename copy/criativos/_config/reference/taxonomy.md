@@ -12,12 +12,12 @@ NC1 = menos consciente (topo do funil), NC5 = mais consciente (fundo do funil).
 
 ## Estado atual do pipeline
 
-Producao atual concentrada em **NC5 (Most Aware)** — fundo do funil.
-
 | NC | Hooks | Bodies | Status |
 |----|-------|--------|--------|
 | NC5 | h01-h10 (10 hooks) | b01-b03 (3 bodies) | **ativo** |
-| NC1-NC4 | — | — | pastas criadas, sem conteudo |
+| NC4 | h11-h20 (10 hooks) | — | **ativo** |
+| NC3 | h21-h30 (10 hooks) | b04-b05 (2 bodies) | **ativo** |
+| NC1-NC2 | — | — | pastas criadas, sem conteudo |
 
 Quando escalar pra outros NCs, criar hooks e bodies na pasta `NC<X>-<awareness>/` correspondente. A regra de montagem (`04-finais/CONTEXT.md`) automaticamente pega qualquer NC novo.
 
@@ -34,6 +34,18 @@ Angulo vive no frontmatter `angulo:` de cada hook, nao como subfolder.
 | urgencia | Custo concreto de nao agir agora |
 | comando | Ordem direta ao viewer |
 | convite | Tom de convite pessoal |
+| credibilidade | Prova de autoridade via casos conhecidos |
+| prova-social | Social proof quantificado (vagas, participantes) |
+| resultado-especifico | Entregaveis nomeados da consultoria/workshop |
+| acesso-metodo | Mesmo processo da consultoria de 60k disponivel |
+| formato-diferente | Diferencial do formato pratico vs curso gravado |
+| caminho-diferente | Por que tentativas anteriores falharam (mecanismo errado) |
+| espelho | Reconhecimento exato da situacao atual do avatar |
+| injustica | Pessoas menos preparadas ocupam mais espaco |
+| identificacao | Label de situacao especifica — convida o avatar certo |
+| custo-de-esperar | Custo de continuar generico enquanto outros ocupam espaco |
+| promessa-de-mecanismo | O processo comeca de voce, nao de formula |
+| resultado-concreto | 5 entregaveis especificos que voce sai com em 2 dias |
 
 Novas abordagens podem ser criadas a qualquer momento — campo livre no frontmatter.
 
