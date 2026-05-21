@@ -25,7 +25,7 @@ Stages 2-4 sao gitignored (binarios). Stage 1 + docs sobem no git.
 | "trocar avatar HeyGen" | `setup/02-avatar-pick.md` |
 | "escrever/editar hook/body/CTA" | `01-scripts/CONTEXT.md` |
 | "gerar audio do <id>" | `02-audio/CONTEXT.md` |
-| "gerar video do <id>" | `03-video/CONTEXT.md` |
+| "gerar video do <id>" | `03-video/CONTEXT.md` + **`_config/heygen-api-workflow.md`** (OBRIGATORIO) |
 | "montar criativo NC<X>_h<XX>_b<XX>_c<XX>" | `04-finais/CONTEXT.md` |
 | "qual o proximo numero de hook/body/CTA" | `_config/reference/nomenclature.md` |
 | "framework Hormozi (hook types, body formats)" | `_config/reference/hormozi.md` |
@@ -38,6 +38,7 @@ Stages 2-4 sao gitignored (binarios). Stage 1 + docs sobem no git.
 _config/
 ├── minimax.json          ← T2A config (voice_id, speed, emotion)
 ├── heygen.json           ← avatar_id, quality, aspect_ratio
+├── heygen-api-workflow.md ← LEITURA OBRIGATORIA antes de gerar video (REST API, nao MCP)
 └── reference/
     ├── hormozi.md        ← framework de ads (Hook/Body/CTA, 70-20-10)
     ├── nomenclature.md   ← ID format + decoder + regra de crescimento
