@@ -1,45 +1,18 @@
 ---
-const segment = 'ÚLTIMO DIA  ·  ';
+const segment = 'ÚLTIMO DIA  ·  ';
 const repeat = 20;
 const textBlock = segment.repeat(repeat);
 ---
 
 <div class="top-banner">
-  <div class="marquee-track" data-scroll-marquee aria-hidden="true">
-    <span class="marquee-content" data-marquee-half>{textBlock}</span>
-    <span class="marquee-content" data-marquee-half>{textBlock}</span>
+  <div class="marquee-track" aria-hidden="true">
+    <span class="marquee-content">{textBlock}</span>
+    <span class="marquee-content">{textBlock}</span>
   </div>
   <a href="#pricing" class="banner-cta" data-cta-location="top-banner">
     GARANTIR VAGA
   </a>
 </div>
-
-<script>
-  const track = document.querySelector('[data-scroll-marquee]') as HTMLElement;
-  const half = document.querySelector('[data-marquee-half]') as HTMLElement;
-  if (track && half) {
-    let current = 0;
-    let target = 0;
-    let loopWidth = half.offsetWidth;
-    let running = false;
-
-    window.addEventListener('resize', () => { loopWidth = half.offsetWidth; }, { passive: true });
-
-    window.addEventListener('scroll', () => {
-      target = window.scrollY * 0.6;
-    }, { passive: true });
-
-    function tick() {
-      current += (target - current) * 0.12;
-      const offset = -(current % loopWidth);
-      track.style.transform = `translate3d(${offset}px,0,0)`;
-      running = true;
-      requestAnimationFrame(tick);
-    }
-
-    requestAnimationFrame(tick);
-  }
-</script>
 
 <style>
   .top-banner {
@@ -50,16 +23,21 @@ const textBlock = segment.repeat(repeat);
     overflow: hidden;
     display: flex;
     align-items: center;
-    height: 44px;
-    z-index: 50;
-    isolation: isolate;
+    height: 38px;
+    z-index: 40;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .marquee-track {
     display: flex;
     white-space: nowrap;
-    will-change: transform;
+    animation: banner-scroll 30s linear infinite;
     padding-right: 120px;
+  }
+
+  .marquee-track:hover {
+    animation-play-state: paused;
   }
 
   @media (min-width: 768px) {
@@ -69,9 +47,9 @@ const textBlock = segment.repeat(repeat);
   }
 
   .marquee-content {
-    font-size: 0.8125rem;
+    font-size: 0.75rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: #ffffff;
     padding: 0 0.25rem;
@@ -80,8 +58,19 @@ const textBlock = segment.repeat(repeat);
 
   @media (min-width: 768px) {
     .marquee-content {
-      font-size: 0.875rem;
-      letter-spacing: 0.1em;
+      font-size: 0.8125rem;
+      letter-spacing: 0.12em;
+    }
+  }
+
+  @keyframes banner-scroll {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-50%, 0, 0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
     }
   }
 
@@ -95,20 +84,20 @@ const textBlock = segment.repeat(repeat);
     padding: 0 1rem;
     background: #fbbf24;
     color: #1c1917;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 800;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     text-decoration: none;
     white-space: nowrap;
     transition: background 0.2s ease;
-    box-shadow: -4px 0 12px rgba(0, 0, 0, 0.15);
+    box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2);
   }
 
   @media (min-width: 768px) {
     .banner-cta {
       padding: 0 1.5rem;
-      font-size: 0.8125rem;
+      font-size: 0.75rem;
     }
   }
 
