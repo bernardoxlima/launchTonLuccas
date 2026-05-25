@@ -24,6 +24,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 **Refinamentos:**
 - 2026-05-20 — Progress bar do Lote 01 subiu de 77% pra 93% (Hero ticker + label + fill, Pricing label + fill). Sync global aplicado em todas as versões ativas (v3/v4/v5/v6/v7/v8) — atualiza pressão de escassez.
 - 2026-05-20 — Hero progress bar alinhada ao CTA no desktop. Wrapper ganhou `lg:mx-0` (mantém `mx-auto` no mobile/tablet com text-center). Fix global — antes a barra ficava centralizada enquanto o CTA `w-full sm:w-auto` aterrissava left-aligned via `lg:text-left`, desalinhando no lg+.
+- 2026-05-25 — Progress bar do Lote 01 baixou de 93% pra 22% (Hero ticker + label + fill, Pricing label + fill). Reset global em todas as versões ativas (v3/v4/v5/v6/v7/v8) — alinhado com a faixa "LOTE UM LIBERADO" no TopBanner: lote novo acabou de abrir.
 
 ### v7 — 2026-05-13
 
@@ -45,6 +46,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 - 2026-05-18 HOTFIX (checkout): migração Kirvano → Eduzz. Standard `pay.kirvano.com/cd45d82c-9fe5-44f3-8b41-8fce3b50437b` → `chk.eduzz.com/39ZREE8OWE`. Aplicado nos 11 arquivos da v7 (Pricing + 10 CTAs). UTM suffix preservado. Hotfix global em todas as versões ativas (v3 default + v4/v5/v6/v7) — ver nota no fim da seção v3.
 - 2026-05-20 — Progress bar do Lote 01 subiu de 77% pra 93% (Hero ticker + label + fill, Pricing label + fill). Sync global aplicado em todas as versões ativas (v3/v4/v5/v6/v7/v8) — atualiza pressão de escassez.
 - 2026-05-20 — Hero progress bar alinhada ao CTA no desktop. Wrapper ganhou `lg:mx-0` (mantém `mx-auto` no mobile/tablet com text-center). Fix global — antes a barra ficava centralizada enquanto o CTA `w-full sm:w-auto` aterrissava left-aligned via `lg:text-left`, desalinhando no lg+.
+- 2026-05-25 — Progress bar do Lote 01 baixou de 93% pra 22% (Hero ticker + label + fill, Pricing label + fill). Reset global em todas as versões ativas (v3/v4/v5/v6/v7/v8) — alinhado com a faixa "LOTE UM LIBERADO" no TopBanner: lote novo acabou de abrir.
 
 ### v6 — 2026-05-13
 
@@ -58,6 +60,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 - 2026-05-18 HOTFIX (checkout): migração Kirvano → Eduzz. Standard `pay.kirvano.com/cd45d82c...` → `chk.eduzz.com/39ZREE8OWE`. 11 arquivos (Pricing + 10 CTAs). UTM preservado. Hotfix global — ver nota no fim da seção v3.
 - 2026-05-20 — Progress bar do Lote 01 subiu de 77% pra 93% (Hero ticker + label + fill, Pricing label + fill). Sync global aplicado em todas as versões ativas (v3/v4/v5/v6/v7/v8) — atualiza pressão de escassez.
 - 2026-05-20 — Hero progress bar alinhada ao CTA no desktop. Wrapper ganhou `lg:mx-0` (mantém `mx-auto` no mobile/tablet com text-center). Fix global — antes a barra ficava centralizada enquanto o CTA `w-full sm:w-auto` aterrissava left-aligned via `lg:text-left`, desalinhando no lg+.
+- 2026-05-25 — Progress bar do Lote 01 baixou de 93% pra 22% (Hero ticker + label + fill, Pricing label + fill). Reset global em todas as versões ativas (v3/v4/v5/v6/v7/v8) — alinhado com a faixa "LOTE UM LIBERADO" no TopBanner: lote novo acabou de abrir.
 
 ### v5 — 2026-05-13
 
@@ -76,6 +79,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 - 2026-05-18 HOTFIX (checkout): migração Kirvano → Eduzz. Standard `pay.kirvano.com/cd45d82c...` → `chk.eduzz.com/39ZREE8OWE`. 11 arquivos (Pricing + 10 CTAs). UTM preservado. Hotfix global — ver nota no fim da seção v3.
 - 2026-05-20 — Progress bar do Lote 01 subiu de 77% pra 93% (Hero ticker + label + fill, Pricing label + fill). Sync global aplicado em todas as versões ativas (v3/v4/v5/v6/v7/v8) — atualiza pressão de escassez.
 - 2026-05-20 — Hero progress bar alinhada ao CTA no desktop. Wrapper ganhou `lg:mx-0` (mantém `mx-auto` no mobile/tablet com text-center). Fix global — antes a barra ficava centralizada enquanto o CTA `w-full sm:w-auto` aterrissava left-aligned via `lg:text-left`, desalinhando no lg+.
+- 2026-05-25 — Progress bar do Lote 01 baixou de 93% pra 22% (Hero ticker + label + fill, Pricing label + fill). Reset global em todas as versões ativas (v3/v4/v5/v6/v7/v8) — alinhado com a faixa "LOTE UM LIBERADO" no TopBanner: lote novo acabou de abrir.
 
 ### v4 — 2026-05-11
 
@@ -90,6 +94,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 - 2026-05-18 HOTFIX (checkout): migração Kirvano → Eduzz. Standard `pay.kirvano.com/cd45d82c...` → `chk.eduzz.com/39ZREE8OWE`; VIP `pay.kirvano.com/5971d946...` → `chk.eduzz.com/Q9N2PPDP01` (v4 tem ambos no Pricing). UTM preservado. Hotfix global — ver nota no fim da seção v3.
 - 2026-05-20 — Progress bar do Lote 01 subiu de 77% pra 93% (Hero ticker + label + fill, Pricing label + fill). Sync global aplicado em todas as versões ativas (v3/v4/v5/v6/v7/v8) — atualiza pressão de escassez.
 - 2026-05-20 — Hero progress bar alinhada ao CTA no desktop. Wrapper ganhou `lg:mx-0` (mantém `mx-auto` no mobile/tablet com text-center). Fix global — antes a barra ficava centralizada enquanto o CTA `w-full sm:w-auto` aterrissava left-aligned via `lg:text-left`, desalinhando no lg+.
+- 2026-05-25 — Progress bar do Lote 01 baixou de 93% pra 22% (Hero ticker + label + fill, Pricing label + fill). Reset global em todas as versões ativas (v3/v4/v5/v6/v7/v8) — alinhado com a faixa "LOTE UM LIBERADO" no TopBanner: lote novo acabou de abrir.
 
 ### v3 — 2026-05-10  *(PINNED como `default` desde 2026-05-11 — é o que `tonluccas.com.br/` serve)*
 
@@ -107,6 +112,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 - 2026-05-18 HOTFIX (checkout): migração Kirvano → Eduzz. Standard `pay.kirvano.com/cd45d82c...` → `chk.eduzz.com/39ZREE8OWE`; VIP `pay.kirvano.com/5971d946...` → `chk.eduzz.com/Q9N2PPDP01`. UTM suffix preservado nos dois.
 - 2026-05-20 — Progress bar do Lote 01 subiu de 77% pra 93% (Hero ticker + label + fill, Pricing label + fill). Sync global aplicado em todas as versões ativas (v3/v4/v5/v6/v7/v8) — atualiza pressão de escassez.
 - 2026-05-20 — Hero progress bar alinhada ao CTA no desktop. Wrapper ganhou `lg:mx-0` (mantém `mx-auto` no mobile/tablet com text-center). Fix global — antes a barra ficava centralizada enquanto o CTA `w-full sm:w-auto` aterrissava left-aligned via `lg:text-left`, desalinhando no lg+.
+- 2026-05-25 — Progress bar do Lote 01 baixou de 93% pra 22% (Hero ticker + label + fill, Pricing label + fill). Reset global em todas as versões ativas (v3/v4/v5/v6/v7/v8) — alinhado com a faixa "LOTE UM LIBERADO" no TopBanner: lote novo acabou de abrir.
 
 ---
 
