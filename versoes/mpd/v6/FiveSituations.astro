@@ -1,7 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
 
-const checkoutStandardUrl = import.meta.env.PUBLIC_CHECKOUT_STANDARD_URL || 'https://chk.eduzz.com/39ZREE8OWE';
 
 const situations = [
   {
@@ -93,7 +92,7 @@ const situations = [
 
     <div class="mt-16 text-center">
       <a
-        href={checkoutStandardUrl}
+        href="#pricing-standard"
         data-cta="situations-standard"
         class="inline-flex items-center justify-center px-7 py-3.5 bg-stone-900 hover:bg-stone-800 text-[#D4F268] rounded-full text-base md:text-lg font-medium transition-all transform hover:-translate-y-0.5 shadow-xl shadow-stone-900/20 font-sans text-center"
       >
@@ -107,11 +106,9 @@ const situations = [
   import { trackEvent } from '@lib/tracking';
   document.querySelectorAll<HTMLAnchorElement>('a[data-cta="situations-standard"]').forEach((el) => {
     el.addEventListener('click', () => {
-      trackEvent('begin_checkout', {
-        currency: 'BRL',
-        value: 47,
+      trackEvent('select_promotion', {
+        promotion_name: 'pricing-section',
         cta_location: 'situations',
-        items: [{ item_id: 'workshop-mp-definitiva-standard', item_name: 'Standard', price: 47, quantity: 1 }],
       });
     });
   });

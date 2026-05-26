@@ -47,6 +47,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 - 2026-05-20 — Progress bar do Lote 01 subiu de 77% pra 93% (Hero ticker + label + fill, Pricing label + fill). Sync global aplicado em todas as versões ativas (v3/v4/v5/v6/v7/v8) — atualiza pressão de escassez.
 - 2026-05-20 — Hero progress bar alinhada ao CTA no desktop. Wrapper ganhou `lg:mx-0` (mantém `mx-auto` no mobile/tablet com text-center). Fix global — antes a barra ficava centralizada enquanto o CTA `w-full sm:w-auto` aterrissava left-aligned via `lg:text-left`, desalinhando no lg+.
 - 2026-05-25 — Progress bar do Lote 01 baixou de 93% pra 22% (Hero ticker + label + fill, Pricing label + fill). Reset global em todas as versões ativas (v3/v4/v5/v6/v7/v8) — alinhado com a faixa "LOTE UM LIBERADO" no TopBanner: lote novo acabou de abrir.
+- 2026-05-26 — **VIP restaurado** (convertida de Standard-only pra 2-tier in-place). Pricing.astro substituído por 2-card grid (Standard cream + VIP lime, frame animado, "Mais Escolhido", `lg:-translate-y-4`). 10 CTAs intra-page voltaram pra `href="#pricing-standard"` (scroll-to-pricing) + tracking `select_promotion`. FAQ restaurou as 3 menções a VIP. Reason: user validou VIP — apagada a identidade Standard-only da v5 e padronizada com v3/v4/v8.
 
 ### v6 — 2026-05-13
 
@@ -61,6 +62,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 - 2026-05-20 — Progress bar do Lote 01 subiu de 77% pra 93% (Hero ticker + label + fill, Pricing label + fill). Sync global aplicado em todas as versões ativas (v3/v4/v5/v6/v7/v8) — atualiza pressão de escassez.
 - 2026-05-20 — Hero progress bar alinhada ao CTA no desktop. Wrapper ganhou `lg:mx-0` (mantém `mx-auto` no mobile/tablet com text-center). Fix global — antes a barra ficava centralizada enquanto o CTA `w-full sm:w-auto` aterrissava left-aligned via `lg:text-left`, desalinhando no lg+.
 - 2026-05-25 — Progress bar do Lote 01 baixou de 93% pra 22% (Hero ticker + label + fill, Pricing label + fill). Reset global em todas as versões ativas (v3/v4/v5/v6/v7/v8) — alinhado com a faixa "LOTE UM LIBERADO" no TopBanner: lote novo acabou de abrir.
+- 2026-05-26 — **VIP restaurado** (convertida de Standard-only pra 2-tier in-place). Pricing.astro substituído por 2-card grid (Standard cream + VIP lime, frame animado, "Mais Escolhido", `lg:-translate-y-4`). 10 CTAs intra-page voltaram pra `href="#pricing-standard"` (scroll-to-pricing) + tracking `select_promotion`. FAQ restaurou as 3 menções a VIP. Reason: user validou VIP — apagada a identidade Standard-only da v6 e padronizada com v3/v4/v8.
 
 ### v5 — 2026-05-13
 
@@ -80,6 +82,7 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 - 2026-05-20 — Progress bar do Lote 01 subiu de 77% pra 93% (Hero ticker + label + fill, Pricing label + fill). Sync global aplicado em todas as versões ativas (v3/v4/v5/v6/v7/v8) — atualiza pressão de escassez.
 - 2026-05-20 — Hero progress bar alinhada ao CTA no desktop. Wrapper ganhou `lg:mx-0` (mantém `mx-auto` no mobile/tablet com text-center). Fix global — antes a barra ficava centralizada enquanto o CTA `w-full sm:w-auto` aterrissava left-aligned via `lg:text-left`, desalinhando no lg+.
 - 2026-05-25 — Progress bar do Lote 01 baixou de 93% pra 22% (Hero ticker + label + fill, Pricing label + fill). Reset global em todas as versões ativas (v3/v4/v5/v6/v7/v8) — alinhado com a faixa "LOTE UM LIBERADO" no TopBanner: lote novo acabou de abrir.
+- 2026-05-26 — **VIP restaurado** (convertida de Standard-only pra 2-tier in-place). Pricing.astro substituído por 2-card grid (Standard cream + VIP lime, frame animado, "Mais Escolhido", `lg:-translate-y-4`). 10 CTAs intra-page voltaram pra `href="#pricing-standard"` (scroll-to-pricing) + tracking `select_promotion`. FAQ restaurou as 3 menções a VIP. Reason: user validou VIP — apagada a identidade Standard-only da v7 (originalmente o experimento Standard-only com a promessa "posicionamento + formato de conteúdo") e padronizada com v3/v4/v8.
 
 ### v4 — 2026-05-11
 
