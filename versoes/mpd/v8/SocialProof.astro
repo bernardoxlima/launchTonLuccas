@@ -1,40 +1,91 @@
 ---
-import { Image } from 'astro:assets';
-import t1 from '../../../cases/testimonial-1.png';
-import t2 from '../../../cases/testimonial-2.png';
-import t3 from '../../../cases/testimonial-3.png';
-import t4 from '../../../cases/testimonial-4.png';
-
 const testimonials = [
-  { src: t1, alt: 'Depoimento de aluno do último workshop Marca Pessoal Definitiva' },
-  { src: t2, alt: 'Depoimento de aluno do último workshop Marca Pessoal Definitiva' },
-  { src: t3, alt: 'Depoimento de aluno do último workshop Marca Pessoal Definitiva' },
-  { src: t4, alt: 'Depoimento de aluno do último workshop Marca Pessoal Definitiva' },
+  { author: '@cariscavello', quote: 'Minha cabeça está fervendo 🔥 Melhor investimento da vida! Você é um cara RARO criando uma comunidade de RAROS.' },
+  { author: '@carolwilnes', quote: 'Saio dessa imersão com algo muito maior do que estratégia: clareza sobre quem eu preciso ser no mundo. O Ton teve a sensibilidade rara de não me encaixar em mais um molde.' },
+  { author: '@iacarafaria', quote: 'Você trouxe estratégia real, do início ao fim. Valeu mais que faculdade, valeu mais que mentoria. Saio daqui com identidade RARA, não com tarefa de copiar e colar.' },
+  { author: '@segueabarbarasousa', quote: 'Foi o melhor workshop que eu já vi na vida, sem reservas. Só conteúdo de qualidade que realmente funciona e faz sentido. 🍀' },
+  { author: '@_luoliveira', quote: 'Entregou todos os "segredos" que os "gurus" escondem e não entregam nem nas mentorias milionárias. Abriu os bastidores DE VERDADE!' },
+  { author: '@eduardamoraisg', quote: 'O melhor workshop que já fiz (e olha que não foram poucos!). Ton, o que você entregou nesse WS, sério, estou sem palavras!' },
+  { author: 'Matheus Rosário', quote: 'Esclarecedor e único. Ninguém fala sobre encontrar quem você é para, aí sim, ter um formato que faz sentido. Ele fala.' },
+  { author: '@luanasobraloficial', quote: 'Ainda estou processando tudo! 1000% entregue. O Ton está criando um divisor de águas na forma como as pessoas enxergam marcas pessoais.' },
+  { author: '@euqueziaguimaraes', quote: 'Saí realmente impactada. Conteúdo de altíssimo valor, visão, estratégia e muitos insights sobre posicionamento, marca e propósito.' },
+  { author: '@marques.leandro_', quote: 'Caramba, o Ton não economizou conteúdo... RASGOU totalmente o véu que ocultava os segredos do digital. Minha mente está gritando de ideias!' },
+  { author: 'Carlos Daniel', quote: 'Me identifiquei de verdade com os arquétipos dominantes na minha vida e com os pontos fortes e fracos que ele traz.' },
+  { author: '@carol_birk', quote: 'Superou todas as expectativas, explodiu a mente e trouxe mudanças positivas. Uma aula com sessão de terapia e um baita professor.' },
+  { author: '@dra.biancaalvess', quote: 'Saindo dessa aula com outro olhar, mais motivação e cheia de ideias! Conteúdo extremamente rico e muito além do esperado. 🚀' },
+  { author: '@elienaimariaa', quote: 'Estamos diante de um dos maiores construtores de marca do Brasil! Hoje eu testifiquei. Melhor aula da vida.' },
+  { author: '@joaquimsilvinoneto', quote: 'Foram dois dias incríveis. O Ton entregou tudo nesse evento. Só os raros podem ir além da maioria. Vamos juntos.' },
+  { author: '@gracielaanjosg', quote: 'Artesanal, metódico e artístico. É um prazer aprender com quem domina as arestas onde o sol não toca. Você é realmente raro.' },
+  { author: '@rodrigokristensen', quote: 'Entrega absurda. Muita profundidade com uma didática fantástica. 🔥' },
+  { author: '@monicaferreiralucros', quote: 'Melhor investimento da última década.' },
 ];
+
+const initial = (name: string) => name.replace('@', '').charAt(0).toUpperCase();
+const loop = [...testimonials, ...testimonials];
 ---
 
-<section id="prova-social-workshop" class="ds-section w-full bg-[#E6E3D6] py-14 md:py-24 lg:py-12 px-6 md:px-12">
-  <div class="max-w-7xl mx-auto">
-    <div class="mb-10 md:mb-16 lg:mb-8">
+<section id="prova-social-workshop" class="ds-section w-full bg-[#E6E3D6] py-14 md:py-24 lg:py-16 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6 md:px-12">
+    <div class="mb-10 md:mb-16 lg:mb-12">
       <h2 class="text-3xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-stone-900 mb-6 font-serif font-medium w-fit mx-auto">
         Veja o que dizem sobre
         <span class="block italic text-stone-600 whitespace-nowrap text-4xl md:text-6xl lg:text-5xl ml-8 md:ml-16 lg:inline lg:ml-3">o último workshop:</span>
       </h2>
     </div>
+  </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 items-start">
-      {testimonials.map((t, i) => (
-        <div class={`rounded-2xl bg-white border border-stone-200 overflow-hidden ${i % 2 === 0 ? 'transform md:rotate-[-1deg]' : 'transform md:rotate-[1deg]'} hover:rotate-0 transition-transform duration-500 shadow-lg shadow-stone-900/5`}>
-          <Image
-            src={t.src}
-            alt={t.alt}
-            widths={[400, 600, 800]}
-            sizes="(max-width: 768px) 88vw, (max-width: 1024px) 44vw, 22vw"
-            class="w-full h-auto"
-            loading="lazy"
-          />
-        </div>
+  {/* Carrossel de depoimentos — marquee auto-scroll (mesmo padrão do brand-marquee), pausa no hover, full-bleed */}
+  <div class="testimonial-marquee relative">
+    <div class="testimonial-track flex gap-5 md:gap-6 px-6 md:px-12">
+      {loop.map((t, i) => (
+        <article
+          class="testimonial-card shrink-0 w-[290px] sm:w-[330px] bg-white rounded-2xl border border-stone-200 shadow-lg shadow-stone-900/5 p-6 md:p-7 flex flex-col"
+          aria-hidden={i >= testimonials.length ? 'true' : undefined}
+        >
+          <span class="text-5xl leading-[0.6] font-serif text-stone-300 mb-3 select-none" aria-hidden="true">&ldquo;</span>
+          <p class="text-stone-700 leading-relaxed font-sans text-sm md:text-[15px] flex-1">{t.quote}</p>
+          <div class="mt-5 pt-4 border-t border-stone-100 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-stone-900 text-[#E6E3D6] flex items-center justify-center font-serif text-sm shrink-0">{initial(t.author)}</div>
+            <div class="min-w-0">
+              <p class="text-stone-900 font-medium font-sans text-sm leading-tight truncate">{t.author}</p>
+              <p class="text-stone-400 text-xs font-sans">Aluno do último workshop</p>
+            </div>
+          </div>
+        </article>
       ))}
     </div>
   </div>
 </section>
+
+<style>
+  .testimonial-marquee {
+    mask-image: linear-gradient(90deg, transparent 0, black 5%, black 95%, transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, black 5%, black 95%, transparent 100%);
+  }
+  .testimonial-track {
+    width: max-content;
+    animation: testimonial-marquee-scroll 90s linear infinite;
+  }
+  .testimonial-marquee:hover .testimonial-track {
+    animation-play-state: paused;
+  }
+  @keyframes testimonial-marquee-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .testimonial-marquee {
+      mask-image: none;
+      -webkit-mask-image: none;
+    }
+    .testimonial-track {
+      animation: none;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 0.5rem;
+    }
+    .testimonial-card {
+      scroll-snap-align: start;
+    }
+  }
+</style>

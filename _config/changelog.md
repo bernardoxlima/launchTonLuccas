@@ -8,6 +8,34 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 
 ## mpd
 
+#### NOTA — Copy update global + carrossel + foto Craft + checkout Kirvano (2026-05-29)
+
+Aplicado em TODAS as versões ativas (v3 default + v4/v5/v6/v7/v8) a partir do PDF "Ajustes Copy - LP.pdf" do cliente. Decisão do user via AskUserQuestion: aplicar em todas as 6.
+
+**Copy (texto):**
+- **Hero** — headline trocada pra "Construa uma marca pessoal alinhada à sua essência e desejada pelo mercado em apenas 2 dias." + novo sub. Isso **colapsou as variantes de A/B de hero**: v4/v5 (Instagram máquina de vendas) e v7/v8 (eyebrow "O mais conhecido vence o melhor" + posicionamento) foram sobrescritas — as 6 agora têm a MESMA headline. Eyebrow da v7/v8 removida.
+- **Deliverables** ("Em 2 dias") cards 03-06: 03 "diferencial autoral" → "Os arquétipos da sua marca"; 04 "narrativa de autoridade" → "narrativa de diferenciação"; 05 "formato de conteúdo" → "Qual o melhor formato de conteúdo para você"; 06 "caminho de diferenciação" → "Um plano de presença digital eficaz" (todos com body novo).
+- **ScheduleDays** Dia 2: 01 → "Sua narrativa de diferenciação"; 02 "Sua comunicação" → "Seus arquétipos de marca" (+ body novo sobre trinca arquetípica).
+- **Anchor60k**: título/corpo R$60k/R$60.000 → **+R$100k / + de R$ 100.000**; lista (território definitivo, arquétipos identificados, modelo mental que guiará sua produção de conteúdo); "mesmo processo" → "mesmo método". Ticker do **Hero** "consultoria de R$ 60.000" → "R$ 100.000" (consistência).
+- **Cases** Yang Mendes: "15 mil → 90 mil em 3 meses" → "20 mil → 127 mil em 5 meses" (headline + descrição "Em 5 meses reposicionado").
+- **Footer** (6) + **Pricing** disclaimer (6): "Kiwify"/"Eduzz" → **"Kirvano"**.
+
+**SocialProof** — grid de 4 PNGs substituído por **carrossel marquee de 18 cards editoriais** (texto transcrito de ~40 prints de Instagram/WhatsApp do cliente; autor + @handle, aspas serif, avatar com inicial; mesmo padrão dos marquees do Hero/About; pausa no hover; reduced-motion → scroll-snap). Os 4 PNGs antigos (`cases/testimonial-*.png`) ficaram órfãos (não deletados).
+
+**About** — foto trocada: `ton-bio.webp` → `ton-craft.jpg` (palestra no Craft Black, 3840x2560, baixada do Drive do cliente). Frame mantido retrato 3/4 (foto landscape entra cropada no centro — pendente decisão de tratamento wide).
+
+**Checkout** — migração **Eduzz → Kirvano** (links NOVOS) nos 6 `Pricing.astro`:
+- Standard: `chk.eduzz.com/39ZREE8OWE` → `pay.kirvano.com/8b0b589a-4394-43b2-a0ed-11bbda43a3bb`
+- VIP: `chk.eduzz.com/Q9N2PPDP01` → `pay.kirvano.com/2d445670-5392-4ee9-a468-e9c83abcd135`
+- UTM suffix dropado (links novos vieram limpos). Só o fallback hardcoded foi alterado — ver ATENÇÃO abaixo.
+
+**⚠️ PENDÊNCIAS (flagadas pro user):**
+1. **Env var Vercel** — `PUBLIC_CHECKOUT_STANDARD_URL` / `PUBLIC_CHECKOUT_VIP_URL`: se setadas no painel da Vercel, PROD usa o valor de lá e ignora o fallback Kirvano novo. Precisa atualizar as 2 vars + redeploy, OU confirmar que não estão setadas.
+2. **VIP price** — card VIP exibe R$ 297; user rotulou o link VIP como "(R$47)". Preço exibido mantido em R$ 297 até confirmação.
+3. **Webhook Kirvano → Meta CAPI** — product IDs mudaram (links novos); tracking server-side de `purchase` pode precisar reconfig.
+
+---
+
 ### v8 — 2026-05-20
 
 **Forked from:** v7
