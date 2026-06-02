@@ -8,6 +8,19 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 
 ## mpd
 
+#### NOTA — Revert da promessa do Hero (v3-v8) + criação da v9 (2026-06-02)
+
+Decisão do user via AskUserQuestion. A NOTA de 2026-05-29 (commit `ce90f61`) tinha colapsado a promessa do Hero das 6 versões numa só ("Construa uma marca pessoal alinhada à sua essência e desejada pelo mercado..."), matando as variantes de A/B do Hero. Esta operação **reverte SÓ a promessa do Hero** (H1 + sub; nas v7/v8 também o eyebrow + estrutura italic de posicionamento) de cada versão pro que era ANTES do commit, restaurando cada identidade:
+- **v3 / v6** → "Construa sua marca pessoal forte, original e lucrativa em apenas 2 dias."
+- **v4 / v5** → "Transforme o seu Instagram em uma máquina de vendas e construa uma marca forte, original e lucrativa, em 2 dias."
+- **v7 / v8** → eyebrow "O mais conhecido vence o melhor — sempre." + "Torne a sua marca pessoal conhecida, desejada e escolhida — construindo o posicionamento e o formato de conteúdo que atrai o público que vai comprar de você."
+
+**Escopo do revert:** apenas o bloco da promessa no `Hero.astro`. NÃO toca o ticker (R$ 100.000 mantido), nem Deliverables/ScheduleDays/Anchor/Cases/SocialProof/About/Pricing/Footer — todas as outras mudanças da NOTA 2026-05-29 ficam intactas.
+
+**A promessa "nova" (essência/desejo do mercado) virou a v9** — fork da v8 (setup 2-tier VIP) carregando essa única variável isolada pra A/B. Ver seção v9 abaixo. Estado: `latest` v8 → v9; v8 entra em `frozen`; `default` continua v3 (pinned).
+
+---
+
 #### NOTA — Copy update global + carrossel + foto Craft + checkout Kirvano (2026-05-29)
 
 Aplicado em TODAS as versões ativas (v3 default + v4/v5/v6/v7/v8) a partir do PDF "Ajustes Copy - LP.pdf" do cliente. Decisão do user via AskUserQuestion: aplicar em todas as 6.
@@ -35,6 +48,20 @@ Aplicado em TODAS as versões ativas (v3 default + v4/v5/v6/v7/v8) a partir do P
 3. **Webhook Kirvano → Meta CAPI** — product IDs mudaram (links novos); tracking server-side de `purchase` pode precisar reconfig.
 
 ---
+
+### v9 — 2026-06-02
+
+**Forked from:** v8
+**Label:** Hero promise — "alinhada à sua essência e desejada pelo mercado"
+**Mudança:**
+- Único delta vs v8: a promessa do Hero. H1 "Construa uma marca pessoal alinhada à sua essência e desejada pelo mercado em apenas 2 dias." + sub "Você vai sair com um plano claro para se posicionar e ser percebido no digital como uma autoridade impossível de ser ignorada." (substitui o eyebrow "O mais conhecido vence o melhor" + a promessa de posicionamento da v8). `page.astro` meta description alinhada à promessa nova.
+- Todo o resto idêntico à v8: Pricing 2-tier (Standard R$ 47 + VIP R$ 297), 10 CTAs intra-page `#pricing-standard` (select_promotion), ticker R$ 100.000, demais seções.
+
+**Hipótese:** Isolar a promessa unificada de essência/desejo do mercado. v8 (Hero posicionamento/eyebrow) vs v9 (Hero essência/desejo) com todo o resto controlado mede o impacto puro dessa copy na conversão.
+**Métrica:** begin_checkout rate via tracking.ts (separado por Standard vs VIP)
+
+**Refinamentos:**
+- (vazio)
 
 ### v8 — 2026-05-20
 

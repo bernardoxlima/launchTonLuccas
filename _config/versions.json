@@ -1,9 +1,9 @@
 {
   "mpd": {
-    "latest": "v8",
+    "latest": "v9",
     "default": "v3",
     "default_pinned": true,
-    "frozen": ["v4", "v5", "v6", "v7"],
+    "frozen": ["v4", "v5", "v6", "v7", "v8"],
     "deleted": ["v1", "v2"],
     "history": [
       {
@@ -53,6 +53,14 @@
         "label": "Hero v7 + VIP de volta (Pricing 2-tier, CTAs scroll pra Pricing)",
         "hypothesis": "Mesma promessa de Hero da v7 (posicionamento + formato de conteúdo) mas com VIP de volta como opção paralela em Pricing 2-tier. Os 10 CTAs intra-page voltam ao padrão v3/v4 (scroll pra #pricing-standard, dispara select_promotion). Hipótese: oferecer Standard E VIP em paralelo aumenta AOV via Q&A exclusivo/aulas/12 meses do VIP, mantendo o Standard como entrada acessível. Comparar v7 (Standard-only) vs v8 (2-tier) com Hero idêntico mede impacto puro de oferecer upsell VIP na conversão e receita por visitante.",
         "metric": "begin_checkout rate via tracking.ts (separado por Standard vs VIP) + revenue per visitor"
+      },
+      {
+        "v": "v9",
+        "from": "v8",
+        "created": "2026-06-02",
+        "label": "Hero promise — 'alinhada à sua essência e desejada pelo mercado'",
+        "hypothesis": "Isolar a promessa unificada de essência/desejo do mercado. Após reverter o Hero de v3-v8 para suas promessas originais (cada uma com a própria copy), a v9 nasce como fork da v8 (setup 2-tier VIP) carregando a única variável diferente: a promessa 'Construa uma marca pessoal alinhada à sua essência e desejada pelo mercado em apenas 2 dias.' + sub de posicionamento/autoridade. Comparar v8 (Hero posicionamento/eyebrow 'o mais conhecido vence o melhor') vs v9 (Hero essência/desejo) mede o impacto puro dessa promessa, controlando todo o resto da página.",
+        "metric": "begin_checkout rate via tracking.ts (separado por Standard vs VIP)"
       }
     ]
   }
