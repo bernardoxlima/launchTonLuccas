@@ -29,5 +29,5 @@
     "cloned_at": "2026-05-20",
     "ttl": "7 dias sem uso — verificar via get_voice antes de gerar"
   },
-  "notes": "Antes de gerar: verificar se ton-luccas-v3 existe via POST /v1/get_voice. Se nao existir, re-clonar com o audio fonte em setup/voice/. NAO passar emotion no voice_setting — omitir o campo faz o MiniMax usar automatico. Interjeicoes (sighs, breath, etc) e pausas (<#x#>) — perguntar ao user antes de inserir no texto. Pronunciation_dict — perguntar ao user se tem nomes proprios novos pra adicionar. Subtitle: response retorna data.subtitle_file (URL JSON com word timestamps em ms). Baixar e salvar como .json ao lado do .mp3."
+  "notes": "Antes de gerar: verificar se ton-luccas-v3 existe via POST /v1/get_voice. Se nao existir, re-clonar com o audio fonte em setup/voice/. PADRAO: passar emotion: angry no voice_setting (decisao do user 2026-06-03 — funciona melhor de forma geral pra voz do Ton). Interjeicoes (sighs, breath, etc) e pausas (<#x#>) — perguntar ao user antes de inserir no texto. Pronunciation_dict — perguntar ao user se tem nomes proprios novos pra adicionar. Subtitle: response retorna data.subtitle_file (URL JSON com word timestamps em ms). Baixar e salvar como .json ao lado do .mp3."
 }
