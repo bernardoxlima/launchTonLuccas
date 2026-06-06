@@ -110,3 +110,26 @@ Dialogue: 0,0:00:00.04,0:00:01.59,Cap,,0,0,0,,Imagine você abrir o Instagram e
 ## Fluxo de lote (f01–f10)
 
 Acertar 1 piloto, user aprova, aplicar a mesma receita nos demais via timestamps MiniMax. Cada final sobrescreve seu `04-finais/full/f{XX}.mp4`.
+
+---
+
+## Variantes (mesma receita, fonte diferente)
+
+### NC5 modulares → `_config/video-edit-nc5.py`
+Aplica O MESMO padrão (corte equilibrado + punch-in + legenda branca) nos finais NC5 `hook+body+cta`. Diferenças:
+- **Fonte = componentes LIMPOS** de `03-video/hooks|body/NC5-most-aware/*.mp4` + `03-video/ctas/cta*.mp4` (render do avatar, sem legenda), remontados via concat.
+- **Texto+timing** vem dos `.ass` já existentes em `04-finais/_legendado/{hooks,body,ctas}/...` (de onde veio a legenda amarela original), combinados com offset = duração acumulada do componente. SEM Scribe/MiniMax.
+- Re-chunk dos cues de ~3 palavras (amarelo original) pra ~6 (padrão branco).
+- Mapeamento cta: `cta01→cta1.mp4`, `cta02→cta2.mp4`, `cta03→cta3.mp4`.
+- Sobrescreve `04-finais/NC5-most-aware/<id>.mp4`. Uso: `python3 _config/video-edit-nc5.py NC5_h01_b02_cta02 ...`
+
+### Overlay de banner (video+image) → `_config/video-overlay-lead.py`
+Sobrepõe um banner `lead<N>.png` nos fulls já editados (gera os criativos video+image).
+- Imagens em `04-finais/_assets/lead{1..4}.png` — full-frame 1080×1920 **RGBA** (papel rasgado vermelho no topo + headline; resto transparente).
+- Overlay `overlay=0:0` pela DURAÇÃO INTEIRA (estático, sem fade). Banner no topo não conflita com a legenda (terço inferior). Áudio `-c:a copy`.
+- Sobrescreve `04-finais/video+image/lead<N>/f<XX>_lead<N>.mp4`. Uso: `python3 _config/video-overlay-lead.py 1 2 3 4`
+
+## Gotchas de orquestração (aprendidos em lote)
+- **Não rodar build manual de um id que um agent ainda processa** — ambos escrevem o mesmo path de saída; quem lê durante a escrita pega `.mp4` truncado (moov atom not found). Resultado final ok se a pipeline é idêntica, mas evite.
+- **`ffmpeg` come stdin em `while read`** — usar `ffmpeg -nostdin` em loops de verificação, senão o loop pula/corrompe itens.
+- **zsh não faz word-split de variável não-quotada** — usar `echo "$X" | tr ' ' '\n' | while read` ou array.
