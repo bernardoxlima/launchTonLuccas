@@ -1,6 +1,6 @@
 # Meta Conversions API (CAPI) — Setup Completo
 
-Documentação do tracking server-side Meta Ads integrado com Kirvano via Vercel Functions.
+Documentação do tracking server-side Meta Ads integrado com Eduzz via Vercel Functions.
 
 ## Visão geral
 
@@ -9,8 +9,8 @@ Landing page (tonluccas.com.br)
   ├─ Browser: Meta Pixel → fbq('track', 'PageView')
   └─ Browser: sendBeacon → Vercel Function → Meta CAPI (PageView)
 
-Kirvano checkout (webhook)
-  └─ Kirvano POST → Vercel Function → Meta CAPI (InitiateCheckout / Purchase)
+Eduzz checkout (webhook v3)
+  └─ Eduzz POST → Vercel Function → Meta CAPI (InitiateCheckout / Purchase)
 ```
 
 O Meta deduplica eventos browser + servidor pelo `event_id` compartilhado.
@@ -19,7 +19,7 @@ O Meta deduplica eventos browser + servidor pelo `event_id` compartilhado.
 
 - **Site:** Astro 5 (static) na Vercel
 - **Pixel ID:** 1264597782386113
-- **Checkout:** Kirvano (webhook)
+- **Checkout:** Eduzz (webhook v3 — payload JSON + assinatura HMAC `x-signature`)
 - **Serverless Functions:** Vercel (Node.js, Fluid Compute)
 - **Graph API:** v21.0
 
@@ -29,7 +29,7 @@ O Meta deduplica eventos browser + servidor pelo `event_id` compartilhado.
 |---|---|
 | `src/layouts/Base.astro` | Meta Pixel (browser) + sendBeacon pro CAPI + meta tag de verificação de domínio |
 | `api/meta-capi.ts` | Vercel Function — recebe PageView do browser e envia pro Meta Graph API |
-| `api/kirvano-webhook.ts` | Vercel Function — recebe webhooks da Kirvano e envia eventos pro Meta Graph API |
+| `api/sale-webhook.ts` | Vercel Function — recebe webhooks da Eduzz e envia eventos pro Meta Graph API |
 | `src/lib/tracking.ts` | Helpers de tracking (dataLayer para GA4) |
 
 ## Env vars na Vercel
@@ -38,7 +38,7 @@ O Meta deduplica eventos browser + servidor pelo `event_id` compartilhado.
 |---|---|---|
 | `PUBLIC_META_PIXEL_ID` | Public | Browser (Astro build) + Functions |
 | `META_CAPI_TOKEN` | Secret | Apenas Functions (nunca expor no browser) |
-| `KIRVANO_WEBHOOK_SECRET` | Secret | Apenas na Function do webhook |
+| `CHECKOUT_WEBHOOK_SECRET` | Secret | Apenas na Function do webhook (secret de assinatura HMAC da Eduzz) |
 | `META_CAPI_TEST_CODE` | Secret (temporária) | Só durante testes — remover depois |
 
 ## Eventos configurados
@@ -46,10 +46,8 @@ O Meta deduplica eventos browser + servidor pelo `event_id` compartilhado.
 | Ponto do funil | Evento Meta | Origem | Trigger |
 |---|---|---|---|
 | Visita na landing page | `PageView` | Browser + Servidor | Carregamento da página |
-| Gera PIX no checkout | `InitiateCheckout` | Servidor | Webhook Kirvano (`PIX_GENERATED`) |
-| Gera Boleto no checkout | `InitiateCheckout` | Servidor | Webhook Kirvano (`BOLETO_GENERATED`) |
-| Gera PicPay no checkout | `InitiateCheckout` | Servidor | Webhook Kirvano (`PICPAY_GENERATED`) |
-| Pagamento confirmado | `Purchase` | Servidor | Webhook Kirvano (`SALE_APPROVED`) |
+| PIX/Boleto gerado (aguardando pgto) | `InitiateCheckout` | Servidor | Webhook Eduzz (`myeduzz.invoice_waiting_payment`) |
+| Pagamento confirmado | `Purchase` | Servidor | Webhook Eduzz (`myeduzz.invoice_paid`) |
 
 ## Como foi configurado — passo a passo
 
@@ -85,28 +83,38 @@ O Meta deduplica eventos browser + servidor pelo `event_id` compartilhado.
    - `client_ip_address` e `client_user_agent` dos headers do request
    - Cookies `_fbc` (Facebook click ID) e `_fbp` (Facebook browser ID)
 
-### 4. Conversions API — Eventos de checkout (Kirvano webhook)
+### 4. Conversions API — Eventos de checkout (Eduzz webhook v3)
 
-1. Gerar um webhook secret:
+1. No console de desenvolvedor da Eduzz → Webhook → Segurança: gerar uma
+   **chave de assinatura** (a Eduzz usa pra assinar cada request via HMAC).
+   Copiar o valor gerado.
+2. Setar na Vercel (valor = a chave copiada da Eduzz):
    ```bash
-   openssl rand -hex 16
+   echo "CHAVE_DA_EDUZZ" | npx vercel env add CHECKOUT_WEBHOOK_SECRET production --yes
    ```
-2. Setar na Vercel:
+   Remover a var antiga da Kirvano (agora morta):
    ```bash
-   echo "SECRET_AQUI" | npx vercel env add KIRVANO_WEBHOOK_SECRET production --yes
+   npx vercel env rm KIRVANO_WEBHOOK_SECRET production --yes
    ```
-3. No painel Kirvano → Integrações → Webhooks → Adicionar integração:
-   - **Nome:** Facebook C-API
-   - **URL:** `https://www.tonluccas.com.br/api/kirvano-webhook`
-   - **Token:** o secret gerado acima
-   - **Produto:** Workshop Marca Pessoal Definitiva
-   - **Eventos:** Boleto gerado, PicPay gerado, PIX gerado, Compra aprovada
-4. A Vercel Function `api/kirvano-webhook.ts`:
-   - Valida o token via header
-   - Mapeia evento Kirvano → evento Meta standard
+3. No console da Eduzz → Webhook → Adicionar:
+   - **URL:** `https://www.tonluccas.com.br/api/sale-webhook`
+   - **Eventos:** `Fatura Paga` (invoice_paid) + `Fatura Aguardando Pagamento` (invoice_waiting_payment)
+   - **Chave de assinatura:** a mesma chave setada no passo 2
+4. A Vercel Function `api/sale-webhook.ts`:
+   - Lê o **raw body** (bytes crus) e valida a assinatura `x-signature` via
+     HMAC-SHA256 com `CHECKOUT_WEBHOOK_SECRET` (se a var não estiver setada,
+     processa sem verificar — útil durante a transição)
+   - Normaliza o evento Eduzz (`myeduzz.invoice_paid` → `invoice_paid`) e mapeia
+     pro evento Meta standard
    - Hasheia PII com SHA-256 (email, telefone, nome, CPF)
-   - Constrói `fbc` a partir do `fbclid` do cookie da Kirvano
-   - Envia pro Meta Graph API com `event_id` baseado em `sale_id` (idempotente em retries)
+   - Envia pro Meta Graph API com `event_id` baseado em `data.id` da fatura
+     (idempotente em retries da Eduzz)
+
+> **Nota — fbp/fbc:** a Eduzz **não** repassa os cookies `_fbp`/`_fbclid` do
+> Facebook no payload (a Kirvano repassava). O match server-side fica baseado em
+> email + telefone + CPF hasheados (forte). Pra recuperar fbp/fbc no futuro,
+> repassar via tracker codes da Eduzz (`cod1`/`cod2` no link de checkout) — a
+> Function já lê `data.tracker.code1/2/3` quando tiverem cara de `fb.*`.
 
 ### 5. Modo de teste
 
@@ -118,12 +126,21 @@ Para testar sem afetar dados de produção:
    echo "TEST12345" | npx vercel env add META_CAPI_TEST_CODE production --yes
    ```
 3. Acessar o site e verificar na aba Eventos de teste se os eventos aparecem
-4. Testar webhook com curl:
+4. Testar webhook com curl. Com `CHECKOUT_WEBHOOK_SECRET` **não setado** (ou
+   durante a transição), a Function processa sem checar assinatura:
    ```bash
-   curl -X POST "https://www.tonluccas.com.br/api/kirvano-webhook" \
+   BODY='{"event":"myeduzz.invoice_paid","data":{"id":"TEST-001","status":"paid","sentDate":"2026-06-08T12:00:00-03:00","buyer":{"name":"Teste Silva","email":"teste@test.com","document":"00000000000","cellphone":"5511999999999"},"paid":{"value":47,"currency":"BRL"},"items":[{"productId":"produto-id","name":"Produto"}],"offer":{"name":"Workshop MPD"}}}'
+   curl -X POST "https://www.tonluccas.com.br/api/sale-webhook" \
      -H "Content-Type: application/json" \
-     -H "token: SEU_SECRET" \
-     -d '{"event":"SALE_APPROVED","sale_id":"TEST-001","status":"APPROVED","created_at":"2026-05-11 12:00:00","cookies":{"fbclid":"test123"},"customer":{"name":"Teste","email":"teste@test.com","document":"00000000000","phone_number":"5511999999999"},"products":[{"id":"produto-id","name":"Produto"}],"fiscal":{"total_value":47}}'
+     -d "$BODY"
+   ```
+   Com o secret setado, calcular a assinatura HMAC e mandar no header:
+   ```bash
+   SIG=$(printf '%s' "$BODY" | openssl dgst -sha256 -hmac "SEU_SECRET" | sed 's/^.* //')
+   curl -X POST "https://www.tonluccas.com.br/api/sale-webhook" \
+     -H "Content-Type: application/json" \
+     -H "x-signature: $SIG" \
+     -d "$BODY"
    ```
 5. Após validar, remover o código de teste:
    ```bash
@@ -143,31 +160,30 @@ Para testar sem afetar dados de produção:
 | `fbc` | Cookie `_fbc` do browser |
 | `fbp` | Cookie `_fbp` do browser |
 
-### InitiateCheckout / Purchase (Kirvano webhook)
+### InitiateCheckout / Purchase (Eduzz webhook v3)
 
 | Campo | Origem |
 |---|---|
-| `event_id` | `kv.{sale_id}.{evento}` (idempotente) |
-| `em` (email) | `customer.email` — SHA-256 |
-| `ph` (telefone) | `customer.phone_number` — SHA-256 |
-| `fn` (primeiro nome) | `customer.name` primeiro token — SHA-256 |
-| `ln` (sobrenome) | `customer.name` último token — SHA-256 |
-| `external_id` | `customer.document` (CPF) — SHA-256 |
+| `event_id` | `ez.{data.id}.{evento}` (idempotente) |
+| `em` (email) | `data.buyer.email` — SHA-256 |
+| `ph` (telefone) | `data.buyer.cellphone` (fallback `phone`/`phone2`) — SHA-256 |
+| `fn` (primeiro nome) | `data.buyer.name` primeiro token — SHA-256 |
+| `ln` (sobrenome) | `data.buyer.name` último token — SHA-256 |
+| `external_id` | `data.buyer.document` (CPF) — SHA-256 |
 | `country` | `br` — SHA-256 |
-| `client_ip_address` | `ip` do payload Kirvano |
-| `fbc` | Construído: `fb.1.{timestamp}.{cookies.fbclid}` |
-| `fbp` | `cookies.fbp` direto do payload |
-| `value` | `fiscal.total_value` |
-| `currency` | `BRL` |
-| `content_ids` | `products[].id` |
-| `content_name` | `products[0].name` |
+| `client_ip_address` | `data.ip` / `ip` (se presente) |
+| `fbp` / `fbc` | `data.tracker.code1/2/3` (só se vierem como `fb.*`; ver nota acima) |
+| `value` | `data.paid.value` |
+| `currency` | `data.paid.currency` (fallback `BRL`) |
+| `content_ids` | `data.items[].productId` |
+| `content_name` | `data.items[0].name` (fallback `data.offer.name`) |
 
 ## Segurança
 
 - `META_CAPI_TOKEN` nunca é exposto no browser (sem prefixo `PUBLIC_`)
-- Webhook autenticado via token no header (não na URL)
+- Webhook autenticado via assinatura HMAC-SHA256 (`x-signature`) sobre o raw body
 - PII sempre hasheado com SHA-256 antes de enviar ao Meta
-- Eventos idempotentes via `event_id` baseado em `sale_id` — retries da Kirvano não duplicam
+- Eventos idempotentes via `event_id` baseado em `data.id` (fatura) — retries da Eduzz não duplicam
 
 ## Troubleshooting
 
@@ -177,6 +193,8 @@ Para testar sem afetar dados de produção:
 
 **Eventos de teste não aparecem:** verificar se `META_CAPI_TEST_CODE` está setado e se a aba "Eventos de teste" está aberta no Gerenciador de Eventos durante o teste
 
-**Webhook retorna 401:** verificar se o token no header da Kirvano bate com `KIRVANO_WEBHOOK_SECRET` na Vercel
+**Webhook retorna 401:** a assinatura `x-signature` não bateu — conferir se a chave na Eduzz é exatamente a mesma de `CHECKOUT_WEBHOOK_SECRET` na Vercel. (Sem a var setada, a Function não checa assinatura e não dá 401.)
 
-**Evento não mapeado:** a function retorna `200 { skipped: "EVENT_NAME" }` para eventos Kirvano não mapeados (ex: `REFUND`, `CHARGEBACK`)
+**Webhook retorna 400:** body não é JSON válido / raw body vazio — conferir o `Content-Type: application/json` e o payload.
+
+**Evento não mapeado:** a function retorna `200 { skipped: "EVENT_NAME" }` para eventos Eduzz não mapeados (ex: `myeduzz.invoice_refunded`, `myeduzz.invoice_canceled`)

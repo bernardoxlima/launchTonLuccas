@@ -8,6 +8,26 @@ Source of truth do estado atual: `_config/versions.json`. Este arquivo é o hist
 
 ## mpd
 
+#### NOTA — Webhook Meta CAPI migrado Kirvano → Eduzz + pendências fechadas (2026-06-08)
+
+Fecha as 2 pendências abertas desde a migração de checkout pra Eduzz (commit `326f6f8`). Não toca em nenhuma versão (`versoes/`) — só infra (`api/`, docs, `.env.example`).
+
+**1. Env vars de checkout (PENDÊNCIA #1 — RESOLVIDA):** o user confirmou as env vars da Vercel — só existem `PUBLIC_GTM_ID`, `KIRVANO_WEBHOOK_SECRET`, `META_CAPI_TOKEN`, `PUBLIC_META_PIXEL_ID`. **`PUBLIC_CHECKOUT_STANDARD_URL` / `PUBLIC_CHECKOUT_VIP_URL` NÃO estão setadas** → produção usa o fallback hardcoded dos `versoes/*/Pricing.astro`, que já é Eduzz (`chk.eduzz.com/60E2QJZKW3` + `R9JX72V80X`). Logo, os checkout URLs já estão 100% Eduzz em prod, sem ação na Vercel. `.env.example` atualizado deixando claro que essas vars são opcionais e não estão setadas em prod.
+
+**2. Webhook (PENDÊNCIA #2 — RESOLVIDA em código):** `api/kirvano-webhook.ts` reescrito e renomeado pra `api/sale-webhook.ts` (nome neutro — 3ª troca de gateway). Mudanças:
+- **Payload:** parseia o formato Eduzz webhook v3 (`event: "myeduzz.invoice_paid"`, `data.buyer.{name,email,document,cellphone}`, `data.paid.value`, `data.items[].productId`, `data.id`).
+- **Auth:** valida assinatura `x-signature` = HMAC-SHA256(secret, raw_body). Lê o raw body via stream do `IncomingMessage` (sem tocar `req.body`). Gated em `CHECKOUT_WEBHOOK_SECRET` — se a var não estiver setada, processa sem verificar (transição graceful).
+- **Event map:** `invoice_waiting_payment` → `InitiateCheckout`; `invoice_paid` → `Purchase`. Normaliza o prefixo `myeduzz.`. Idempotência via `event_id = ez.{data.id}.{evento}`.
+- **Env var:** `KIRVANO_WEBHOOK_SECRET` → `CHECKOUT_WEBHOOK_SECRET`.
+- **fbp/fbc:** a Eduzz NÃO repassa cookies do FB (a Kirvano repassava). Match server-side agora é email+telefone+CPF hasheados. A Function já lê `data.tracker.code1/2/3` como fbp/fbc se vierem `fb.*` (forward-compat pra quando o checkout repassar via tracker codes).
+
+**Ações manuais pendentes pro user (fora do repo):**
+1. Vercel → add `CHECKOUT_WEBHOOK_SECRET` = chave de assinatura gerada no console de dev da Eduzz; remover `KIRVANO_WEBHOOK_SECRET` (morta).
+2. Eduzz → console de dev → Webhook → URL `https://www.tonluccas.com.br/api/sale-webhook`, eventos `Fatura Paga` + `Fatura Aguardando Pagamento`, com a chave de assinatura.
+3. Redeploy + validar com curl (ver `docs/meta-capi-setup.md` §4-5).
+
+---
+
 #### NOTA — Revert da promessa do Hero (v3-v8) + criação da v9 (2026-06-02)
 
 Decisão do user via AskUserQuestion. A NOTA de 2026-05-29 (commit `ce90f61`) tinha colapsado a promessa do Hero das 6 versões numa só ("Construa uma marca pessoal alinhada à sua essência e desejada pelo mercado..."), matando as variantes de A/B do Hero. Esta operação **reverte SÓ a promessa do Hero** (H1 + sub; nas v7/v8 também o eyebrow + estrutura italic de posicionamento) de cada versão pro que era ANTES do commit, restaurando cada identidade:
