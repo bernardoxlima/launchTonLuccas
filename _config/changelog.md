@@ -62,6 +62,7 @@ Aplicado em TODAS as versões ativas (v3 default + v4/v5/v6/v7/v8) a partir do P
 
 **Refinamentos:**
 - 2026-06-08 HOTFIX (checkout): re-migração Kirvano → Eduzz. Standard `pay.kirvano.com/8b0b589a...` → `chk.eduzz.com/60E2QJZKW3`; VIP `pay.kirvano.com/2d445670...` → `chk.eduzz.com/R9JX72V80X`. Links novos sem UTM. Hotfix global em todas as 7 versões ativas (v3 default + v4/v5/v6/v7/v8/v9). `.env.example` sincronizado.
+- 2026-06-08 — Disclaimer Pricing + Footer trocada de "via Kirvano" pra "Pagamento processado com segurança" (provider-neutral). Decisão do user pra evitar inconsistência futura quando trocar de provider. Aplicado nos 14 arquivos (7 Pricing + 7 Footer).
 
 ### v8 — 2026-05-20
 
@@ -81,6 +82,7 @@ Aplicado em TODAS as versões ativas (v3 default + v4/v5/v6/v7/v8) a partir do P
 - 2026-05-20 — Hero progress bar alinhada ao CTA no desktop. Wrapper ganhou `lg:mx-0` (mantém `mx-auto` no mobile/tablet com text-center). Fix global — antes a barra ficava centralizada enquanto o CTA `w-full sm:w-auto` aterrissava left-aligned via `lg:text-left`, desalinhando no lg+.
 - 2026-05-25 — Progress bar do Lote 01 baixou de 93% pra 22% (Hero ticker + label + fill, Pricing label + fill). Reset global em todas as versões ativas (v3/v4/v5/v6/v7/v8) — alinhado com a faixa "LOTE UM LIBERADO" no TopBanner: lote novo acabou de abrir.
 - 2026-06-08 HOTFIX (checkout): re-migração Kirvano → Eduzz. Standard `pay.kirvano.com/8b0b589a...` → `chk.eduzz.com/60E2QJZKW3`; VIP `pay.kirvano.com/2d445670...` → `chk.eduzz.com/R9JX72V80X`. Links novos sem UTM. Hotfix global em todas as 7 versões ativas (v3 default + v4/v5/v6/v7/v8/v9). `.env.example` sincronizado.
+- 2026-06-08 — Disclaimer Pricing + Footer trocada de "via Kirvano" pra "Pagamento processado com segurança" (provider-neutral). Decisão do user pra evitar inconsistência futura quando trocar de provider. Aplicado nos 14 arquivos (7 Pricing + 7 Footer).
 
 ### v7 — 2026-05-13
 
@@ -105,6 +107,7 @@ Aplicado em TODAS as versões ativas (v3 default + v4/v5/v6/v7/v8) a partir do P
 - 2026-05-25 — Progress bar do Lote 01 baixou de 93% pra 22% (Hero ticker + label + fill, Pricing label + fill). Reset global em todas as versões ativas (v3/v4/v5/v6/v7/v8) — alinhado com a faixa "LOTE UM LIBERADO" no TopBanner: lote novo acabou de abrir.
 - 2026-05-26 — **VIP restaurado** (convertida de Standard-only pra 2-tier in-place). Pricing.astro substituído por 2-card grid (Standard cream + VIP lime, frame animado, "Mais Escolhido", `lg:-translate-y-4`). 10 CTAs intra-page voltaram pra `href="#pricing-standard"` (scroll-to-pricing) + tracking `select_promotion`. FAQ restaurou as 3 menções a VIP. Reason: user validou VIP — apagada a identidade Standard-only da v5 e padronizada com v3/v4/v8.
 - 2026-06-08 HOTFIX (checkout): re-migração Kirvano → Eduzz. Standard `pay.kirvano.com/8b0b589a...` → `chk.eduzz.com/60E2QJZKW3`; VIP `pay.kirvano.com/2d445670...` → `chk.eduzz.com/R9JX72V80X`. Links novos sem UTM. Hotfix global em todas as 7 versões ativas (v3 default + v4/v5/v6/v7/v8/v9). `.env.example` sincronizado.
+- 2026-06-08 — Disclaimer Pricing + Footer trocada de "via Kirvano" pra "Pagamento processado com segurança" (provider-neutral). Decisão do user pra evitar inconsistência futura quando trocar de provider. Aplicado nos 14 arquivos (7 Pricing + 7 Footer).
 
 ### v6 — 2026-05-13
 
@@ -121,6 +124,7 @@ Aplicado em TODAS as versões ativas (v3 default + v4/v5/v6/v7/v8) a partir do P
 - 2026-05-25 — Progress bar do Lote 01 baixou de 93% pra 22% (Hero ticker + label + fill, Pricing label + fill). Reset global em todas as versões ativas (v3/v4/v5/v6/v7/v8) — alinhado com a faixa "LOTE UM LIBERADO" no TopBanner: lote novo acabou de abrir.
 - 2026-05-26 — **VIP restaurado** (convertida de Standard-only pra 2-tier in-place). Pricing.astro substituído por 2-card grid (Standard cream + VIP lime, frame animado, "Mais Escolhido", `lg:-translate-y-4`). 10 CTAs intra-page voltaram pra `href="#pricing-standard"` (scroll-to-pricing) + tracking `select_promotion`. FAQ restaurou as 3 menções a VIP. Reason: user validou VIP — apagada a identidade Standard-only da v6 e padronizada com v3/v4/v8.
 - 2026-06-08 HOTFIX (checkout): re-migração Kirvano → Eduzz. Standard `pay.kirvano.com/8b0b589a...` → `chk.eduzz.com/60E2QJZKW3`; VIP `pay.kirvano.com/2d445670...` → `chk.eduzz.com/R9JX72V80X`. Links novos sem UTM. Hotfix global em todas as 7 versões ativas (v3 default + v4/v5/v6/v7/v8/v9). `.env.example` sincronizado.
+- 2026-06-08 — Disclaimer Pricing + Footer trocada de "via Kirvano" pra "Pagamento processado com segurança" (provider-neutral). Decisão do user pra evitar inconsistência futura quando trocar de provider. Aplicado nos 14 arquivos (7 Pricing + 7 Footer).
 
 ### v5 — 2026-05-13
 
@@ -142,6 +146,7 @@ Aplicado em TODAS as versões ativas (v3 default + v4/v5/v6/v7/v8) a partir do P
 - 2026-05-25 — Progress bar do Lote 01 baixou de 93% pra 22% (Hero ticker + label + fill, Pricing label + fill). Reset global em todas as versões ativas (v3/v4/v5/v6/v7/v8) — alinhado com a faixa "LOTE UM LIBERADO" no TopBanner: lote novo acabou de abrir.
 - 2026-05-26 — **VIP restaurado** (convertida de Standard-only pra 2-tier in-place). Pricing.astro substituído por 2-card grid (Standard cream + VIP lime, frame animado, "Mais Escolhido", `lg:-translate-y-4`). 10 CTAs intra-page voltaram pra `href="#pricing-standard"` (scroll-to-pricing) + tracking `select_promotion`. FAQ restaurou as 3 menções a VIP. Reason: user validou VIP — apagada a identidade Standard-only da v7 (originalmente o experimento Standard-only com a promessa "posicionamento + formato de conteúdo") e padronizada com v3/v4/v8.
 - 2026-06-08 HOTFIX (checkout): re-migração Kirvano → Eduzz. Standard `pay.kirvano.com/8b0b589a...` → `chk.eduzz.com/60E2QJZKW3`; VIP `pay.kirvano.com/2d445670...` → `chk.eduzz.com/R9JX72V80X`. Links novos sem UTM. Hotfix global em todas as 7 versões ativas (v3 default + v4/v5/v6/v7/v8/v9). `.env.example` sincronizado.
+- 2026-06-08 — Disclaimer Pricing + Footer trocada de "via Kirvano" pra "Pagamento processado com segurança" (provider-neutral). Decisão do user pra evitar inconsistência futura quando trocar de provider. Aplicado nos 14 arquivos (7 Pricing + 7 Footer).
 
 ### v4 — 2026-05-11
 
@@ -158,6 +163,7 @@ Aplicado em TODAS as versões ativas (v3 default + v4/v5/v6/v7/v8) a partir do P
 - 2026-05-20 — Hero progress bar alinhada ao CTA no desktop. Wrapper ganhou `lg:mx-0` (mantém `mx-auto` no mobile/tablet com text-center). Fix global — antes a barra ficava centralizada enquanto o CTA `w-full sm:w-auto` aterrissava left-aligned via `lg:text-left`, desalinhando no lg+.
 - 2026-05-25 — Progress bar do Lote 01 baixou de 93% pra 22% (Hero ticker + label + fill, Pricing label + fill). Reset global em todas as versões ativas (v3/v4/v5/v6/v7/v8) — alinhado com a faixa "LOTE UM LIBERADO" no TopBanner: lote novo acabou de abrir.
 - 2026-06-08 HOTFIX (checkout): re-migração Kirvano → Eduzz. Standard `pay.kirvano.com/8b0b589a...` → `chk.eduzz.com/60E2QJZKW3`; VIP `pay.kirvano.com/2d445670...` → `chk.eduzz.com/R9JX72V80X`. Links novos sem UTM. Hotfix global em todas as 7 versões ativas (v3 default + v4/v5/v6/v7/v8/v9). `.env.example` sincronizado.
+- 2026-06-08 — Disclaimer Pricing + Footer trocada de "via Kirvano" pra "Pagamento processado com segurança" (provider-neutral). Decisão do user pra evitar inconsistência futura quando trocar de provider. Aplicado nos 14 arquivos (7 Pricing + 7 Footer).
 
 ### v3 — 2026-05-10  *(PINNED como `default` desde 2026-05-11 — é o que `tonluccas.com.br/` serve)*
 
@@ -177,6 +183,7 @@ Aplicado em TODAS as versões ativas (v3 default + v4/v5/v6/v7/v8) a partir do P
 - 2026-05-20 — Hero progress bar alinhada ao CTA no desktop. Wrapper ganhou `lg:mx-0` (mantém `mx-auto` no mobile/tablet com text-center). Fix global — antes a barra ficava centralizada enquanto o CTA `w-full sm:w-auto` aterrissava left-aligned via `lg:text-left`, desalinhando no lg+.
 - 2026-05-25 — Progress bar do Lote 01 baixou de 93% pra 22% (Hero ticker + label + fill, Pricing label + fill). Reset global em todas as versões ativas (v3/v4/v5/v6/v7/v8) — alinhado com a faixa "LOTE UM LIBERADO" no TopBanner: lote novo acabou de abrir.
 - 2026-06-08 HOTFIX (checkout): re-migração Kirvano → Eduzz. Standard `pay.kirvano.com/8b0b589a...` → `chk.eduzz.com/60E2QJZKW3`; VIP `pay.kirvano.com/2d445670...` → `chk.eduzz.com/R9JX72V80X`. Links novos sem UTM. Hotfix global em todas as 7 versões ativas (v3 default + v4/v5/v6/v7/v8/v9). `.env.example` sincronizado.
+- 2026-06-08 — Disclaimer Pricing + Footer trocada de "via Kirvano" pra "Pagamento processado com segurança" (provider-neutral). Decisão do user pra evitar inconsistência futura quando trocar de provider. Aplicado nos 14 arquivos (7 Pricing + 7 Footer).
 
 ---
 
